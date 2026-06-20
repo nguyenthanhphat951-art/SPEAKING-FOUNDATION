@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPK F Lesson 2: Express Preferences | Interactive Classroom</title>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<link href="/fonts/Montserrat/index.css" rel="stylesheet">
+<link href="/fonts/Open Sans/index.css" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--navy:#1A237E;--blue:#283593;--green:#1B5E20;--amber:#F57F17;--red:#B71C1C;--teal:#006064;--bg:#E8EAF6;--bg2:#C5CAE9;--ink:#0D0D2B;--ink2:#283593;--hf:Montserrat,sans-serif;--bf:Open Sans,sans-serif;}
+html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink);overflow:hidden;}
+.slide{display:none;width:100vw;height:100vh;position:relative;overflow:hidden;animation:fadeIn .4s ease;}
+.slide.active{display:flex;flex-direction:column;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+@keyframes shake{0%,100%{transform:translateX(0);}20%,60%{transform:translateX(-6px);}40%,80%{transform:translateX(6px);}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(26,35,126,.4);}70%{box-shadow:0 0 0 14px rgba(26,35,126,0);}}
+#progress-bar{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--navy),var(--amber));transition:width .4s ease;z-index:1001;}
+#navbar{position:fixed;bottom:0;left:0;right:0;height:52px;background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:1000;box-shadow:0 -4px 20px rgba(0,0,0,.25);}
+.nav-btn{background:rgba(255,255,255,.15);border:none;color:#fff;padding:6px 14px;border-radius:8px;cursor:pointer;font-family:var(--hf);font-size:.76rem;font-weight:700;transition:all .2s;display:flex;align-items:center;gap:5px;}
+.nav-btn:hover{background:rgba(255,255,255,.28);transform:translateY(-1px);}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed;transform:none;}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;transition:all .2s;flex-shrink:0;}
+.dot.active{background:#fff;transform:scale(1.3);}
+.dot:hover{background:rgba(255,255,255,.7);}
+#nav-dots{display:flex;align-items:center;gap:5px;flex-wrap:wrap;max-width:600px;justify-content:center;}
+.slide-counter{color:rgba(255,255,255,.75);font-family:var(--hf);font-size:.78rem;font-weight:600;min-width:55px;text-align:center;}
+.s-header{padding:18px 44px 10px;flex-shrink:0;border-bottom:3px solid var(--navy);display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;}
+.s-header h1{font-family:var(--hf);font-size:1.65rem;font-weight:800;color:var(--navy);line-height:1.1;}
+.s-badge{background:var(--navy);color:#fff;font-family:var(--hf);font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:20px;white-space:nowrap;letter-spacing:.05em;}
+.s-badge.amber{background:var(--amber);color:#1a0000;}
+.s-badge.teal{background:var(--teal);}
+.s-badge.green{background:#2e7d32;}
+.s-badge.red{background:var(--red);}
+.s-content{flex:1;padding:14px 44px 60px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;}
+.intro-note{background:rgba(26,35,126,.08);border-left:4px solid var(--navy);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.88rem;color:var(--ink);line-height:1.5;}
+.model-q{background:var(--navy);color:#fff;border-radius:10px;padding:11px 16px;font-size:.88rem;font-weight:600;display:flex;align-items:flex-start;gap:8px;}
+.model-q i{margin-top:2px;flex-shrink:0;color:var(--amber);}
+.model-answer-box{background:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 3px 12px rgba(26,35,126,.1);font-size:.88rem;line-height:1.75;color:var(--ink);border-left:5px solid var(--navy);}
+.hl-pref{background:rgba(26,35,126,.12);color:var(--navy);font-weight:700;padding:1px 5px;border-radius:4px;}
+.hl-comp{background:rgba(245,127,23,.18);color:#7a3800;font-weight:700;padding:1px 5px;border-radius:4px;}
+.hl-disc{background:rgba(0,96,100,.12);color:#004d40;font-weight:700;padding:1px 5px;border-radius:4px;}
+.hl-reason{background:rgba(46,125,50,.12);color:#1b5e20;font-weight:700;padding:1px 5px;border-radius:4px;}
+.lang-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+.lang-tag{background:#fff;border:1.5px solid var(--bg2);border-radius:8px;padding:5px 10px;font-size:.78rem;display:flex;align-items:center;gap:5px;color:var(--ink2);}
+.lang-tag i{color:var(--navy);}
+.tip-box{background:rgba(245,127,23,.12);border-left:4px solid var(--amber);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;color:var(--ink);display:flex;align-items:flex-start;gap:8px;}
+.tip-box i{color:var(--amber);margin-top:2px;flex-shrink:0;}
+.mc-opt{background:var(--bg);border:2px solid var(--bg2);border-radius:8px;padding:7px 14px;font-size:.82rem;cursor:pointer;font-family:var(--bf);color:var(--ink);transition:all .2s;text-align:left;}
+.mc-opt:hover:not(:disabled){background:rgba(26,35,126,.08);border-color:var(--navy);}
+.mc-opt.correct{background:#e8f5e9;border-color:#2e7d32;color:#1b5e20;font-weight:700;}
+.mc-opt.wrong{background:#ffebee;border-color:#c62828;color:#7f1d1d;animation:shake .4s;}
+.mc-opt:disabled{cursor:not-allowed;opacity:.7;}
+.gap-input{border:2px solid var(--bg2);border-radius:8px;padding:5px 10px;font-size:.84rem;font-family:var(--bf);color:var(--ink);background:#fff;min-width:160px;transition:all .2s;outline:none;}
+.gap-input:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(26,35,126,.1);}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;}
+.check-btn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:var(--hf);display:flex;align-items:center;gap:6px;transition:all .2s;}
+.check-btn:hover{opacity:.88;transform:translateY(-1px);}
+.check-btn.amber{background:var(--amber);color:#1a0000;}
+.reset-btn{background:rgba(26,35,126,.1);color:var(--navy);border:none;border-radius:8px;padding:8px 16px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:var(--hf);display:flex;align-items:center;gap:6px;transition:all .2s;}
+.reset-btn:hover{background:rgba(26,35,126,.18);}
+.vocab-card{background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);cursor:pointer;transition:all .2s;border-left:4px solid var(--navy);}
+.vocab-card:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(26,35,126,.12);}
+.vocab-word{font-family:var(--hf);font-size:.9rem;font-weight:800;color:var(--navy);margin-bottom:3px;}
+.vocab-example{font-size:.78rem;color:var(--ink2);font-style:italic;line-height:1.4;}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:8px;cursor:pointer;transition:background .2s;}
+.check-item:hover{background:rgba(26,35,126,.05);}
+.check-item.checked .check-box{background:var(--navy);border-color:var(--navy);}
+.check-item.checked .check-box i{opacity:1;}
+.check-box{width:22px;height:22px;border-radius:5px;border:2px solid var(--bg2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+.check-box i{font-size:.7rem;color:#fff;opacity:0;transition:opacity .2s;}
+.check-text{font-size:.84rem;color:var(--ink);line-height:1.4;}
+.cover-content{text-align:center;padding:0 40px;}
+.cover-tag{background:rgba(255,255,255,.2);color:#fff;font-family:var(--hf);font-size:.85rem;font-weight:700;padding:6px 18px;border-radius:20px;display:inline-block;margin-bottom:18px;letter-spacing:.08em;}
+.cover-h1{font-family:var(--hf);font-size:3.2rem;font-weight:900;color:#fff;line-height:1.1;margin-bottom:14px;}
+.cover-h1 span{color:var(--amber);}
+.cover-p{font-size:1.05rem;color:rgba(255,255,255,.85);margin-bottom:28px;line-height:1.6;max-width:600px;margin-left:auto;margin-right:auto;}
+.start-btn{background:var(--amber);color:#1a0000;border:none;border-radius:12px;padding:14px 36px;font-size:1.05rem;font-weight:800;cursor:pointer;font-family:var(--hf);display:inline-flex;align-items:center;gap:10px;transition:all .25s;animation:pulse 2s infinite;}
+.start-btn:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.25);}
+.cover-stats{display:flex;gap:28px;justify-content:center;margin-top:28px;}
+.cover-stat .num{font-family:var(--hf);font-size:2rem;font-weight:900;color:#fff;}
+.cover-stat .lbl{font-size:.78rem;color:rgba(255,255,255,.7);font-weight:600;text-transform:uppercase;letter-spacing:.08em;}
+.toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%) translateY(20px);background:#0d0d2b;color:#fff;padding:10px 22px;border-radius:10px;font-size:.88rem;font-weight:600;opacity:0;transition:all .3s;z-index:2000;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.success{background:#1b5e20;}
+.toast.error{background:#7f1d1d;}
+</style>
+</head>
+<body>
+<div id="progress-bar" style="width:0%"></div>
+
+<!-- SLIDE 1: COVER -->
+<div class="slide" id="slide-1">
+  <div style="position:absolute;inset:0;background:linear-gradient(135deg,#1A237E 0%,#283593 50%,#303F9F 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+    <div class="cover-content">
+      <div class="cover-tag"><i class="fas fa-balance-scale" style="margin-right:5px"></i>SPK F &middot; Lesson 2 &middot; Part 1</div>
+      <div class="cover-h1">Express <span>Preferences</span></div>
+      <div class="cover-p">Master how to answer "Do you prefer X or Y?" questions using preference structures, comparatives, and discourse markers.</div>
+      <button class="start-btn" onclick="goToSlide(2)"><i class="fas fa-play"></i> Start Lesson</button>
+      <div class="cover-stats">
+        <div class="cover-stat"><div class="num">35</div><div class="lbl">Slides</div></div>
+        <div class="cover-stat"><div class="num">3</div><div class="lbl">Language Steps</div></div>
+        <div class="cover-stat"><div class="num">5</div><div class="lbl">Model Answers</div></div>
+        <div class="cover-stat"><div class="num">10</div><div class="lbl">Practice Qs</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2: LESSON AIMS -->
+<div class="slide" id="slide-2">
+  <div class="s-header"><h1>Lesson Aims</h1><span class="s-badge">Lesson 2</span></div>
+  <div class="s-content">
+    <div class="intro-note">In this lesson, you will master how to answer questions related to your <strong>preferences</strong>.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 2px 8px rgba(26,35,126,.08);border-top:4px solid var(--navy);">
+        <div style="font-family:var(--hf);font-size:.8rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;"><i class="fas fa-bullseye" style="margin-right:5px"></i>Target Question Types</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:.84rem;padding:6px 10px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">Do you prefer writing letters or sending emails?</div>
+          <div style="font-size:.84rem;padding:6px 10px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">Do you prefer talking on the phone or chatting online?</div>
+          <div style="font-size:.84rem;padding:6px 10px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">Do you prefer to travel by bike or on foot?</div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 2px 8px rgba(26,35,126,.08);border-top:4px solid var(--amber);">
+        <div style="font-family:var(--hf);font-size:.8rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;"><i class="fas fa-flask" style="margin-right:5px"></i>Answer Order</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:rgba(26,35,126,.06);border-radius:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--hf);font-size:.78rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div><div style="font-size:.84rem;"><strong>State which one you prefer</strong><br><span style="color:var(--ink2);font-size:.78rem;">I prefer X rather than Y / I prefer X to Y</span></div></div>
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:rgba(26,35,126,.06);border-radius:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--hf);font-size:.78rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div><div style="font-size:.84rem;"><strong>Compare the two things</strong><br><span style="color:var(--ink2);font-size:.78rem;">X is more convenient than Y / X is faster than Y</span></div></div>
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:rgba(26,35,126,.06);border-radius:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--hf);font-size:.78rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div><div style="font-size:.84rem;"><strong>Give reasons and examples</strong><br><span style="color:var(--ink2);font-size:.78rem;">because / so / in addition / besides</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: PREFER STRUCTURES -->
+<div class="slide" id="slide-3">
+  <div class="s-header"><h1>Step 1: How to Use PREFER</h1><span class="s-badge">Language Step 1</span></div>
+  <div class="s-content">
+    <div class="intro-note"><strong>Two correct structures</strong> &mdash; both mean exactly the same thing. Click each card to see examples.</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-left:5px solid var(--navy);">
+        <div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:8px;">Structure 1: prefer + verb-ing + to/rather than + verb-ing</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+          <div style="padding:5px 9px;background:rgba(26,35,126,.06);border-radius:7px;cursor:pointer;" onclick="showToast('I prefer cycling to taking the bus.','success')">I prefer <strong>cycling</strong> to <strong>taking</strong> the bus.</div>
+          <div style="padding:5px 9px;background:rgba(26,35,126,.06);border-radius:7px;cursor:pointer;" onclick="showToast('I prefer eating to cooking.','success')">I prefer <strong>eating</strong> to <strong>cooking</strong>.</div>
+          <div style="padding:5px 9px;background:rgba(26,35,126,.06);border-radius:7px;cursor:pointer;" onclick="showToast('I prefer baking cakes at home rather than buying them in shops.','success')">I prefer <strong>baking</strong> cakes at home rather than <strong>buying</strong> them in shops.</div>
+          <div style="padding:5px 9px;background:rgba(26,35,126,.06);border-radius:7px;cursor:pointer;" onclick="showToast('I prefer reading a newspaper rather than watching TV.','success')">I prefer <strong>reading</strong> a newspaper rather than <strong>watching</strong> TV.</div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-left:5px solid var(--amber);">
+        <div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:#7a3800;margin-bottom:8px;">Structure 2: prefer + to verb + rather than + verb</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+          <div style="padding:5px 9px;background:rgba(245,127,23,.06);border-radius:7px;cursor:pointer;" onclick="showToast('I prefer to cycle rather than take the bus.','success')">I prefer <strong>to cycle</strong> rather than <strong>take</strong> the bus.</div>
+          <div style="padding:5px 9px;background:rgba(245,127,23,.06);border-radius:7px;cursor:pointer;" onclick="showToast('I prefer to eat rather than cook.','success')">I prefer <strong>to eat</strong> rather than <strong>cook</strong>.</div>
+          <div style="padding:5px 9px;background:rgba(245,127,23,.06);border-radius:7px;cursor:pointer;" onclick="showToast('I prefer to bake cakes at home rather than buy them in shops.','success')">I prefer <strong>to bake</strong> cakes at home rather than <strong>buy</strong> them in shops.</div>
+          <div style="padding:5px 9px;background:rgba(245,127,23,.06);border-radius:7px;cursor:pointer;" onclick="showToast('I prefer to read a newspaper rather than watch TV.','success')">I prefer <strong>to read</strong> a newspaper rather than <strong>watch</strong> TV.</div>
+        </div>
+      </div>
+    </div>
+    <div class="tip-box"><i class="fas fa-lightbulb"></i><span><strong>Key Rule:</strong> Keep structures consistent. V-ing + V-ing OR to+verb + verb. NEVER mix them (e.g. prefer cycling rather than to walk = WRONG).</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 4: COMPARATIVE RULES -->
+<div class="slide" id="slide-4">
+  <div class="s-header"><h1>Step 1: Comparative Adjectives (Rules)</h1><span class="s-badge">Language Step 1</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use comparatives to explain <strong>why</strong> you prefer one thing over another.</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;">1 Syllable: add -er</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-size:.8rem;">
+          <div style="padding:4px 8px;background:rgba(26,35,126,.06);border-radius:6px;">cheap &rarr; <strong>cheaper</strong></div>
+          <div style="padding:4px 8px;background:rgba(26,35,126,.06);border-radius:6px;">fast &rarr; <strong>faster</strong></div>
+          <div style="padding:4px 8px;background:rgba(26,35,126,.06);border-radius:6px;">small &rarr; <strong>smaller</strong></div>
+          <div style="padding:4px 8px;background:rgba(26,35,126,.06);border-radius:6px;">warm &rarr; <strong>warmer</strong></div>
+          <div style="padding:4px 8px;background:rgba(26,35,126,.06);border-radius:6px;">short &rarr; <strong>shorter</strong></div>
+          <div style="padding:4px 8px;background:rgba(26,35,126,.06);border-radius:6px;">bright &rarr; <strong>brighter</strong></div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;">Ends in -y: change to -ier</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-size:.8rem;">
+          <div style="padding:4px 8px;background:rgba(245,127,23,.08);border-radius:6px;">easy &rarr; <strong>easier</strong></div>
+          <div style="padding:4px 8px;background:rgba(245,127,23,.08);border-radius:6px;">heavy &rarr; <strong>heavier</strong></div>
+          <div style="padding:4px 8px;background:rgba(245,127,23,.08);border-radius:6px;">noisy &rarr; <strong>noisier</strong></div>
+          <div style="padding:4px 8px;background:rgba(245,127,23,.08);border-radius:6px;">busy &rarr; <strong>busier</strong></div>
+          <div style="padding:4px 8px;background:rgba(245,127,23,.08);border-radius:6px;">tasty &rarr; <strong>tastier</strong></div>
+          <div style="padding:4px 8px;background:rgba(245,127,23,.08);border-radius:6px;">friendly &rarr; <strong>friendlier</strong></div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;">2+ Syllables: add more</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-size:.8rem;">
+          <div style="padding:4px 8px;background:rgba(0,96,100,.06);border-radius:6px;">expensive &rarr; <strong>more expensive</strong></div>
+          <div style="padding:4px 8px;background:rgba(0,96,100,.06);border-radius:6px;">comfortable &rarr; <strong>more comfortable</strong></div>
+          <div style="padding:4px 8px;background:rgba(0,96,100,.06);border-radius:6px;">convenient &rarr; <strong>more convenient</strong></div>
+          <div style="padding:4px 8px;background:rgba(0,96,100,.06);border-radius:6px;">interesting &rarr; <strong>more interesting</strong></div>
+          <div style="padding:4px 8px;background:rgba(0,96,100,.06);border-radius:6px;">enjoyable &rarr; <strong>more enjoyable</strong></div>
+          <div style="padding:4px 8px;background:rgba(0,96,100,.06);border-radius:6px;">effective &rarr; <strong>more effective</strong></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px;">
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-left:4px solid var(--navy);cursor:pointer;" onclick="showToast('Watching TV is more interesting than listening to the radio.','success')"><div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:4px;">X + is + comparative + than + Y</div><div style="font-size:.78rem;color:var(--ink2);font-style:italic;">Watching TV is more interesting than listening to the radio.</div></div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-left:4px solid var(--teal);cursor:pointer;" onclick="showToast('Listening to the radio is not as interesting as watching TV.','success')"><div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:var(--teal);margin-bottom:4px;">X + is + not as + adjective + as + Y</div><div style="font-size:.78rem;color:var(--ink2);font-style:italic;">Listening to the radio is not as interesting as watching TV.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: COMPARATIVES TABLE -->
+<div class="slide" id="slide-5">
+  <div class="s-header"><h1>Comparative Adjectives: Reference Table</h1><span class="s-badge">Language Step 1</span></div>
+  <div class="s-content">
+    <div class="intro-note">Click any adjective card to see its comparative form and an example sentence.</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:7px;">
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('Cycling is cheaper than taking a taxi.','success')"><div class="vocab-word" style="font-size:.82rem;">cheap &rarr; cheaper</div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('Emails are faster than traditional letters.','success')"><div class="vocab-word" style="font-size:.82rem;">fast &rarr; faster</div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('Studying alone is quieter than studying in a group.','success')"><div class="vocab-word" style="font-size:.82rem;">quiet &rarr; quieter</div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('Chatting online is easier than making phone calls.','success')"><div class="vocab-word" style="font-size:.82rem;">easy &rarr; easier</div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('Watching movies at home is more comfortable than going to the cinema.','success')"><div class="vocab-word" style="font-size:.82rem;">comfortable &rarr; more comfortable</div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('Taking the bus is more convenient than cycling long distances.','success')"><div class="vocab-word" style="font-size:.82rem;">convenient &rarr; more convenient</div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('Studying alone is more effective than studying in a group.','success')"><div class="vocab-word" style="font-size:.82rem;">effective &rarr; more effective</div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('Reading books is more enjoyable than watching TV for me.','success')"><div class="vocab-word" style="font-size:.82rem;">enjoyable &rarr; more enjoyable</div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('Chatting online is less stressful than talking on the phone.','success')"><div class="vocab-word" style="font-size:.82rem;">stressful &rarr; less stressful</div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('Cycling is more environmentally friendly than driving.','success')"><div class="vocab-word" style="font-size:.82rem;">friendly &rarr; friendlier</div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('Online learning is more flexible than face-to-face classes.','success')"><div class="vocab-word" style="font-size:.82rem;">flexible &rarr; more flexible</div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('Living in the city is more exciting than living in the countryside.','success')"><div class="vocab-word" style="font-size:.82rem;">exciting &rarr; more exciting</div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('The countryside is more peaceful than the city.','success')"><div class="vocab-word" style="font-size:.82rem;">peaceful &rarr; more peaceful</div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('Eating at home is healthier than eating out.','success')"><div class="vocab-word" style="font-size:.82rem;">healthy &rarr; healthier</div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('The city is noisier than the countryside.','success')"><div class="vocab-word" style="font-size:.82rem;">noisy &rarr; noisier</div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('Cycling is more dangerous than walking.','success')"><div class="vocab-word" style="font-size:.82rem;">dangerous &rarr; more dangerous</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: DISCOURSE MARKERS -->
+<div class="slide" id="slide-6">
+  <div class="s-header"><h1>Extra Step: Discourse Markers</h1><span class="s-badge teal">Extra Language</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use these discourse markers to sound more like a native speaker. Click any card to see the example.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="vocab-card" onclick="showToast('It is actually a lot cheaper to go to that supermarket. In fact, public buses are a lot more environmentally friendly than many people think.','success')"><div class="vocab-word">actually / in fact</div><div class="vocab-example">Introduces something surprising or that slightly changes what was said before.<br><em>It is actually a lot cheaper to go to that supermarket.</em></div></div>
+      <div class="vocab-card" onclick="showToast('He has done very badly in his exams, so needless to say, he will not get into university this year.','success')"><div class="vocab-word">needless to say</div><div class="vocab-example">Another way of saying obviously without sounding rude.<br><em>Needless to say, he will not get into university this year.</em></div></div>
+      <div class="vocab-card" onclick="showToast('I prefer cycling rather than driving a car because it helps me keep fit; in addition, it is better for the environment and it is also cheaper!','success')"><div class="vocab-word">also / in addition</div><div class="vocab-example">Used to add extra or further information.<br><em>In addition, it is better for the environment and it is also cheaper!</em></div></div>
+      <div class="vocab-card" onclick="showToast('I like riding a bike as it is a very convenient way to travel. Besides, it is cheap and I cannot afford a car.','success')"><div class="vocab-word">besides</div><div class="vocab-example">At the start of a clause = as well as that / anyway.<br><em>Besides, it is cheap and I cannot afford a car.</em></div></div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);margin-top:4px;">
+      <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;"><i class="fas fa-star" style="margin-right:4px"></i>All Discourse Markers</div>
+      <div style="display:flex;flex-wrap:wrap;gap:7px;">
+        <span style="background:rgba(26,35,126,.08);color:var(--navy);font-size:.8rem;font-weight:600;padding:4px 11px;border-radius:20px;cursor:pointer;" onclick="showToast('actually — introduces something surprising','success')">actually</span>
+        <span style="background:rgba(26,35,126,.08);color:var(--navy);font-size:.8rem;font-weight:600;padding:4px 11px;border-radius:20px;cursor:pointer;" onclick="showToast('in fact — reinforces or slightly changes what was said','success')">in fact</span>
+        <span style="background:rgba(26,35,126,.08);color:var(--navy);font-size:.8rem;font-weight:600;padding:4px 11px;border-radius:20px;cursor:pointer;" onclick="showToast('needless to say — obviously, everyone knows that','success')">needless to say</span>
+        <span style="background:rgba(26,35,126,.08);color:var(--navy);font-size:.8rem;font-weight:600;padding:4px 11px;border-radius:20px;cursor:pointer;" onclick="showToast('also — adds extra information','success')">also</span>
+        <span style="background:rgba(26,35,126,.08);color:var(--navy);font-size:.8rem;font-weight:600;padding:4px 11px;border-radius:20px;cursor:pointer;" onclick="showToast('in addition — adds extra information (more formal)','success')">in addition</span>
+        <span style="background:rgba(26,35,126,.08);color:var(--navy);font-size:.8rem;font-weight:600;padding:4px 11px;border-radius:20px;cursor:pointer;" onclick="showToast('besides — as well as that / anyway','success')">besides</span>
+        <span style="background:rgba(26,35,126,.08);color:var(--navy);font-size:.8rem;font-weight:600;padding:4px 11px;border-radius:20px;cursor:pointer;" onclick="showToast('so — shows result or consequence','success')">so</span>
+        <span style="background:rgba(26,35,126,.08);color:var(--navy);font-size:.8rem;font-weight:600;padding:4px 11px;border-radius:20px;cursor:pointer;" onclick="showToast('particularly / especially — emphasises a specific point','success')">particularly / especially</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7: MODEL ANSWER 1 -->
+<div class="slide" id="slide-7">
+  <div class="s-header"><h1>Model Answer 1: Letters or Emails?</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> Do you prefer writing letters or sending emails?</div>
+    <div class="model-answer-box"><span class="hl-pref">I prefer sending emails rather than writing letters.</span> They are <span class="hl-comp">more convenient and faster than</span> traditional letters, <span class="hl-reason">so</span> I can send something and get a reply quite quickly. I usually email my teachers when I have questions, and they often respond the same day.</div>
+    <div class="lang-tags">
+      <div class="lang-tag"><i class="fas fa-balance-scale"></i> Preference: prefer + V-ing + rather than + V-ing</div>
+      <div class="lang-tag"><i class="fas fa-not-equal"></i> Comparatives: more convenient / faster than</div>
+      <div class="lang-tag"><i class="fas fa-link"></i> Linker: so</div>
+      <div class="lang-tag"><i class="fas fa-lightbulb"></i> Example: daily habit</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: MODEL ANSWER 2 -->
+<div class="slide" id="slide-8">
+  <div class="s-header"><h1>Model Answer 2: Phone or Chatting Online?</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> Do you prefer talking on the phone or chatting online?</div>
+    <div class="model-answer-box"><span class="hl-pref">I prefer chatting online rather than talking on the phone.</span> It is <span class="hl-comp">easier and less stressful than</span> making phone calls, especially when I am busy. I normally just message my friends after school to make plans or share things.</div>
+    <div class="lang-tags">
+      <div class="lang-tag"><i class="fas fa-balance-scale"></i> Preference: prefer + V-ing + rather than + V-ing</div>
+      <div class="lang-tag"><i class="fas fa-not-equal"></i> Comparatives: easier / less stressful than</div>
+      <div class="lang-tag"><i class="fas fa-star"></i> Feature: especially when...</div>
+      <div class="lang-tag"><i class="fas fa-lightbulb"></i> Example: real-life routine</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: MODEL ANSWER 3 -->
+<div class="slide" id="slide-9">
+  <div class="s-header"><h1>Model Answer 3: Bike or On Foot?</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> Do you prefer traveling by bike or on foot?</div>
+    <div class="model-answer-box"><span class="hl-pref">I prefer cycling rather than walking.</span> It is <span class="hl-comp">faster and more enjoyable than</span> walking, particularly for longer distances. <span class="hl-disc">In addition,</span> it helps me keep fit. I ride my bike to school most days, <span class="hl-reason">so</span> it saves me quite a lot of time.</div>
+    <div class="lang-tags">
+      <div class="lang-tag"><i class="fas fa-balance-scale"></i> Preference: prefer + V-ing + rather than + V-ing</div>
+      <div class="lang-tag"><i class="fas fa-not-equal"></i> Comparatives: faster / more enjoyable than</div>
+      <div class="lang-tag"><i class="fas fa-plus"></i> Discourse marker: in addition</div>
+      <div class="lang-tag"><i class="fas fa-heartbeat"></i> Health benefit: keep fit</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: MODEL ANSWER 4 -->
+<div class="slide" id="slide-10">
+  <div class="s-header"><h1>Model Answer 4: Alone or In a Group?</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> Do you prefer studying alone or in a group?</div>
+    <div class="model-answer-box"><span class="hl-pref">I prefer studying alone rather than studying in a group.</span> It is <span class="hl-comp">more effective and quieter than</span> group study, <span class="hl-reason">so</span> I can focus better. I tend to get distracted when studying with other people, <span class="hl-reason">so</span> I usually revise at home in the evening.</div>
+    <div class="lang-tags">
+      <div class="lang-tag"><i class="fas fa-balance-scale"></i> Preference: prefer + V-ing + rather than + V-ing</div>
+      <div class="lang-tag"><i class="fas fa-not-equal"></i> Comparatives: more effective / quieter than</div>
+      <div class="lang-tag"><i class="fas fa-star"></i> Feature: I tend to...</div>
+      <div class="lang-tag"><i class="fas fa-link"></i> Linker: so</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 11: MODEL ANSWER 5 -->
+<div class="slide" id="slide-11">
+  <div class="s-header"><h1>Model Answer 5: Home or Cinema?</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> Do you prefer watching movies at home or at the cinema?</div>
+    <div class="model-answer-box"><span class="hl-pref">I prefer watching movies at home rather than going to the cinema.</span> It is <span class="hl-comp">more comfortable and cheaper than</span> going out. <span class="hl-disc">Besides,</span> I can pause whenever I want, which makes it <span class="hl-comp">more convenient.</span> I usually watch films with my family in the evening, and it is a lot <span class="hl-comp">more relaxing.</span></div>
+    <div class="lang-tags">
+      <div class="lang-tag"><i class="fas fa-balance-scale"></i> Preference: prefer + V-ing + rather than + V-ing</div>
+      <div class="lang-tag"><i class="fas fa-not-equal"></i> Comparatives: more comfortable / cheaper / more convenient</div>
+      <div class="lang-tag"><i class="fas fa-plus"></i> Discourse marker: besides</div>
+      <div class="lang-tag"><i class="fas fa-star"></i> Feature: which makes it...</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 12: ANNOTATED MODEL ANSWER -->
+<div class="slide" id="slide-12">
+  <div class="s-header"><h1>Full Formula: Annotated Example</h1><span class="s-badge">Formula in Action</span></div>
+  <div class="s-content">
+    <div class="intro-note">See how all 3 steps work together. Click each highlighted part to learn more.</div>
+    <div class="model-q"><i class="fas fa-question-circle"></i> Do you prefer traveling by bike or on foot?</div>
+    <div class="model-answer-box" style="font-size:.88rem;">
+      <span class="hl-pref" style="cursor:pointer" onclick="showToast('Step 1 - Preference structure: I prefer cycling rather than walking','success')">I prefer cycling rather than walking.</span>
+      It is <span class="hl-comp" style="cursor:pointer" onclick="showToast('Step 2 - Comparative: faster and more enjoyable than — compares the two options','success')">faster and more enjoyable than</span>
+      walking, particularly for longer distances.
+      <span class="hl-disc" style="cursor:pointer" onclick="showToast('Extra step - Discourse marker: In addition — adds extra information','success')">In addition,</span>
+      it <span class="hl-reason" style="cursor:pointer" onclick="showToast('Step 3 - Reason: helps me keep fit — health benefit','success')">helps me keep fit.</span>
+      I ride my bike to school most days,
+      <span class="hl-reason" style="cursor:pointer" onclick="showToast('Step 3 - Reason linker: so — shows result','success')">so</span>
+      it saves me quite a lot of time.
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px;">
+      <div style="background:rgba(26,35,126,.08);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 1</div><div style="font-size:.82rem;color:var(--navy);font-weight:600;">State Preference</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">I prefer cycling rather than walking</div></div>
+      <div style="background:rgba(245,127,23,.1);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 2</div><div style="font-size:.82rem;color:#7a3800;font-weight:600;">Compare</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">faster and more enjoyable than walking</div></div>
+      <div style="background:rgba(46,125,50,.08);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#1b5e20;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 3</div><div style="font-size:.82rem;color:#1b5e20;font-weight:600;">Reason + Example</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">helps me keep fit / saves me time</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 13: QUIZ - PREFER STRUCTURES -->
+<div class="slide" id="slide-13">
+  <div class="s-header"><h1>Quiz: Prefer Structures</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the grammatically correct sentence. Score: <strong id="q1-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Which sentence is correct?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-1"><button class="mc-opt" onclick="checkQ1(this,1,'I prefer cycling to taking the bus.')">I prefer cycling to taking the bus.</button><button class="mc-opt" onclick="checkQ1(this,1,'I prefer cycling to taking the bus.')">I prefer to cycling to taking the bus.</button><button class="mc-opt" onclick="checkQ1(this,1,'I prefer cycling to taking the bus.')">I prefer cycle to take the bus.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Which sentence is correct?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-2"><button class="mc-opt" onclick="checkQ1(this,2,'I prefer to read a newspaper rather than watch TV.')">I prefer to read a newspaper rather than watch TV.</button><button class="mc-opt" onclick="checkQ1(this,2,'I prefer to read a newspaper rather than watch TV.')">I prefer to read a newspaper rather than watching TV.</button><button class="mc-opt" onclick="checkQ1(this,2,'I prefer to read a newspaper rather than watch TV.')">I prefer reading a newspaper rather than to watch TV.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Which sentence is correct?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-3"><button class="mc-opt" onclick="checkQ1(this,3,'I prefer baking cakes at home rather than buying them in shops.')">I prefer baking cakes at home rather than buying them in shops.</button><button class="mc-opt" onclick="checkQ1(this,3,'I prefer baking cakes at home rather than buying them in shops.')">I prefer bake cakes at home rather than buy them in shops.</button><button class="mc-opt" onclick="checkQ1(this,3,'I prefer baking cakes at home rather than buying them in shops.')">I prefer to baking cakes at home rather than to buying them.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Which sentence is correct?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-4"><button class="mc-opt" onclick="checkQ1(this,4,'I prefer to eat rather than cook.')">I prefer to eat rather than cook.</button><button class="mc-opt" onclick="checkQ1(this,4,'I prefer to eat rather than cook.')">I prefer to eat rather than to cooking.</button><button class="mc-opt" onclick="checkQ1(this,4,'I prefer to eat rather than cook.')">I prefer eating rather than to cook.</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ1()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 14: QUIZ - COMPARATIVES -->
+<div class="slide" id="slide-14">
+  <div class="s-header"><h1>Quiz: Comparative Forms</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct comparative form. Score: <strong id="q2-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Emails are _____ than traditional letters.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-1"><button class="mc-opt" onclick="checkQ2(this,1,'faster')">faster</button><button class="mc-opt" onclick="checkQ2(this,1,'faster')">more fast</button><button class="mc-opt" onclick="checkQ2(this,1,'faster')">fastest</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Watching movies at home is _____ than going to the cinema.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-2"><button class="mc-opt" onclick="checkQ2(this,2,'more comfortable')">more comfortable</button><button class="mc-opt" onclick="checkQ2(this,2,'more comfortable')">comfortabler</button><button class="mc-opt" onclick="checkQ2(this,2,'more comfortable')">most comfortable</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Chatting online is _____ than making phone calls.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-3"><button class="mc-opt" onclick="checkQ2(this,3,'easier')">easier</button><button class="mc-opt" onclick="checkQ2(this,3,'easier')">more easy</button><button class="mc-opt" onclick="checkQ2(this,3,'easier')">easiest</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Studying alone is _____ than studying in a group.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-4"><button class="mc-opt" onclick="checkQ2(this,4,'more effective')">more effective</button><button class="mc-opt" onclick="checkQ2(this,4,'more effective')">effectiver</button><button class="mc-opt" onclick="checkQ2(this,4,'more effective')">most effective</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ2()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 15: QUIZ - DISCOURSE MARKERS -->
+<div class="slide" id="slide-15">
+  <div class="s-header"><h1>Quiz: Discourse Markers</h1><span class="s-badge amber">Vocabulary Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct discourse marker. Score: <strong id="q3-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I prefer cycling rather than driving a car because it helps me keep fit; _____, it is better for the environment.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-1"><button class="mc-opt" onclick="checkQ3(this,1,'in addition')">in addition</button><button class="mc-opt" onclick="checkQ3(this,1,'in addition')">needless to say</button><button class="mc-opt" onclick="checkQ3(this,1,'in addition')">however</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. I like riding a bike as it is a very convenient way to travel. _____, it is cheap and I cannot afford a car.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-2"><button class="mc-opt" onclick="checkQ3(this,2,'Besides')">Besides</button><button class="mc-opt" onclick="checkQ3(this,2,'Besides')">Actually</button><button class="mc-opt" onclick="checkQ3(this,2,'Besides')">Needless to say</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. It is _____ a lot cheaper to go to that supermarket than to the one near my house.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-3"><button class="mc-opt" onclick="checkQ3(this,3,'actually')">actually</button><button class="mc-opt" onclick="checkQ3(this,3,'actually')">besides</button><button class="mc-opt" onclick="checkQ3(this,3,'actually')">in addition</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. He has done very badly in his exams, so _____, he will not get into university this year.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-4"><button class="mc-opt" onclick="checkQ3(this,4,'needless to say')">needless to say</button><button class="mc-opt" onclick="checkQ3(this,4,'needless to say')">in addition</button><button class="mc-opt" onclick="checkQ3(this,4,'needless to say')">besides</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ3()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 16: GAP FILL -->
+<div class="slide" id="slide-16">
+  <div class="s-header"><h1>Gap Fill: Complete the Answers</h1><span class="s-badge amber">Exercise</span></div>
+  <div class="s-content">
+    <div class="intro-note">Fill in the blanks with the correct word or phrase. Press Enter or click Check to verify.</div>
+    <div style="display:flex;flex-direction:column;gap:9px;">
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">1. I prefer sending emails <input class="gap-input" id="gf-1" placeholder="___" style="width:130px" onkeydown="if(event.key==='Enter')checkGF(1,['rather than','to'])"> writing letters because they are faster.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(1,['rather than','to'])"><i class="fas fa-check"></i> Check</button></div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">2. Chatting online is <input class="gap-input" id="gf-2" placeholder="___" style="width:100px" onkeydown="if(event.key==='Enter')checkGF(2,['easier','less stressful'])"> than talking on the phone.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(2,['easier','less stressful'])"><i class="fas fa-check"></i> Check</button></div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">3. I prefer cycling rather than walking. <input class="gap-input" id="gf-3" placeholder="___" style="width:120px" onkeydown="if(event.key==='Enter')checkGF(3,['in addition','also','besides'])"> it helps me keep fit.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(3,['in addition','also','besides'])"><i class="fas fa-check"></i> Check</button></div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">4. Watching movies at home is <input class="gap-input" id="gf-4" placeholder="___" style="width:180px" onkeydown="if(event.key==='Enter')checkGF(4,['more comfortable','cheaper'])"> than going to the cinema.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(4,['more comfortable','cheaper'])"><i class="fas fa-check"></i> Check</button></div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">5. Listening to the radio is not <input class="gap-input" id="gf-5" placeholder="___" style="width:60px" onkeydown="if(event.key==='Enter')checkGF(5,['as'])"> interesting <input class="gap-input" id="gf-5b" placeholder="___" style="width:60px" onkeydown="if(event.key==='Enter')checkGF(5,['as'])"> watching TV.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(5,['as'])"><i class="fas fa-check"></i> Check</button></div>
+    </div>
+    <div class="btn-row"><button class="check-btn amber" onclick="showGFAnswers()"><i class="fas fa-eye"></i> Show Answers</button><button class="reset-btn" onclick="resetGF()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 17: COMMON MISTAKES -->
+<div class="slide" id="slide-17">
+  <div class="s-header"><h1>Common Mistakes to Avoid</h1><span class="s-badge red">Error Correction</span></div>
+  <div class="s-content">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="border-radius:14px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.08);">
+        <div style="padding:11px 16px;font-family:var(--hf);font-size:.86rem;font-weight:700;display:flex;align-items:center;gap:7px;background:#FEE2E2;color:#c62828;border-bottom:3px solid #c62828;"><i class="fas fa-times-circle"></i> Incorrect</div>
+        <div style="background:#fff;padding:9px;">
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#FFF5F5;color:#7F1D1D;border-left:3px solid #c62828;"><i class="fas fa-times-circle" style="color:#c62828"></i><em>"I prefer to cycling rather than to walking." (wrong: to + V-ing)</em></div>
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#FFF5F5;color:#7F1D1D;border-left:3px solid #c62828;"><i class="fas fa-times-circle" style="color:#c62828"></i><em>"I prefer reading rather than to watch TV." (mixed structures)</em></div>
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#FFF5F5;color:#7F1D1D;border-left:3px solid #c62828;"><i class="fas fa-times-circle" style="color:#c62828"></i><em>"Emails are more faster than letters." (double comparative)</em></div>
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#FFF5F5;color:#7F1D1D;border-left:3px solid #c62828;"><i class="fas fa-times-circle" style="color:#c62828"></i><em>"I prefer emails." (no comparison, no reason)</em></div>
+        </div>
+      </div>
+      <div style="border-radius:14px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.08);">
+        <div style="padding:11px 16px;font-family:var(--hf);font-size:.86rem;font-weight:700;display:flex;align-items:center;gap:7px;background:#D1FAE5;color:#047857;border-bottom:3px solid var(--teal);"><i class="fas fa-check-circle"></i> Correct</div>
+        <div style="background:#fff;padding:9px;">
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#F0FDF4;color:#064E3B;border-left:3px solid var(--teal);"><i class="fas fa-check-circle" style="color:var(--teal)"></i><em>"I prefer <strong>cycling</strong> rather than <strong>walking</strong>." (V-ing + rather than + V-ing)</em></div>
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#F0FDF4;color:#064E3B;border-left:3px solid var(--teal);"><i class="fas fa-check-circle" style="color:var(--teal)"></i><em>"I prefer <strong>to read</strong> rather than <strong>watch</strong> TV." (to + verb + rather than + verb)</em></div>
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#F0FDF4;color:#064E3B;border-left:3px solid var(--teal);"><i class="fas fa-check-circle" style="color:var(--teal)"></i><em>"Emails are <strong>faster</strong> than letters." (one-syllable: add -er only)</em></div>
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#F0FDF4;color:#064E3B;border-left:3px solid var(--teal);"><i class="fas fa-check-circle" style="color:var(--teal)"></i><em>"I prefer sending emails rather than writing letters because they are <strong>faster and more convenient</strong>."</em></div>
+        </div>
+      </div>
+    </div>
+    <div class="tip-box"><i class="fas fa-lightbulb"></i><span><strong>Key Rules:</strong> (1) Keep structures consistent: V-ing + V-ing OR to+verb + verb. (2) Never use "more" with short adjectives (faster NOT more fast). (3) Always compare BOTH options and give a reason.</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 18: PRACTICE QUESTIONS -->
+<div class="slide" id="slide-18">
+  <div class="s-header"><h1>Practice Questions</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use the 3-step formula (State Preference + Compare + Reason/Example) to answer these questions.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>1.</strong> Do you prefer studying in the morning or at night?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>2.</strong> Do you prefer tea or coffee?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>3.</strong> Do you prefer reading books or watching TV?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>4.</strong> Do you prefer living in the city or in the countryside?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>5.</strong> Do you prefer traveling by car or by public transport?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>6.</strong> Do you prefer eating at home or eating out?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>7.</strong> Do you prefer online learning or face-to-face classes?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>8.</strong> Do you prefer spending time alone or with friends?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>9.</strong> Do you prefer summer or winter?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>10.</strong> Do you prefer using a laptop or a smartphone?</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 19: SELF-ASSESSMENT CHECKLIST -->
+<div class="slide" id="slide-19">
+  <div class="s-header"><h1>Self-Assessment Checklist</h1><span class="s-badge">Evaluation</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use this checklist to evaluate your own answer after practising. Click each item to mark it.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>1. Clear preference:</strong> Uses "I prefer X rather than Y" or "I prefer X to Y"</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>2. Correct verb form:</strong> Uses V-ing or to + verb correctly (consistent structure)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>3. Comparison:</strong> Uses comparative structure (faster than, more + adj than)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>4. Both items compared:</strong> Mentions BOTH options from the question</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>5. Reason given:</strong> Explains why (clear idea with because/so)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>6. Discourse marker:</strong> Uses actually / in fact / also / in addition / besides</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>7. Example included:</strong> Gives a specific personal example or detail</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>8. Clarity and fluency:</strong> Easy to understand, logical flow</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 20: QUIZ - COMPARATIVE RULES -->
+<div class="slide" id="slide-20">
+  <div class="s-header"><h1>Quiz: Comparative Rules</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct comparative form. Score: <strong id="q4-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. The countryside is _____ than the city. (peaceful)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-1"><button class="mc-opt" onclick="checkQ4(this,1,'more peaceful')">more peaceful</button><button class="mc-opt" onclick="checkQ4(this,1,'more peaceful')">peacefuler</button><button class="mc-opt" onclick="checkQ4(this,1,'more peaceful')">most peaceful</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Eating at home is _____ than eating out. (healthy)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-2"><button class="mc-opt" onclick="checkQ4(this,2,'healthier')">healthier</button><button class="mc-opt" onclick="checkQ4(this,2,'healthier')">more healthy</button><button class="mc-opt" onclick="checkQ4(this,2,'healthier')">healthiest</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Online learning is _____ than face-to-face classes. (flexible)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-3"><button class="mc-opt" onclick="checkQ4(this,3,'more flexible')">more flexible</button><button class="mc-opt" onclick="checkQ4(this,3,'more flexible')">flexibler</button><button class="mc-opt" onclick="checkQ4(this,3,'more flexible')">most flexible</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Cycling is _____ than taking a taxi. (cheap)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-4"><button class="mc-opt" onclick="checkQ4(this,4,'cheaper')">cheaper</button><button class="mc-opt" onclick="checkQ4(this,4,'cheaper')">more cheap</button><button class="mc-opt" onclick="checkQ4(this,4,'cheaper')">cheapest</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ4()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 21: BUILD YOUR OWN ANSWER -->
+<div class="slide" id="slide-21">
+  <div class="s-header"><h1>Build Your Own Answer</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use the word bank to build a complete answer for: <strong>"Do you prefer living in the city or in the countryside?"</strong></div>
+    <div style="background:var(--navy);color:#fff;border-radius:10px;padding:12px 18px;font-size:.85rem;margin-bottom:10px;"><strong style="color:var(--amber)">Formula:</strong> State Preference + Comparative + Reason/Discourse Marker + Example</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Preference Structures</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(26,35,126,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I prefer living in the city rather than in the countryside.','success')">prefer...rather than</span><span style="background:rgba(26,35,126,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I prefer to live in the city rather than in the countryside.','success')">prefer to...rather than</span></div></div>
+      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Comparatives</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(245,127,23,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('The city is more exciting and convenient than the countryside.','success')">more exciting</span><span style="background:rgba(245,127,23,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('The city is more convenient than the countryside.','success')">more convenient</span><span style="background:rgba(245,127,23,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('The countryside is more peaceful than the city.','success')">more peaceful</span></div></div>
+      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Discourse Markers</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(0,96,100,.1);color:var(--teal);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('In addition, there are more job opportunities in the city.','success')">in addition</span><span style="background:rgba(0,96,100,.1);color:var(--teal);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('Besides, the city has better transport links.','success')">besides</span><span style="background:rgba(0,96,100,.1);color:var(--teal);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('Actually, the city is much more convenient than I expected.','success')">actually</span></div></div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 3px 10px rgba(26,35,126,.07);margin-top:8px;border-left:4px solid var(--teal);">
+      <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Sample Answer</div>
+      <div style="font-size:.86rem;color:var(--ink);line-height:1.7;"><span class="hl-pref">I prefer living in the city rather than in the countryside.</span> The city is <span class="hl-comp">more exciting and convenient than</span> the countryside, so there is always something to do. <span class="hl-disc">In addition,</span> there are more job opportunities and better transport links. <span class="hl-disc">Actually,</span> I grew up in the countryside, so I know from experience that city life is <span class="hl-comp">much more stimulating.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 22: VOCABULARY REFERENCE -->
+<div class="slide" id="slide-22">
+  <div class="s-header"><h1>Vocabulary Reference: All Key Expressions</h1><span class="s-badge">Quick Reference</span></div>
+  <div class="s-content">
+    <div class="intro-note">Review all the key expressions from Lesson 2. Click any card to highlight it.</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-top:3px solid var(--navy);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(26,35,126,0.06)'?'#fff':'rgba(26,35,126,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:4px;">Prefer Structure 1</div><div style="font-size:.76rem;color:var(--ink2);">prefer + V-ing + to + V-ing<br>prefer + V-ing + rather than + V-ing</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-top:3px solid var(--amber);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(245,127,23,0.06)'?'#fff':'rgba(245,127,23,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#7a3800;margin-bottom:4px;">Prefer Structure 2</div><div style="font-size:.76rem;color:var(--ink2);">prefer + to + verb + rather than + verb</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-top:3px solid var(--teal);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(0,96,100,0.06)'?'#fff':'rgba(0,96,100,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--teal);margin-bottom:4px;">Comparative Structures</div><div style="font-size:.76rem;color:var(--ink2);">X is + comparative + than + Y<br>X is not as + adjective + as + Y</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-top:3px solid var(--navy);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(26,35,126,0.06)'?'#fff':'rgba(26,35,126,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:4px;">Discourse Markers</div><div style="font-size:.76rem;color:var(--ink2);">actually | in fact | needless to say | also | in addition | besides | particularly | especially</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-top:3px solid var(--amber);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(245,127,23,0.06)'?'#fff':'rgba(245,127,23,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#7a3800;margin-bottom:4px;">1-Syllable Comparatives</div><div style="font-size:.76rem;color:var(--ink2);">cheap&rarr;cheaper | fast&rarr;faster | small&rarr;smaller | warm&rarr;warmer | short&rarr;shorter</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-top:3px solid var(--teal);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(0,96,100,0.06)'?'#fff':'rgba(0,96,100,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--teal);margin-bottom:4px;">Multi-Syllable Comparatives</div><div style="font-size:.76rem;color:var(--ink2);">more convenient | more comfortable | more effective | more enjoyable | more interesting | more flexible</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDES 23-35: REMAINING QUIZZES AND REVIEW -->
+<div class="slide" id="slide-23">
+  <div class="s-header"><h1>Quiz: Complete the Sentence</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct word or phrase to complete each sentence. Score: <strong id="q5-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I prefer _____ online rather than writing letters.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-1"><button class="mc-opt" onclick="checkQ5(this,1,'chatting')">chatting</button><button class="mc-opt" onclick="checkQ5(this,1,'chatting')">to chatting</button><button class="mc-opt" onclick="checkQ5(this,1,'chatting')">chat</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Cycling is _____ than taking a taxi because it is free.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-2"><button class="mc-opt" onclick="checkQ5(this,2,'much cheaper')">much cheaper</button><button class="mc-opt" onclick="checkQ5(this,2,'much cheaper')">more cheaper</button><button class="mc-opt" onclick="checkQ5(this,2,'much cheaper')">the cheapest</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. I prefer to study alone _____ study in a group.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-3"><button class="mc-opt" onclick="checkQ5(this,3,'rather than')">rather than</button><button class="mc-opt" onclick="checkQ5(this,3,'rather than')">than</button><button class="mc-opt" onclick="checkQ5(this,3,'rather than')">instead</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Watching movies at home is not _____ exciting _____ going to the cinema.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-4"><button class="mc-opt" onclick="checkQ5(this,4,'as...as')">as...as</button><button class="mc-opt" onclick="checkQ5(this,4,'as...as')">more...than</button><button class="mc-opt" onclick="checkQ5(this,4,'as...as')">so...as</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ5()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-24">
+  <div class="s-header"><h1>Grammar Focus: PREFER Rules</h1><span class="s-badge" style="background:#6A1B9A;">Grammar</span></div>
+  <div class="s-content">
+    <div class="intro-note">Master the two correct structures for PREFER. Both are correct and mean the same thing.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;"><i class="fas fa-check-circle" style="margin-right:4px;color:#2e7d32"></i>Structure 1: V-ing</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+          <div style="padding:5px 9px;background:rgba(46,125,50,.06);border-radius:7px;border-left:3px solid #2e7d32;">I prefer <strong>cycling</strong> to <strong>taking</strong> the bus.</div>
+          <div style="padding:5px 9px;background:rgba(46,125,50,.06);border-radius:7px;border-left:3px solid #2e7d32;">I prefer <strong>eating</strong> to <strong>cooking</strong>.</div>
+          <div style="padding:5px 9px;background:rgba(46,125,50,.06);border-radius:7px;border-left:3px solid #2e7d32;">I prefer <strong>reading</strong> rather than <strong>watching</strong> TV.</div>
+          <div style="padding:5px 9px;background:rgba(46,125,50,.06);border-radius:7px;border-left:3px solid #2e7d32;">I prefer <strong>baking</strong> rather than <strong>buying</strong> cakes.</div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;"><i class="fas fa-check-circle" style="margin-right:4px;color:#2e7d32"></i>Structure 2: to + verb</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+          <div style="padding:5px 9px;background:rgba(245,127,23,.06);border-radius:7px;border-left:3px solid var(--amber);">I prefer <strong>to cycle</strong> rather than <strong>take</strong> the bus.</div>
+          <div style="padding:5px 9px;background:rgba(245,127,23,.06);border-radius:7px;border-left:3px solid var(--amber);">I prefer <strong>to eat</strong> rather than <strong>cook</strong>.</div>
+          <div style="padding:5px 9px;background:rgba(245,127,23,.06);border-radius:7px;border-left:3px solid var(--amber);">I prefer <strong>to read</strong> rather than <strong>watch</strong> TV.</div>
+          <div style="padding:5px 9px;background:rgba(245,127,23,.06);border-radius:7px;border-left:3px solid var(--amber);">I prefer <strong>to bake</strong> rather than <strong>buy</strong> cakes.</div>
+        </div>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);margin-top:8px;">
+      <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:#c62828;text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;"><i class="fas fa-times-circle" style="margin-right:4px"></i>NEVER mix the two structures</div>
+      <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+        <div style="padding:5px 9px;background:rgba(198,40,40,.06);border-radius:7px;border-left:3px solid #c62828;text-decoration:line-through;color:#c62828;">I prefer <em>cycling</em> rather than <em>to walk</em>. (V-ing + to + verb = WRONG)</div>
+        <div style="padding:5px 9px;background:rgba(198,40,40,.06);border-radius:7px;border-left:3px solid #c62828;text-decoration:line-through;color:#c62828;">I prefer <em>to cycle</em> rather than <em>walking</em>. (to + verb + V-ing = WRONG)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-25">
+  <div class="s-header"><h1>Mixed Practice Quiz</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct option. Score: <strong id="q6-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I prefer _____ at home rather than eating out because it is healthier.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-1"><button class="mc-opt" onclick="checkQ6(this,1,'cooking')">cooking</button><button class="mc-opt" onclick="checkQ6(this,1,'cooking')">to cooking</button><button class="mc-opt" onclick="checkQ6(this,1,'cooking')">cook</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Online learning is _____ than face-to-face classes because you can study at your own pace.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-2"><button class="mc-opt" onclick="checkQ6(this,2,'more flexible')">more flexible</button><button class="mc-opt" onclick="checkQ6(this,2,'more flexible')">flexibler</button><button class="mc-opt" onclick="checkQ6(this,2,'more flexible')">more flexibly</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. I prefer to use a laptop rather than _____ a smartphone for studying.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-3"><button class="mc-opt" onclick="checkQ6(this,3,'use')">use</button><button class="mc-opt" onclick="checkQ6(this,3,'use')">using</button><button class="mc-opt" onclick="checkQ6(this,3,'use')">to use</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. _____, public transport is much more environmentally friendly than driving a car.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-4"><button class="mc-opt" onclick="checkQ6(this,4,'In fact')">In fact</button><button class="mc-opt" onclick="checkQ6(this,4,'In fact')">However</button><button class="mc-opt" onclick="checkQ6(this,4,'In fact')">Although</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ6()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-26">
+  <div class="s-header"><h1>Comparative Adjectives: -y Endings</h1><span class="s-badge">Grammar Reference</span></div>
+  <div class="s-content">
+    <div class="intro-note">Adjectives ending in <strong>-y</strong> change to <strong>-ier</strong> in the comparative. Click any card to see an example.</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+      <div class="vocab-card" style="padding:9px 11px;" onclick="showToast('Cycling is easier than driving in heavy traffic.','success')"><div class="vocab-word" style="font-size:.82rem;">easy &rarr; easier</div></div>
+      <div class="vocab-card" style="padding:9px 11px;" onclick="showToast('This bag is heavier than my old one.','success')"><div class="vocab-word" style="font-size:.82rem;">heavy &rarr; heavier</div></div>
+      <div class="vocab-card" style="padding:9px 11px;" onclick="showToast('The new cafe is prettier than the old one.','success')"><div class="vocab-word" style="font-size:.82rem;">pretty &rarr; prettier</div></div>
+      <div class="vocab-card" style="padding:9px 11px;" onclick="showToast('The city is noisier than the countryside.','success')"><div class="vocab-word" style="font-size:.82rem;">noisy &rarr; noisier</div></div>
+      <div class="vocab-card" style="padding:9px 11px;" onclick="showToast('I am busier on weekdays than on weekends.','success')"><div class="vocab-word" style="font-size:.82rem;">busy &rarr; busier</div></div>
+      <div class="vocab-card" style="padding:9px 11px;" onclick="showToast('This restaurant is tastier than the one near my school.','success')"><div class="vocab-word" style="font-size:.82rem;">tasty &rarr; tastier</div></div>
+      <div class="vocab-card" style="padding:9px 11px;" onclick="showToast('The weather is sunnier in the south than in the north.','success')"><div class="vocab-word" style="font-size:.82rem;">sunny &rarr; sunnier</div></div>
+      <div class="vocab-card" style="padding:9px 11px;" onclick="showToast('My new room is messier than my old one.','success')"><div class="vocab-word" style="font-size:.82rem;">messy &rarr; messier</div></div>
+      <div class="vocab-card" style="padding:9px 11px;" onclick="showToast('She is friendlier than her sister.','success')"><div class="vocab-word" style="font-size:.82rem;">friendly &rarr; friendlier</div></div>
+      <div class="vocab-card" style="padding:9px 11px;" onclick="showToast('He is angrier than I expected.','success')"><div class="vocab-word" style="font-size:.82rem;">angry &rarr; angrier</div></div>
+      <div class="vocab-card" style="padding:9px 11px;" onclick="showToast('This joke is funnier than the last one.','success')"><div class="vocab-word" style="font-size:.82rem;">funny &rarr; funnier</div></div>
+      <div class="vocab-card" style="padding:9px 11px;" onclick="showToast('She is luckier than me when it comes to exams.','success')"><div class="vocab-word" style="font-size:.82rem;">lucky &rarr; luckier</div></div>
+    </div>
+    <div class="tip-box"><i class="fas fa-lightbulb"></i><span><strong>Rule:</strong> If the adjective ends in consonant + y, change y to i and add -er. E.g. happ<strong>y</strong> &rarr; happ<strong>ier</strong>, eas<strong>y</strong> &rarr; eas<strong>ier</strong>.</span></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-27">
+  <div class="s-header"><h1>Quiz: -y Comparative Forms</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct comparative form for adjectives ending in -y. Score: <strong id="q7-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. The city is _____ than the countryside. (noisy)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-1"><button class="mc-opt" onclick="checkQ7(this,1,'noisier')">noisier</button><button class="mc-opt" onclick="checkQ7(this,1,'noisier')">more noisy</button><button class="mc-opt" onclick="checkQ7(this,1,'noisier')">noisyer</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. This restaurant is _____ than the one near my school. (tasty)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-2"><button class="mc-opt" onclick="checkQ7(this,2,'tastier')">tastier</button><button class="mc-opt" onclick="checkQ7(this,2,'tastier')">more tasty</button><button class="mc-opt" onclick="checkQ7(this,2,'tastier')">tastyer</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. She is _____ than her sister. (friendly)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-3"><button class="mc-opt" onclick="checkQ7(this,3,'friendlier')">friendlier</button><button class="mc-opt" onclick="checkQ7(this,3,'friendlier')">more friendly</button><button class="mc-opt" onclick="checkQ7(this,3,'friendlier')">friendlyer</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. I am _____ on weekdays than on weekends. (busy)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-4"><button class="mc-opt" onclick="checkQ7(this,4,'busier')">busier</button><button class="mc-opt" onclick="checkQ7(this,4,'busier')">more busy</button><button class="mc-opt" onclick="checkQ7(this,4,'busier')">busyer</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ7()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-28">
+  <div class="s-header"><h1>Discourse Markers: Deep Dive</h1><span class="s-badge teal">Language Focus</span></div>
+  <div class="s-content">
+    <div class="intro-note">Understand the exact meaning and usage of each discourse marker. Click any card to see a full example.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);cursor:pointer;" onclick="showToast('It is actually a lot cheaper to go to that supermarket. In fact, public buses are a lot more environmentally friendly than many people think.','success')"><div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:4px;">actually / in fact</div><div style="font-size:.82rem;color:var(--ink2);">Introduces something surprising or that slightly changes what was said before.</div><div style="font-size:.8rem;color:var(--ink);font-style:italic;margin-top:4px;padding:4px 8px;background:rgba(26,35,126,.06);border-radius:6px;">It is <strong>actually</strong> a lot cheaper to go to that supermarket.</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);cursor:pointer;" onclick="showToast('He has done very badly in his exams, so needless to say, he will not get into university this year.','success')"><div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:4px;">needless to say</div><div style="font-size:.82rem;color:var(--ink2);">Another way of saying obviously without sounding rude or arrogant.</div><div style="font-size:.8rem;color:var(--ink);font-style:italic;margin-top:4px;padding:4px 8px;background:rgba(26,35,126,.06);border-radius:6px;"><strong>Needless to say,</strong> he will not get into university this year.</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);cursor:pointer;" onclick="showToast('I prefer cycling rather than driving a car because it helps me keep fit; in addition, it is better for the environment and it is also cheaper!','success')"><div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:4px;">also / in addition</div><div style="font-size:.82rem;color:var(--ink2);">Used to add extra or further information. In addition is more formal than also.</div><div style="font-size:.8rem;color:var(--ink);font-style:italic;margin-top:4px;padding:4px 8px;background:rgba(26,35,126,.06);border-radius:6px;"><strong>In addition,</strong> it is better for the environment and it is <strong>also</strong> cheaper!</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);cursor:pointer;" onclick="showToast('I like riding a bike as it is a very convenient way to travel. Besides, it is cheap and I cannot afford a car.','success')"><div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:4px;">besides</div><div style="font-size:.82rem;color:var(--ink2);">At the beginning of a clause = anyway or as well as that. Adds an extra reason or point.</div><div style="font-size:.8rem;color:var(--ink);font-style:italic;margin-top:4px;padding:4px 8px;background:rgba(26,35,126,.06);border-radius:6px;"><strong>Besides,</strong> it is cheap and I cannot afford a car.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-29">
+  <div class="s-header"><h1>Quiz: Discourse Markers (Advanced)</h1><span class="s-badge amber">Vocabulary Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the most appropriate discourse marker for each context. Score: <strong id="q8-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I prefer cycling to taking the bus. _____, it is much better for the environment.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-1"><button class="mc-opt" onclick="checkQ8(this,1,'Besides')">Besides</button><button class="mc-opt" onclick="checkQ8(this,1,'Besides')">However</button><button class="mc-opt" onclick="checkQ8(this,1,'Besides')">Although</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Many people think the countryside is boring, but _____, there is a lot to do there.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-2"><button class="mc-opt" onclick="checkQ8(this,2,'in fact')">in fact</button><button class="mc-opt" onclick="checkQ8(this,2,'in fact')">needless to say</button><button class="mc-opt" onclick="checkQ8(this,2,'in fact')">in addition</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. He failed all his exams, so _____, he will have to repeat the year.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-3"><button class="mc-opt" onclick="checkQ8(this,3,'needless to say')">needless to say</button><button class="mc-opt" onclick="checkQ8(this,3,'needless to say')">besides</button><button class="mc-opt" onclick="checkQ8(this,3,'needless to say')">actually</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. I prefer studying alone because it is more effective; _____, it is quieter and I can focus better.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-4"><button class="mc-opt" onclick="checkQ8(this,4,'in addition')">in addition</button><button class="mc-opt" onclick="checkQ8(this,4,'in addition')">however</button><button class="mc-opt" onclick="checkQ8(this,4,'in addition')">although</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ8()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-30">
+  <div class="s-header"><h1>Formula Summary</h1><span class="s-badge">Formula Reference</span></div>
+  <div class="s-content">
+    <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+      <div style="background:var(--navy);color:#fff;border-radius:8px;padding:8px 14px;font-family:var(--hf);font-size:.88rem;font-weight:700;display:flex;align-items:center;gap:6px;"><i class="fas fa-balance-scale"></i> State Preference</div>
+      <span style="font-family:var(--hf);font-size:1.2rem;font-weight:900;color:var(--ink2);">+</span>
+      <div style="background:var(--amber);color:#1a0000;border-radius:8px;padding:8px 14px;font-family:var(--hf);font-size:.88rem;font-weight:700;display:flex;align-items:center;gap:6px;"><i class="fas fa-not-equal"></i> Compare</div>
+      <span style="font-family:var(--hf);font-size:1.2rem;font-weight:900;color:var(--ink2);">+</span>
+      <div style="background:var(--teal);color:#fff;border-radius:8px;padding:8px 14px;font-family:var(--hf);font-size:.88rem;font-weight:700;display:flex;align-items:center;gap:6px;"><i class="fas fa-lightbulb"></i> Reason + Example</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-top:4px solid var(--navy);"><div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Step 1: State Preference</div><div style="font-size:.8rem;color:var(--ink2);line-height:1.5;">I prefer X rather than Y / I prefer X to Y / I prefer to X rather than Y</div></div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-top:4px solid var(--amber);"><div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Step 2: Compare</div><div style="font-size:.8rem;color:var(--ink2);line-height:1.5;">X is faster/cheaper/more convenient than Y / X is not as interesting as Y</div></div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-top:4px solid var(--teal);"><div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Step 3: Reason + Example</div><div style="font-size:.8rem;color:var(--ink2);line-height:1.5;">because / so / in addition / besides / actually / needless to say + specific personal example</div></div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 3px 10px rgba(26,35,126,.07);margin-top:8px;border-left:4px solid var(--navy);">
+      <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Full Example</div>
+      <div style="font-size:.86rem;color:var(--ink);line-height:1.7;"><span class="hl-pref">I prefer watching movies at home rather than going to the cinema.</span> It is <span class="hl-comp">more comfortable and cheaper than</span> going out. <span class="hl-disc">Besides,</span> I can pause whenever I want, which makes it <span class="hl-comp">more convenient.</span> I usually watch films with my family in the evening, and it is a lot <span class="hl-comp">more relaxing.</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-31">
+  <div class="s-header"><h1>Lesson Summary</h1><span class="s-badge">Key Takeaways</span></div>
+  <div class="s-content">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(26,35,126,.08);border-top:4px solid var(--navy);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-balance-scale"></i> Prefer Structures</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(26,35,126,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">prefer + V-ing + to + V-ing</span><span style="background:rgba(26,35,126,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">prefer + V-ing + rather than + V-ing</span><span style="background:rgba(26,35,126,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">prefer + to + verb + rather than + verb</span></div></div>
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(26,35,126,.08);border-top:4px solid var(--amber);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:#7a3800;margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-not-equal"></i> Comparative Rules</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(245,127,23,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">1 syllable: add -er</span><span style="background:rgba(245,127,23,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">ends in -y: change to -ier</span><span style="background:rgba(245,127,23,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">2+ syllables: add more</span></div></div>
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(26,35,126,.08);border-top:4px solid var(--teal);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:var(--teal);margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-comment"></i> Discourse Markers</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(0,96,100,.08);color:var(--teal);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">actually / in fact</span><span style="background:rgba(0,96,100,.08);color:var(--teal);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">needless to say</span><span style="background:rgba(0,96,100,.08);color:var(--teal);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">also / in addition</span><span style="background:rgba(0,96,100,.08);color:var(--teal);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">besides</span></div></div>
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(26,35,126,.08);border-top:4px solid #2e7d32;"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:#2e7d32;margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-exclamation-circle"></i> Grammar Rule</h3><div style="font-size:.84rem;color:var(--ink2);line-height:1.5;">Keep structures consistent: V-ing + V-ing OR to+verb + verb. NEVER mix them. Never use "more" with 1-syllable adjectives.</div></div>
+    </div>
+    <div style="background:linear-gradient(135deg,var(--navy),#283593);color:#fff;border-radius:14px;padding:18px 24px;text-align:center;margin-top:8px;">
+      <div style="font-family:var(--hf);font-size:1.1rem;font-weight:800;margin-bottom:6px;">&#127881; Lesson 2 Complete!</div>
+      <div style="font-size:.88rem;opacity:.85;">You have mastered the formula for expressing preferences. Keep practising with the 10 practice questions!</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-32">
+  <div class="s-header"><h1>Final Review: Complete Answer</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Review the complete formula with all components. Click each highlighted part to learn more.</div>
+    <div class="model-q"><i class="fas fa-question-circle"></i> Question: Do you prefer studying alone or in a group?</div>
+    <div class="model-answer-box" style="font-size:.88rem;">
+      <span class="hl-pref" style="cursor:pointer" onclick="showToast('Step 1 - Preference structure: I prefer studying alone rather than studying in a group','success')">I prefer studying alone rather than studying in a group.</span>
+      It is <span class="hl-comp" style="cursor:pointer" onclick="showToast('Step 2 - Comparative: more effective and quieter than — compares the two options','success')">more effective and quieter than</span>
+      group study,
+      <span class="hl-reason" style="cursor:pointer" onclick="showToast('Step 3 - Reason linker: so — shows result','success')">so</span>
+      I can focus better.
+      <span class="hl-disc" style="cursor:pointer" onclick="showToast('Extra step - Discourse marker: Actually — introduces a surprising or personal detail','success')">Actually,</span>
+      I tend to get distracted when studying with other people,
+      <span class="hl-reason" style="cursor:pointer" onclick="showToast('Step 3 - Reason linker: so — shows result','success')">so</span>
+      I usually revise at home in the evening.
+      <span class="hl-disc" style="cursor:pointer" onclick="showToast('Extra step - Discourse marker: In addition — adds extra information','success')">In addition,</span>
+      studying alone means I can set my own pace and take breaks whenever I need to.
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px;">
+      <div style="background:rgba(26,35,126,.08);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 1</div><div style="font-size:.82rem;color:var(--navy);font-weight:600;">Preference</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">prefer studying alone rather than in a group</div></div>
+      <div style="background:rgba(245,127,23,.1);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 2</div><div style="font-size:.82rem;color:#7a3800;font-weight:600;">Comparative</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">more effective and quieter than group study</div></div>
+      <div style="background:rgba(46,125,50,.08);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#1b5e20;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 3</div><div style="font-size:.82rem;color:#1b5e20;font-weight:600;">Reason + Discourse</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">so I can focus / actually / in addition</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-33">
+  <div class="s-header"><h1>IELTS Speaking Tips for Part 1</h1><span class="s-badge" style="background:#6A1B9A;">IELTS Tips</span></div>
+  <div class="s-content">
+    <div class="intro-note">Follow these tips to maximise your score in IELTS Speaking Part 1 preference questions.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-left:4px solid var(--navy);">
+        <div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:6px;"><i class="fas fa-check-circle" style="margin-right:5px;color:#2e7d32"></i>DO</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.82rem;color:var(--ink);">
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">State your preference clearly first</div>
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Mention BOTH options from the question</div>
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Use at least one comparative adjective</div>
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Add a discourse marker (in addition, besides)</div>
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Give a specific personal example</div>
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Speak for 3-5 sentences per answer</div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);border-left:4px solid #c62828;">
+        <div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#c62828;margin-bottom:6px;"><i class="fas fa-times-circle" style="margin-right:5px"></i>DO NOT</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.82rem;color:var(--ink);">
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Mix prefer structures (V-ing + to+verb)</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Use "more" with 1-syllable adjectives</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Forget to mention the second option</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Give one-word answers</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Repeat the same comparative adjective</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Memorise answers word for word</div>
+        </div>
+      </div>
+    </div>
+    <div style="background:linear-gradient(135deg,var(--navy),#283593);color:#fff;border-radius:14px;padding:16px 24px;text-align:center;margin-top:8px;">
+      <div style="font-family:var(--hf);font-size:1rem;font-weight:800;margin-bottom:6px;">Remember the Formula!</div>
+      <div style="font-size:.88rem;opacity:.9;">I prefer X rather than Y + X is <strong>comparative</strong> than Y + because/so + <strong>discourse marker</strong> + <strong>specific example</strong></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-34">
+  <div class="s-header"><h1>Extra Practice: Sentence Transformation</h1><span class="s-badge amber">Exercise</span></div>
+  <div class="s-content">
+    <div class="intro-note">Rewrite each sentence using the word in brackets. Keep the same meaning.</div>
+    <div style="display:flex;flex-direction:column;gap:9px;">
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">1. I like cycling more than walking. (prefer)<br><input class="gap-input" id="tr-1" placeholder="I prefer ___" style="width:400px" onkeydown="if(event.key==='Enter')checkTR(1,['i prefer cycling to walking','i prefer cycling rather than walking','i prefer to cycle rather than walk'])"></div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkTR(1,['i prefer cycling to walking','i prefer cycling rather than walking','i prefer to cycle rather than walk'])"><i class="fas fa-check"></i> Check</button></div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">2. Emails are faster than letters. (not as)<br><input class="gap-input" id="tr-2" placeholder="Letters are not as ___" style="width:400px" onkeydown="if(event.key==='Enter')checkTR(2,['letters are not as fast as emails'])"></div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkTR(2,['letters are not as fast as emails'])"><i class="fas fa-check"></i> Check</button></div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">3. I like watching movies at home. I also like the fact that I can pause. (besides)<br><input class="gap-input" id="tr-3" placeholder="I prefer watching movies at home. Besides, ___" style="width:400px" onkeydown="if(event.key==='Enter')checkTR(3,['i can pause whenever i want'])"></div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkTR(3,['i can pause whenever i want'])"><i class="fas fa-check"></i> Check</button></div>
+    </div>
+    <div class="btn-row">
+      <button class="check-btn amber" onclick="showTRAnswers()"><i class="fas fa-eye"></i> Show Answers</button>
+      <button class="reset-btn" onclick="resetTR()"><i class="fas fa-redo"></i> Reset</button>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-35">
+  <div class="s-header"><h1>Lesson 2: Complete Review</h1><span class="s-badge green">Final Review</span></div>
+  <div class="s-content">
+    <div class="intro-note">Test yourself on all the key points from Lesson 2. Score: <strong id="qfinal-score">0</strong>/5</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Which is the correct prefer structure?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-1"><button class="mc-opt" onclick="checkQF(this,1,'I prefer cycling to taking the bus.')">I prefer cycling to taking the bus.</button><button class="mc-opt" onclick="checkQF(this,1,'I prefer cycling to taking the bus.')">I prefer to cycling to taking the bus.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. What is the comparative of "comfortable"?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-2"><button class="mc-opt" onclick="checkQF(this,2,'more comfortable')">more comfortable</button><button class="mc-opt" onclick="checkQF(this,2,'more comfortable')">comfortabler</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. What is the comparative of "noisy"?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-3"><button class="mc-opt" onclick="checkQF(this,3,'noisier')">noisier</button><button class="mc-opt" onclick="checkQF(this,3,'noisier')">more noisy</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Which discourse marker adds extra information?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-4"><button class="mc-opt" onclick="checkQF(this,4,'in addition')">in addition</button><button class="mc-opt" onclick="checkQF(this,4,'in addition')">however</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(26,35,126,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">5. Which sentence uses "not as...as" correctly?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-5"><button class="mc-opt" onclick="checkQF(this,5,'Listening to the radio is not as interesting as watching TV.')">Listening to the radio is not as interesting as watching TV.</button><button class="mc-opt" onclick="checkQF(this,5,'Listening to the radio is not as interesting as watching TV.')">Listening to the radio is not as more interesting as watching TV.</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQF()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+  <div id="navbar">
+    <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i> Prev</button>
+    <div id="nav-dots"></div>
+    <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next <i class="fas fa-chevron-right"></i></button>
+    <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">35</span></div>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    var currentSlide = 1;
+    var totalSlides = 35;
+
+    function buildDots() {
+      var container = document.getElementById("nav-dots");
+      container.innerHTML = "";
+      for (var i = 1; i <= totalSlides; i++) {
+        var d = document.createElement("div");
+        d.className = "dot" + (i === 1 ? " active" : "");
+        d.setAttribute("data-slide", i);
+        d.onclick = (function(n){ return function(){ goToSlide(n); }; })(i);
+        container.appendChild(d);
+      }
+    }
+
+    function goToSlide(n) {
+      var prev = document.getElementById("slide-" + currentSlide);
+      if (prev) prev.classList.remove("active");
+      currentSlide = n;
+      var next = document.getElementById("slide-" + currentSlide);
+      if (next) next.classList.add("active");
+      document.getElementById("current-slide").textContent = currentSlide;
+      var dots = document.querySelectorAll(".dot");
+      dots.forEach(function(d, i) { d.classList.toggle("active", i + 1 === currentSlide); });
+      document.getElementById("prev-btn").disabled = currentSlide === 1;
+      document.getElementById("next-btn").disabled = currentSlide === totalSlides;
+      var pb = document.getElementById("progress-bar");
+      if (pb) pb.style.width = ((currentSlide / totalSlides) * 100) + "%";
+    }
+
+    function changeSlide(dir) {
+      var n = currentSlide + dir;
+      if (n >= 1 && n <= totalSlides) goToSlide(n);
+    }
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") changeSlide(1);
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") changeSlide(-1);
+    });
+
+    function showToast(msg, type) {
+      var t = document.getElementById("toast");
+      t.textContent = msg;
+      t.className = "toast show " + (type || "");
+      clearTimeout(t._timer);
+      t._timer = setTimeout(function(){ t.className = "toast"; }, 3200);
+    }
+
+    function toggleCheck(el) { el.classList.toggle("checked"); }
+
+    // ===== GAP FILL =====
+    var gfAnswers = {
+      1: ["rather than","to"],
+      2: ["easier","less stressful"],
+      3: ["in addition","also","besides"],
+      4: ["more comfortable","cheaper"],
+      5: ["as"]
+    };
+
+    function checkGF(num, accepted) {
+      var input = document.getElementById("gf-" + num);
+      if (!input) return;
+      var val = input.value.trim().toLowerCase();
+      var isCorrect = accepted.some(function(a) { return val === a.toLowerCase(); });
+      if (isCorrect) {
+        input.style.borderColor = "#2e7d32"; input.style.background = "#f0fdf4";
+        showToast("Correct!", "success");
+      } else {
+        input.style.borderColor = "#c62828"; input.style.background = "#fff5f5";
+        showToast("Try again! Hint: " + accepted[0], "error");
+      }
+    }
+
+    function showGFAnswers() {
+      var ans = { "gf-1": "rather than", "gf-2": "easier", "gf-3": "in addition", "gf-4": "more comfortable", "gf-5": "as", "gf-5b": "as" };
+      Object.keys(ans).forEach(function(id) {
+        var input = document.getElementById(id);
+        if (input) { input.value = ans[id]; input.style.borderColor = "#2e7d32"; input.style.background = "#f0fdf4"; }
+      });
+      showToast("Answers revealed!", "success");
+    }
+
+    function resetGF() {
+      ["gf-1","gf-2","gf-3","gf-4","gf-5","gf-5b"].forEach(function(id) {
+        var input = document.getElementById(id);
+        if (input) { input.value = ""; input.style.borderColor = ""; input.style.background = ""; }
+      });
+    }
+
+    // ===== SENTENCE TRANSFORMATION =====
+    function checkTR(num, accepted) {
+      var input = document.getElementById("tr-" + num);
+      if (!input) return;
+      var val = input.value.trim().toLowerCase();
+      var isCorrect = accepted.some(function(a) { return val.includes(a.toLowerCase()); });
+      if (isCorrect) {
+        input.style.borderColor = "#2e7d32"; input.style.background = "#f0fdf4";
+        showToast("Correct!", "success");
+      } else {
+        input.style.borderColor = "#c62828"; input.style.background = "#fff5f5";
+        showToast("Try again!", "error");
+      }
+    }
+
+    function showTRAnswers() {
+      var ans = { "tr-1": "I prefer cycling to walking / I prefer cycling rather than walking", "tr-2": "Letters are not as fast as emails.", "tr-3": "I can pause whenever I want." };
+      Object.keys(ans).forEach(function(id) {
+        var input = document.getElementById(id);
+        if (input) { input.value = ans[id]; input.style.borderColor = "#2e7d32"; input.style.background = "#f0fdf4"; }
+      });
+      showToast("Answers revealed!", "success");
+    }
+
+    function resetTR() {
+      ["tr-1","tr-2","tr-3"].forEach(function(id) {
+        var input = document.getElementById(id);
+        if (input) { input.value = ""; input.style.borderColor = ""; input.style.background = ""; }
+      });
+    }
+
+    // ===== QUIZ FACTORY =====
+    function makeQuiz(slideId, scoreId) {
+      var score = 0; var done = {};
+      return {
+        check: function(btn, qNum, correct) {
+          if (done[qNum]) return; done[qNum] = true;
+          var opts = document.querySelectorAll("#" + slideId + " #q" + qNum.toString().replace(/\d+/,'') + "-" + qNum + " .mc-opt, #" + slideId + " [id$='-" + qNum + "'] .mc-opt");
+          var allOpts = btn.parentElement.querySelectorAll(".mc-opt");
+          allOpts.forEach(function(o) { o.disabled = true; });
+          if (btn.textContent.trim() === correct) {
+            btn.classList.add("correct"); score++;
+            var el = document.getElementById(scoreId);
+            if (el) el.textContent = score;
+            showToast("Correct!", "success");
+          } else {
+            btn.classList.add("wrong");
+            allOpts.forEach(function(o) { if (o.textContent.trim() === correct) o.classList.add("correct"); });
+            showToast("Not quite. The correct answer is highlighted.", "error");
+          }
+        },
+        reset: function() {
+          score = 0; done = {};
+          var el = document.getElementById(scoreId);
+          if (el) el.textContent = "0";
+          document.querySelectorAll("#" + slideId + " .mc-opt").forEach(function(b) { b.classList.remove("correct","wrong"); b.disabled = false; });
+        }
+      };
+    }
+
+    var q1 = makeQuiz("slide-13","q1-score");
+    var q2 = makeQuiz("slide-14","q2-score");
+    var q3 = makeQuiz("slide-15","q3-score");
+    var q4 = makeQuiz("slide-20","q4-score");
+    var q5 = makeQuiz("slide-23","q5-score");
+    var q6 = makeQuiz("slide-25","q6-score");
+    var q7 = makeQuiz("slide-27","q7-score");
+    var q8 = makeQuiz("slide-29","q8-score");
+    var qfinal = makeQuiz("slide-35","qfinal-score");
+
+    function checkQ1(btn, qNum, correct) { q1.check(btn, qNum, correct); }
+    function resetQ1() { q1.reset(); }
+    function checkQ2(btn, qNum, correct) { q2.check(btn, qNum, correct); }
+    function resetQ2() { q2.reset(); }
+    function checkQ3(btn, qNum, correct) { q3.check(btn, qNum, correct); }
+    function resetQ3() { q3.reset(); }
+    function checkQ4(btn, qNum, correct) { q4.check(btn, qNum, correct); }
+    function resetQ4() { q4.reset(); }
+    function checkQ5(btn, qNum, correct) { q5.check(btn, qNum, correct); }
+    function resetQ5() { q5.reset(); }
+    function checkQ6(btn, qNum, correct) { q6.check(btn, qNum, correct); }
+    function resetQ6() { q6.reset(); }
+    function checkQ7(btn, qNum, correct) { q7.check(btn, qNum, correct); }
+    function resetQ7() { q7.reset(); }
+    function checkQ8(btn, qNum, correct) { q8.check(btn, qNum, correct); }
+    function resetQ8() { q8.reset(); }
+    function checkQF(btn, qNum, correct) { qfinal.check(btn, qNum, correct); }
+    function resetQF() { qfinal.reset(); }
+
+    // ===== INIT =====
+    buildDots();
+    goToSlide(1);
+  </script>
+</body>
+</html>

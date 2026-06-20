@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPK F Lesson 4: Express Past Experiences | Interactive Classroom</title>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<link href="/fonts/Montserrat/index.css" rel="stylesheet">
+<link href="/fonts/Open Sans/index.css" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--navy:#4A148C;--blue:#6A1B9A;--green:#7B1FA2;--amber:#FF8F00;--red:#C62828;--teal:#00838F;--bg:#F3E5F5;--bg2:#E1BEE7;--ink:#1A0030;--ink2:#6A1B9A;--hf:Montserrat,sans-serif;--bf:Open Sans,sans-serif;}
+html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink);overflow:hidden;}
+.slide{display:none;width:100vw;height:100vh;position:relative;overflow:hidden;animation:fadeIn .4s ease;}
+.slide.active{display:flex;flex-direction:column;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+@keyframes shake{0%,100%{transform:translateX(0);}20%,60%{transform:translateX(-6px);}40%,80%{transform:translateX(6px);}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(74,20,140,.4);}70%{box-shadow:0 0 0 14px rgba(74,20,140,0);}}
+#progress-bar{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--navy),var(--amber));transition:width .4s ease;z-index:1001;}
+#navbar{position:fixed;bottom:0;left:0;right:0;height:52px;background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:1000;box-shadow:0 -4px 20px rgba(0,0,0,.25);}
+.nav-btn{background:rgba(255,255,255,.15);border:none;color:#fff;padding:6px 14px;border-radius:8px;cursor:pointer;font-family:var(--hf);font-size:.76rem;font-weight:700;transition:all .2s;display:flex;align-items:center;gap:5px;}
+.nav-btn:hover{background:rgba(255,255,255,.28);transform:translateY(-1px);}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed;transform:none;}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;transition:all .2s;flex-shrink:0;}
+.dot.active{background:#fff;transform:scale(1.3);}
+.dot:hover{background:rgba(255,255,255,.7);}
+#nav-dots{display:flex;align-items:center;gap:5px;flex-wrap:wrap;max-width:600px;justify-content:center;}
+.slide-counter{color:rgba(255,255,255,.75);font-family:var(--hf);font-size:.78rem;font-weight:600;min-width:55px;text-align:center;}
+.s-header{padding:18px 44px 10px;flex-shrink:0;border-bottom:3px solid var(--navy);display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;}
+.s-header h1{font-family:var(--hf);font-size:1.65rem;font-weight:800;color:var(--navy);line-height:1.1;}
+.s-badge{background:var(--navy);color:#fff;font-family:var(--hf);font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:20px;white-space:nowrap;letter-spacing:.05em;}
+.s-badge.amber{background:var(--amber);color:#1a0000;}
+.s-badge.teal{background:var(--teal);}
+.s-badge.green{background:#2e7d32;}
+.s-badge.red{background:var(--red);}
+.s-content{flex:1;padding:14px 44px 60px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;}
+.intro-note{background:rgba(74,20,140,.08);border-left:4px solid var(--navy);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.88rem;color:var(--ink);line-height:1.5;}
+.model-q{background:var(--navy);color:#fff;border-radius:10px;padding:11px 16px;font-size:.88rem;font-weight:600;display:flex;align-items:flex-start;gap:8px;}
+.model-q i{margin-top:2px;flex-shrink:0;color:var(--amber);}
+.model-answer-box{background:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 3px 12px rgba(74,20,140,.1);font-size:.88rem;line-height:1.75;color:var(--ink);border-left:5px solid var(--navy);}
+.hl-time{background:rgba(74,20,140,.12);color:var(--navy);font-weight:700;padding:1px 5px;border-radius:4px;}
+.hl-reason{background:rgba(255,143,0,.18);color:#7a3800;font-weight:700;padding:1px 5px;border-radius:4px;}
+.hl-adj{background:rgba(46,125,50,.12);color:#1b5e20;font-weight:700;padding:1px 5px;border-radius:4px;}
+.hl-verb{background:rgba(0,131,143,.12);color:#005f67;font-weight:700;padding:1px 5px;border-radius:4px;}
+.lang-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+.lang-tag{background:#fff;border:1.5px solid var(--bg2);border-radius:8px;padding:5px 10px;font-size:.78rem;display:flex;align-items:center;gap:5px;color:var(--ink2);}
+.lang-tag i{color:var(--navy);}
+.tip-box{background:rgba(255,143,0,.12);border-left:4px solid var(--amber);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;color:var(--ink);display:flex;align-items:flex-start;gap:8px;}
+.tip-box i{color:var(--amber);margin-top:2px;flex-shrink:0;}
+.mc-opt{background:var(--bg);border:2px solid var(--bg2);border-radius:8px;padding:7px 14px;font-size:.82rem;cursor:pointer;font-family:var(--bf);color:var(--ink);transition:all .2s;text-align:left;}
+.mc-opt:hover:not(:disabled){background:rgba(74,20,140,.08);border-color:var(--navy);}
+.mc-opt.correct{background:#e8f5e9;border-color:#2e7d32;color:#1b5e20;font-weight:700;}
+.mc-opt.wrong{background:#ffebee;border-color:#c62828;color:#7f1d1d;animation:shake .4s;}
+.mc-opt:disabled{cursor:not-allowed;opacity:.7;}
+.gap-input{border:2px solid var(--bg2);border-radius:8px;padding:5px 10px;font-size:.84rem;font-family:var(--bf);color:var(--ink);background:#fff;min-width:140px;transition:all .2s;outline:none;}
+.gap-input:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(74,20,140,.1);}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;}
+.check-btn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:var(--hf);display:flex;align-items:center;gap:6px;transition:all .2s;}
+.check-btn:hover{opacity:.88;transform:translateY(-1px);}
+.check-btn.amber{background:var(--amber);color:#1a0000;}
+.reset-btn{background:rgba(74,20,140,.1);color:var(--navy);border:none;border-radius:8px;padding:8px 16px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:var(--hf);display:flex;align-items:center;gap:6px;transition:all .2s;}
+.reset-btn:hover{background:rgba(74,20,140,.18);}
+.vocab-card{background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);cursor:pointer;transition:all .2s;border-left:4px solid var(--navy);}
+.vocab-card:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(74,20,140,.12);}
+.vocab-word{font-family:var(--hf);font-size:.9rem;font-weight:800;color:var(--navy);margin-bottom:3px;}
+.vocab-example{font-size:.78rem;color:var(--ink2);font-style:italic;line-height:1.4;}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:8px;cursor:pointer;transition:background .2s;}
+.check-item:hover{background:rgba(74,20,140,.05);}
+.check-item.checked .check-box{background:var(--navy);border-color:var(--navy);}
+.check-item.checked .check-box i{opacity:1;}
+.check-box{width:22px;height:22px;border-radius:5px;border:2px solid var(--bg2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+.check-box i{font-size:.7rem;color:#fff;opacity:0;transition:opacity .2s;}
+.check-text{font-size:.84rem;color:var(--ink);line-height:1.4;}
+.cover-content{text-align:center;padding:0 40px;}
+.cover-tag{background:rgba(255,255,255,.2);color:#fff;font-family:var(--hf);font-size:.85rem;font-weight:700;padding:6px 18px;border-radius:20px;display:inline-block;margin-bottom:18px;letter-spacing:.08em;}
+.cover-h1{font-family:var(--hf);font-size:3.2rem;font-weight:900;color:#fff;line-height:1.1;margin-bottom:14px;}
+.cover-h1 span{color:var(--amber);}
+.cover-p{font-size:1.05rem;color:rgba(255,255,255,.85);margin-bottom:28px;line-height:1.6;max-width:600px;margin-left:auto;margin-right:auto;}
+.start-btn{background:var(--amber);color:#1a0000;border:none;border-radius:12px;padding:14px 36px;font-size:1.05rem;font-weight:800;cursor:pointer;font-family:var(--hf);display:inline-flex;align-items:center;gap:10px;transition:all .25s;animation:pulse 2s infinite;}
+.start-btn:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.25);}
+.cover-stats{display:flex;gap:28px;justify-content:center;margin-top:28px;}
+.cover-stat .num{font-family:var(--hf);font-size:2rem;font-weight:900;color:#fff;}
+.cover-stat .lbl{font-size:.78rem;color:rgba(255,255,255,.7);font-weight:600;text-transform:uppercase;letter-spacing:.08em;}
+.toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a0030;color:#fff;padding:10px 22px;border-radius:10px;font-size:.88rem;font-weight:600;opacity:0;transition:all .3s;z-index:2000;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.success{background:#1b5e20;}
+.toast.error{background:#7f1d1d;}
+</style>
+</head>
+<body>
+<div id="progress-bar" style="width:0%"></div>
+
+<!-- SLIDE 1: COVER -->
+<div class="slide" id="slide-1">
+  <div style="position:absolute;inset:0;background:linear-gradient(135deg,#4A148C 0%,#6A1B9A 50%,#7B1FA2 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+    <div class="cover-content">
+      <div class="cover-tag"><i class="fas fa-history" style="margin-right:5px"></i>SPK F &middot; Lesson 4 &middot; Part 1</div>
+      <div class="cover-h1">Express <span>Past Experiences</span></div>
+      <div class="cover-p">Master how to answer "When was the first/last time you...?" questions using time expressions, past simple verbs, and adjectives of experience.</div>
+      <button class="start-btn" onclick="goToSlide(2)"><i class="fas fa-play"></i> Start Lesson</button>
+      <div class="cover-stats">
+        <div class="cover-stat"><div class="num">35</div><div class="lbl">Slides</div></div>
+        <div class="cover-stat"><div class="num">3</div><div class="lbl">Language Steps</div></div>
+        <div class="cover-stat"><div class="num">5</div><div class="lbl">Model Answers</div></div>
+        <div class="cover-stat"><div class="num">10</div><div class="lbl">Practice Qs</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2: LESSON AIMS -->
+<div class="slide" id="slide-2">
+  <div class="s-header"><h1>Lesson Aims</h1><span class="s-badge">Lesson 4</span></div>
+  <div class="s-content">
+    <div class="intro-note">In this lesson, you will master how to answer questions related to <strong>experiences in the past</strong>.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 2px 8px rgba(74,20,140,.08);border-top:4px solid var(--navy);">
+        <div style="font-family:var(--hf);font-size:.8rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;"><i class="fas fa-bullseye" style="margin-right:5px"></i>Target Question Types</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:.84rem;padding:6px 10px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">When was the first time you used a computer?</div>
+          <div style="font-size:.84rem;padding:6px 10px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">When was the last time you went on holiday?</div>
+          <div style="font-size:.84rem;padding:6px 10px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">When did you last have visitors at your house?</div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 2px 8px rgba(74,20,140,.08);border-top:4px solid var(--amber);">
+        <div style="font-family:var(--hf);font-size:.8rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;"><i class="fas fa-flask" style="margin-right:5px"></i>Answer Order</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:rgba(74,20,140,.06);border-radius:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--hf);font-size:.78rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div><div style="font-size:.84rem;"><strong>Say when you first/last did it</strong><br><span style="color:var(--ink2);font-size:.78rem;">last summer / about two weeks ago / in 2019...</span></div></div>
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:rgba(74,20,140,.06);border-radius:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--hf);font-size:.78rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div><div style="font-size:.84rem;"><strong>Say why you did it</strong><br><span style="color:var(--ink2);font-size:.78rem;">to relax / to celebrate / because...</span></div></div>
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:rgba(74,20,140,.06);border-radius:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--hf);font-size:.78rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div><div style="font-size:.84rem;"><strong>Describe what the experience was like</strong><br><span style="color:var(--ink2);font-size:.78rem;">exciting / fascinating / challenging / enjoyable...</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: TIME PREPOSITIONS -->
+<div class="slide" id="slide-3">
+  <div class="s-header"><h1>Step 1: Prepositions of Time</h1><span class="s-badge">Language Step 1</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use these prepositions to say <strong>when</strong> something happened. Click any card to see an example.</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;">
+      <div class="vocab-card" onclick="showToast('...around Christmas... / ...around my 10th birthday...','success')"><div class="vocab-word">around <span style="font-size:.72rem;font-weight:400;color:var(--ink2);">months, occasions, festivals, special days</span></div><div class="vocab-example">...around Christmas... &nbsp;/&nbsp; ...around my 10th birthday...</div></div>
+      <div class="vocab-card" onclick="showToast('...last weekend... / ...last month... / ...last summer...','success')"><div class="vocab-word">last <span style="font-size:.72rem;font-weight:400;color:var(--ink2);">weeks, weekends, months, years, festivals</span></div><div class="vocab-example">...last weekend... &nbsp;/&nbsp; ...last month... &nbsp;/&nbsp; ...last summer...</div></div>
+      <div class="vocab-card" onclick="showToast('...in December... / ...in 1979... / ...in the summer...','success')"><div class="vocab-word">in <span style="font-size:.72rem;font-weight:400;color:var(--ink2);">months, seasons, years</span></div><div class="vocab-example">...in December... &nbsp;/&nbsp; ...in 1979... &nbsp;/&nbsp; ...in the summer...</div></div>
+      <div class="vocab-card" onclick="showToast('...during the Tet holiday... / ...during the spring...','success')"><div class="vocab-word">during <span style="font-size:.72rem;font-weight:400;color:var(--ink2);">months, seasons, long festivals</span></div><div class="vocab-example">...during the Tet holiday... &nbsp;/&nbsp; ...during the spring...</div></div>
+      <div class="vocab-card" onclick="showToast('...on the 5th of November 2005... / ...on my parents 25th wedding anniversary...','success')"><div class="vocab-word">on <span style="font-size:.72rem;font-weight:400;color:var(--ink2);">days, special days</span></div><div class="vocab-example">...on the 5th of November 2005... &nbsp;/&nbsp; ...on my parents anniversary...</div></div>
+      <div class="vocab-card" onclick="showToast('I last played a computer game about two years ago.','success')"><div class="vocab-word">about + time period + ago</div><div class="vocab-example">I last played a computer game <strong>about two years ago</strong>.</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;">
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-left:4px solid var(--navy);cursor:pointer;" onclick="showToast('The last time I went swimming was a few hours ago. The first time I ate insects was in the summer of 2007.','success')"><div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:4px;">The last/first time I + past verb + was...</div><div style="font-size:.78rem;color:var(--ink2);font-style:italic;">The <strong>last time</strong> I went swimming <strong>was</strong> a few hours ago.</div></div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-left:4px solid var(--amber);cursor:pointer;" onclick="showToast('I last went on holiday about three years ago.','success')"><div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:#7a3800;margin-bottom:4px;">I last + past verb + about + time + ago</div><div style="font-size:.78rem;color:var(--ink2);font-style:italic;">I <strong>last</strong> went on holiday <strong>about three years ago</strong>.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: IRREGULAR VERBS PART 1 -->
+<div class="slide" id="slide-4">
+  <div class="s-header"><h1>Step 2: Irregular Verbs (Part 1)</h1><span class="s-badge">Language Step 2</span></div>
+  <div class="s-content">
+    <div class="intro-note">Master these irregular past tense forms. Click any card to hear the past tense form.</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:7px;">
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('are/is -> were/was','success')"><div class="vocab-word" style="font-size:.82rem;">are/is &rarr; <span style="color:var(--amber)">were/was</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('become -> became','success')"><div class="vocab-word" style="font-size:.82rem;">become &rarr; <span style="color:var(--amber)">became</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('begin -> began','success')"><div class="vocab-word" style="font-size:.82rem;">begin &rarr; <span style="color:var(--amber)">began</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('break -> broke','success')"><div class="vocab-word" style="font-size:.82rem;">break &rarr; <span style="color:var(--amber)">broke</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('bring -> brought','success')"><div class="vocab-word" style="font-size:.82rem;">bring &rarr; <span style="color:var(--amber)">brought</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('buy -> bought','success')"><div class="vocab-word" style="font-size:.82rem;">buy &rarr; <span style="color:var(--amber)">bought</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('catch -> caught','success')"><div class="vocab-word" style="font-size:.82rem;">catch &rarr; <span style="color:var(--amber)">caught</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('choose -> chose','success')"><div class="vocab-word" style="font-size:.82rem;">choose &rarr; <span style="color:var(--amber)">chose</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('come -> came','success')"><div class="vocab-word" style="font-size:.82rem;">come &rarr; <span style="color:var(--amber)">came</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('do -> did','success')"><div class="vocab-word" style="font-size:.82rem;">do &rarr; <span style="color:var(--amber)">did</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('drink -> drank','success')"><div class="vocab-word" style="font-size:.82rem;">drink &rarr; <span style="color:var(--amber)">drank</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('drive -> drove','success')"><div class="vocab-word" style="font-size:.82rem;">drive &rarr; <span style="color:var(--amber)">drove</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('eat -> ate','success')"><div class="vocab-word" style="font-size:.82rem;">eat &rarr; <span style="color:var(--amber)">ate</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('fall -> fell','success')"><div class="vocab-word" style="font-size:.82rem;">fall &rarr; <span style="color:var(--amber)">fell</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('find -> found','success')"><div class="vocab-word" style="font-size:.82rem;">find &rarr; <span style="color:var(--amber)">found</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('fly -> flew','success')"><div class="vocab-word" style="font-size:.82rem;">fly &rarr; <span style="color:var(--amber)">flew</span></div></div>
+    </div>
+    <div class="tip-box"><i class="fas fa-lightbulb"></i><span><strong>Key Tip:</strong> In speaking tests, students often forget to use past tense forms when nervous. Practice these irregular verbs until they feel automatic!</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 5: IRREGULAR VERBS PART 2 -->
+<div class="slide" id="slide-5">
+  <div class="s-header"><h1>Step 2: Irregular Verbs (Part 2)</h1><span class="s-badge">Language Step 2</span></div>
+  <div class="s-content">
+    <div class="intro-note">More irregular past tense forms. Click any card to see the past tense.</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:7px;">
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('forget -> forgot','success')"><div class="vocab-word" style="font-size:.82rem;">forget &rarr; <span style="color:var(--amber)">forgot</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('get -> got','success')"><div class="vocab-word" style="font-size:.82rem;">get &rarr; <span style="color:var(--amber)">got</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('give -> gave','success')"><div class="vocab-word" style="font-size:.82rem;">give &rarr; <span style="color:var(--amber)">gave</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('go -> went','success')"><div class="vocab-word" style="font-size:.82rem;">go &rarr; <span style="color:var(--amber)">went</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('have -> had','success')"><div class="vocab-word" style="font-size:.82rem;">have &rarr; <span style="color:var(--amber)">had</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('hear -> heard','success')"><div class="vocab-word" style="font-size:.82rem;">hear &rarr; <span style="color:var(--amber)">heard</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('keep -> kept','success')"><div class="vocab-word" style="font-size:.82rem;">keep &rarr; <span style="color:var(--amber)">kept</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('know -> knew','success')"><div class="vocab-word" style="font-size:.82rem;">know &rarr; <span style="color:var(--amber)">knew</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('leave -> left','success')"><div class="vocab-word" style="font-size:.82rem;">leave &rarr; <span style="color:var(--amber)">left</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('lose -> lost','success')"><div class="vocab-word" style="font-size:.82rem;">lose &rarr; <span style="color:var(--amber)">lost</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('make -> made','success')"><div class="vocab-word" style="font-size:.82rem;">make &rarr; <span style="color:var(--amber)">made</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('meet -> met','success')"><div class="vocab-word" style="font-size:.82rem;">meet &rarr; <span style="color:var(--amber)">met</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('run -> ran','success')"><div class="vocab-word" style="font-size:.82rem;">run &rarr; <span style="color:var(--amber)">ran</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('say -> said','success')"><div class="vocab-word" style="font-size:.82rem;">say &rarr; <span style="color:var(--amber)">said</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('see -> saw','success')"><div class="vocab-word" style="font-size:.82rem;">see &rarr; <span style="color:var(--amber)">saw</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('send -> sent','success')"><div class="vocab-word" style="font-size:.82rem;">send &rarr; <span style="color:var(--amber)">sent</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: IRREGULAR VERBS PART 3 -->
+<div class="slide" id="slide-6">
+  <div class="s-header"><h1>Step 2: Irregular Verbs (Part 3)</h1><span class="s-badge">Language Step 2</span></div>
+  <div class="s-content">
+    <div class="intro-note">More irregular past tense forms. Click any card to see the past tense.</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:7px;">
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('sleep -> slept','success')"><div class="vocab-word" style="font-size:.82rem;">sleep &rarr; <span style="color:var(--amber)">slept</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('stand -> stood','success')"><div class="vocab-word" style="font-size:.82rem;">stand &rarr; <span style="color:var(--amber)">stood</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('swim -> swam','success')"><div class="vocab-word" style="font-size:.82rem;">swim &rarr; <span style="color:var(--amber)">swam</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('take -> took','success')"><div class="vocab-word" style="font-size:.82rem;">take &rarr; <span style="color:var(--amber)">took</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('teach -> taught','success')"><div class="vocab-word" style="font-size:.82rem;">teach &rarr; <span style="color:var(--amber)">taught</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('tell -> told','success')"><div class="vocab-word" style="font-size:.82rem;">tell &rarr; <span style="color:var(--amber)">told</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('think -> thought','success')"><div class="vocab-word" style="font-size:.82rem;">think &rarr; <span style="color:var(--amber)">thought</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('throw -> threw','success')"><div class="vocab-word" style="font-size:.82rem;">throw &rarr; <span style="color:var(--amber)">threw</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('understand -> understood','success')"><div class="vocab-word" style="font-size:.82rem;">understand &rarr; <span style="color:var(--amber)">understood</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('wake -> woke','success')"><div class="vocab-word" style="font-size:.82rem;">wake &rarr; <span style="color:var(--amber)">woke</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('wear -> wore','success')"><div class="vocab-word" style="font-size:.82rem;">wear &rarr; <span style="color:var(--amber)">wore</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('win -> won','success')"><div class="vocab-word" style="font-size:.82rem;">win &rarr; <span style="color:var(--amber)">won</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('write -> wrote','success')"><div class="vocab-word" style="font-size:.82rem;">write &rarr; <span style="color:var(--amber)">wrote</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('read -> read (same spelling, different pronunciation: red)','success')"><div class="vocab-word" style="font-size:.82rem;">read &rarr; <span style="color:var(--amber)">read</span> <span style="font-size:.68rem;color:var(--ink2);">(pronounced "red")</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('put -> put (same form)','success')"><div class="vocab-word" style="font-size:.82rem;">put &rarr; <span style="color:var(--amber)">put</span> <span style="font-size:.68rem;color:var(--ink2);">(same form)</span></div></div>
+      <div class="vocab-card" style="padding:8px 10px;" onclick="showToast('let -> let (same form)','success')"><div class="vocab-word" style="font-size:.82rem;">let &rarr; <span style="color:var(--amber)">let</span> <span style="font-size:.68rem;color:var(--ink2);">(same form)</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7: ADJECTIVES OF EXPERIENCE -->
+<div class="slide" id="slide-7">
+  <div class="s-header"><h1>Step 3: Adjectives of Experience</h1><span class="s-badge">Language Step 3</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use these adjectives to describe <strong>what the experience was like</strong>. Click any card to see an example.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;"><i class="fas fa-thumbs-up" style="margin-right:4px"></i>Positive Experiences</div>
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <div style="font-size:.82rem;padding:5px 9px;background:rgba(74,20,140,.06);border-radius:7px;cursor:pointer;" onclick="showToast('It was quite exciting and fascinating — I had never seen anything like it before.','success')"><strong>exciting, thrilling, exhilarating, stimulating, enjoyable</strong> — things you really enjoyed and that were a lot of fun</div>
+          <div style="font-size:.82rem;padding:5px 9px;background:rgba(74,20,140,.06);border-radius:7px;cursor:pointer;" onclick="showToast('It was fascinating and intriguing — I felt very curious about it.','success')"><strong>fascinating, intriguing, surprising</strong> — things that were new and you felt very curious about</div>
+          <div style="font-size:.82rem;padding:5px 9px;background:rgba(74,20,140,.06);border-radius:7px;cursor:pointer;" onclick="showToast('It was quite challenging but I really enjoyed learning it.','success')"><strong>difficult, challenging</strong> — things you learned that were not easy but you enjoyed</div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:#c62828;text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;"><i class="fas fa-thumbs-down" style="margin-right:4px"></i>Negative Experiences</div>
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <div style="font-size:.82rem;padding:5px 9px;background:rgba(198,40,40,.06);border-radius:7px;cursor:pointer;" onclick="showToast('It was quite depressing and upsetting — I felt very uncomfortable.','error')"><strong>depressing, upsetting, unpleasant</strong> — things that made you feel sad or very uncomfortable</div>
+          <div style="font-size:.82rem;padding:5px 9px;background:rgba(198,40,40,.06);border-radius:7px;cursor:pointer;" onclick="showToast('It was really embarrassing — other people were watching and I felt silly.','error')"><strong>embarrassing, humiliating</strong> — things that made you feel uncomfortable because others were watching</div>
+          <div style="font-size:.82rem;padding:5px 9px;background:rgba(198,40,40,.06);border-radius:7px;cursor:pointer;" onclick="showToast('It was quite irritating and frustrating — I thought it was a waste of time.','error')"><strong>irritating, annoying, frustrating</strong> — things you did not enjoy because they were stupid or a waste of time</div>
+        </div>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);margin-top:4px;">
+      <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;"><i class="fas fa-star" style="margin-right:4px"></i>All Adjectives at a Glance</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        <span style="background:rgba(74,20,140,.08);color:var(--navy);font-size:.78rem;font-weight:600;padding:3px 9px;border-radius:20px;cursor:pointer;" onclick="showToast('exciting — something that was a lot of fun and interesting','success')">exciting</span>
+        <span style="background:rgba(74,20,140,.08);color:var(--navy);font-size:.78rem;font-weight:600;padding:3px 9px;border-radius:20px;cursor:pointer;" onclick="showToast('thrilling — very exciting, like an adventure','success')">thrilling</span>
+        <span style="background:rgba(74,20,140,.08);color:var(--navy);font-size:.78rem;font-weight:600;padding:3px 9px;border-radius:20px;cursor:pointer;" onclick="showToast('fascinating — very interesting and new','success')">fascinating</span>
+        <span style="background:rgba(74,20,140,.08);color:var(--navy);font-size:.78rem;font-weight:600;padding:3px 9px;border-radius:20px;cursor:pointer;" onclick="showToast('intriguing — making you feel curious','success')">intriguing</span>
+        <span style="background:rgba(74,20,140,.08);color:var(--navy);font-size:.78rem;font-weight:600;padding:3px 9px;border-radius:20px;cursor:pointer;" onclick="showToast('enjoyable — pleasant and fun','success')">enjoyable</span>
+        <span style="background:rgba(74,20,140,.08);color:var(--navy);font-size:.78rem;font-weight:600;padding:3px 9px;border-radius:20px;cursor:pointer;" onclick="showToast('challenging — difficult but rewarding','success')">challenging</span>
+        <span style="background:rgba(198,40,40,.08);color:#c62828;font-size:.78rem;font-weight:600;padding:3px 9px;border-radius:20px;cursor:pointer;" onclick="showToast('depressing — making you feel sad','error')">depressing</span>
+        <span style="background:rgba(198,40,40,.08);color:#c62828;font-size:.78rem;font-weight:600;padding:3px 9px;border-radius:20px;cursor:pointer;" onclick="showToast('embarrassing — making you feel silly in front of others','error')">embarrassing</span>
+        <span style="background:rgba(198,40,40,.08);color:#c62828;font-size:.78rem;font-weight:600;padding:3px 9px;border-radius:20px;cursor:pointer;" onclick="showToast('frustrating — annoying because it was too difficult or a waste of time','error')">frustrating</span>
+        <span style="background:rgba(198,40,40,.08);color:#c62828;font-size:.78rem;font-weight:600;padding:3px 9px;border-radius:20px;cursor:pointer;" onclick="showToast('unpleasant — not enjoyable at all','error')">unpleasant</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: MODEL ANSWER 1 - COMPUTER -->
+<div class="slide" id="slide-8">
+  <div class="s-header"><h1>Model Answer 1: First time using a computer</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> When was the first time you used a computer?</div>
+    <div class="model-answer-box"><span class="hl-time">The first time I used a computer was around my 10th birthday.</span> I mainly used it <span class="hl-reason">to play games and learn some basic skills.</span> At that time, everything felt new to me, <span class="hl-reason">so</span> it was quite <span class="hl-adj">exciting and fascinating.</span></div>
+    <div class="lang-tags">
+      <div class="lang-tag"><i class="fas fa-calendar"></i> Time: around my 10th birthday</div>
+      <div class="lang-tag"><i class="fas fa-link"></i> Purpose: to play / to learn</div>
+      <div class="lang-tag"><i class="fas fa-link"></i> Linker: so</div>
+      <div class="lang-tag"><i class="fas fa-star"></i> Adjectives: exciting / fascinating</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: MODEL ANSWER 2 - HOLIDAY -->
+<div class="slide" id="slide-9">
+  <div class="s-header"><h1>Model Answer 2: Last time on holiday</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> When was the last time you went on holiday?</div>
+    <div class="model-answer-box"><span class="hl-time">The last time I went on holiday was last summer.</span> I <span class="hl-verb">went</span> there <span class="hl-reason">to relax and spend time with my family.</span> We <span class="hl-verb">stayed</span> near the beach and <span class="hl-verb">spent</span> most of our time outdoors, which <span class="hl-reason">made</span> the trip really <span class="hl-adj">enjoyable and relaxing.</span></div>
+    <div class="lang-tags">
+      <div class="lang-tag"><i class="fas fa-calendar"></i> Time: last summer</div>
+      <div class="lang-tag"><i class="fas fa-link"></i> Purpose: to relax / to spend time</div>
+      <div class="lang-tag"><i class="fas fa-link"></i> Linker: which</div>
+      <div class="lang-tag"><i class="fas fa-star"></i> Adjectives: enjoyable / relaxing</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: MODEL ANSWER 3 - VISITORS -->
+<div class="slide" id="slide-10">
+  <div class="s-header"><h1>Model Answer 3: Last time with visitors</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> When did you last have visitors at your house?</div>
+    <div class="model-answer-box">I <span class="hl-time">last had visitors at my house about two weeks ago.</span> They <span class="hl-verb">came</span> over <span class="hl-reason">to celebrate my birthday,</span> <span class="hl-reason">so</span> it was quite a special occasion. We <span class="hl-verb">had</span> a small party at home, and it <span class="hl-verb">turned out</span> to be really <span class="hl-adj">fun and memorable.</span></div>
+    <div class="lang-tags">
+      <div class="lang-tag"><i class="fas fa-calendar"></i> Time: about two weeks ago</div>
+      <div class="lang-tag"><i class="fas fa-link"></i> Purpose: to celebrate</div>
+      <div class="lang-tag"><i class="fas fa-link"></i> Linkers: so / and</div>
+      <div class="lang-tag"><i class="fas fa-star"></i> Adjectives: fun / memorable</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 11: MODEL ANSWER 4 - MOVIE -->
+<div class="slide" id="slide-11">
+  <div class="s-header"><h1>Model Answer 4: Last time watching a movie</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> When was the last time you watched a movie?</div>
+    <div class="model-answer-box"><span class="hl-time">The last time I watched a movie was last weekend.</span> I <span class="hl-verb">watched</span> it <span class="hl-reason">to relax after studying.</span> It was a comedy, <span class="hl-reason">so</span> it was quite <span class="hl-adj">entertaining</span> and helped me forget about stress for a while.</div>
+    <div class="lang-tags">
+      <div class="lang-tag"><i class="fas fa-calendar"></i> Time: last weekend</div>
+      <div class="lang-tag"><i class="fas fa-link"></i> Purpose: to relax</div>
+      <div class="lang-tag"><i class="fas fa-link"></i> Linker: so</div>
+      <div class="lang-tag"><i class="fas fa-star"></i> Adjective: entertaining</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 12: MODEL ANSWER 5 - SOMETHING NEW -->
+<div class="slide" id="slide-12">
+  <div class="s-header"><h1>Model Answer 5: Last time trying something new</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> When did you last try something new?</div>
+    <div class="model-answer-box">I <span class="hl-time">last tried something new during the Tet holiday.</span> I <span class="hl-verb">decided</span> to cook a new dish, <span class="hl-reason">as I wanted to learn something different.</span> It was a bit <span class="hl-adj">challenging</span> at first, but it <span class="hl-verb">became</span> quite <span class="hl-adj">enjoyable,</span> <span class="hl-reason">so</span> I <span class="hl-verb">felt</span> pretty <span class="hl-adj">satisfied</span> in the end.</div>
+    <div class="lang-tags">
+      <div class="lang-tag"><i class="fas fa-calendar"></i> Time: during the Tet holiday</div>
+      <div class="lang-tag"><i class="fas fa-link"></i> Purpose: to cook / to learn</div>
+      <div class="lang-tag"><i class="fas fa-link"></i> Linkers: as / but / so</div>
+      <div class="lang-tag"><i class="fas fa-star"></i> Adjectives: challenging / enjoyable / satisfied</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 13: ANNOTATED MODEL ANSWER -->
+<div class="slide" id="slide-13">
+  <div class="s-header"><h1>Full Formula: Annotated Example</h1><span class="s-badge">Formula in Action</span></div>
+  <div class="s-content">
+    <div class="intro-note">See how all 3 steps work together. Click each highlighted part to learn more.</div>
+    <div class="model-q"><i class="fas fa-question-circle"></i> When was the last time you went on holiday?</div>
+    <div class="model-answer-box" style="font-size:.88rem;">
+      <span class="hl-time" style="cursor:pointer" onclick="showToast('Step 1 - Time expression: The last time I went... was last summer — answers WHEN clearly','success')">The last time I went on holiday was last summer.</span>
+      I <span class="hl-verb" style="cursor:pointer" onclick="showToast('Step 2 - Past simple verb: went — irregular past tense of go','success')">went</span>
+      there <span class="hl-reason" style="cursor:pointer" onclick="showToast('Step 2 - Purpose: to relax and spend time — explains WHY you went','success')">to relax and spend time with my family.</span>
+      We <span class="hl-verb" style="cursor:pointer" onclick="showToast('Step 2 - Past simple verb: stayed — regular past tense','success')">stayed</span>
+      near the beach and <span class="hl-verb" style="cursor:pointer" onclick="showToast('Step 2 - Past simple verb: spent — irregular past tense of spend','success')">spent</span>
+      most of our time outdoors, which <span class="hl-reason" style="cursor:pointer" onclick="showToast('Linker: which — connects the activity to the result','success')">made</span>
+      the trip really <span class="hl-adj" style="cursor:pointer" onclick="showToast('Step 3 - Adjectives of experience: enjoyable and relaxing — describes what it was like','success')">enjoyable and relaxing.</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px;">
+      <div style="background:rgba(74,20,140,.08);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 1</div><div style="font-size:.82rem;color:var(--navy);font-weight:600;">When</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">The last time I went... was last summer</div></div>
+      <div style="background:rgba(255,143,0,.1);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 2</div><div style="font-size:.82rem;color:#7a3800;font-weight:600;">Why + Past Verbs</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">to relax / went / stayed / spent</div></div>
+      <div style="background:rgba(46,125,50,.08);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#1b5e20;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 3</div><div style="font-size:.82rem;color:#1b5e20;font-weight:600;">Experience</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">enjoyable and relaxing</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 14: QUIZ - TIME EXPRESSIONS -->
+<div class="slide" id="slide-14">
+  <div class="s-header"><h1>Quiz: Time Expressions</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct preposition or time expression. Score: <strong id="q1-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I last played a computer game _____ two years ago.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-1"><button class="mc-opt" onclick="checkQ1(this,1,'about')">about</button><button class="mc-opt" onclick="checkQ1(this,1,'about')">around</button><button class="mc-opt" onclick="checkQ1(this,1,'about')">during</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. The first time I ate insects was _____ the summer of 2007.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-2"><button class="mc-opt" onclick="checkQ1(this,2,'in')">in</button><button class="mc-opt" onclick="checkQ1(this,2,'in')">on</button><button class="mc-opt" onclick="checkQ1(this,2,'in')">last</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. I last tried something new _____ the Tet holiday.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-3"><button class="mc-opt" onclick="checkQ1(this,3,'during')">during</button><button class="mc-opt" onclick="checkQ1(this,3,'during')">in</button><button class="mc-opt" onclick="checkQ1(this,3,'during')">on</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. I last had visitors at my house _____ weekend.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-4"><button class="mc-opt" onclick="checkQ1(this,4,'last')">last</button><button class="mc-opt" onclick="checkQ1(this,4,'last')">during</button><button class="mc-opt" onclick="checkQ1(this,4,'last')">around</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ1()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 15: QUIZ - IRREGULAR VERBS -->
+<div class="slide" id="slide-15">
+  <div class="s-header"><h1>Quiz: Irregular Past Tenses</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct past tense form. Score: <strong id="q2-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Last summer, my family and I _____ to Sapa for two weeks.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-1"><button class="mc-opt" onclick="checkQ2(this,1,'went')">went</button><button class="mc-opt" onclick="checkQ2(this,1,'went')">goed</button><button class="mc-opt" onclick="checkQ2(this,1,'went')">go</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. We _____ near the beach and spent most of our time outdoors.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-2"><button class="mc-opt" onclick="checkQ2(this,2,'stayed')">stayed</button><button class="mc-opt" onclick="checkQ2(this,2,'stayed')">staid</button><button class="mc-opt" onclick="checkQ2(this,2,'stayed')">stay</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. They _____ over to celebrate my birthday.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-3"><button class="mc-opt" onclick="checkQ2(this,3,'came')">came</button><button class="mc-opt" onclick="checkQ2(this,3,'came')">comed</button><button class="mc-opt" onclick="checkQ2(this,3,'came')">come</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. It was a bit challenging at first, but it _____ quite enjoyable.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-4"><button class="mc-opt" onclick="checkQ2(this,4,'became')">became</button><button class="mc-opt" onclick="checkQ2(this,4,'became')">becomed</button><button class="mc-opt" onclick="checkQ2(this,4,'became')">become</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ2()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 16: QUIZ - ADJECTIVES OF EXPERIENCE -->
+<div class="slide" id="slide-16">
+  <div class="s-header"><h1>Quiz: Adjectives of Experience</h1><span class="s-badge amber">Vocabulary Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct adjective for each experience. Score: <strong id="q3-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I tried bungee jumping for the first time. It was very _____ — my heart was racing the whole time!</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-1"><button class="mc-opt" onclick="checkQ3(this,1,'thrilling')">thrilling</button><button class="mc-opt" onclick="checkQ3(this,1,'thrilling')">depressing</button><button class="mc-opt" onclick="checkQ3(this,1,'thrilling')">frustrating</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. I had to wait in a queue for three hours. It was really _____ because it was such a waste of time.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-2"><button class="mc-opt" onclick="checkQ3(this,2,'frustrating')">frustrating</button><button class="mc-opt" onclick="checkQ3(this,2,'frustrating')">exciting</button><button class="mc-opt" onclick="checkQ3(this,2,'frustrating')">fascinating</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. I visited a museum about ancient civilisations. It was _____ — I had never seen anything like it before.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-3"><button class="mc-opt" onclick="checkQ3(this,3,'fascinating')">fascinating</button><button class="mc-opt" onclick="checkQ3(this,3,'fascinating')">embarrassing</button><button class="mc-opt" onclick="checkQ3(this,3,'fascinating')">unpleasant</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. I learned to ride a bike when I was young. It was quite _____ at first, but I eventually got the hang of it.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-4"><button class="mc-opt" onclick="checkQ3(this,4,'challenging')">challenging</button><button class="mc-opt" onclick="checkQ3(this,4,'challenging')">enjoyable</button><button class="mc-opt" onclick="checkQ3(this,4,'challenging')">stimulating</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ3()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 17: GAP FILL EXERCISE -->
+<div class="slide" id="slide-17">
+  <div class="s-header"><h1>Gap Fill: Complete the Answers</h1><span class="s-badge amber">Exercise</span></div>
+  <div class="s-content">
+    <div class="intro-note">Fill in the blanks with the correct word or phrase. Press Enter or click Check to verify.</div>
+    <div style="display:flex;flex-direction:column;gap:9px;">
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">1. The first time I used a computer was <input class="gap-input" id="gf-1" placeholder="___" style="width:180px" onkeydown="if(event.key==='Enter')checkGF(1,['around my 10th birthday','around my birthday'])"> and it was quite exciting.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(1,['around my 10th birthday','around my birthday'])"><i class="fas fa-check"></i> Check</button></div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">2. I last had visitors at my house <input class="gap-input" id="gf-2" placeholder="___" style="width:180px" onkeydown="if(event.key==='Enter')checkGF(2,['about two weeks ago'])">.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(2,['about two weeks ago'])"><i class="fas fa-check"></i> Check</button></div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">3. The last time I watched a movie was <input class="gap-input" id="gf-3" placeholder="___" style="width:130px" onkeydown="if(event.key==='Enter')checkGF(3,['last weekend','last week'])">.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(3,['last weekend','last week'])"><i class="fas fa-check"></i> Check</button></div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">4. I last tried something new <input class="gap-input" id="gf-4" placeholder="___" style="width:180px" onkeydown="if(event.key==='Enter')checkGF(4,['during the Tet holiday','during the holiday'])">.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(4,['during the Tet holiday','during the holiday'])"><i class="fas fa-check"></i> Check</button></div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">5. We had a small party at home, and it turned out to be really <input class="gap-input" id="gf-5" placeholder="___" style="width:160px" onkeydown="if(event.key==='Enter')checkGF(5,['fun and memorable','enjoyable','fun'])">.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(5,['fun and memorable','enjoyable','fun'])"><i class="fas fa-check"></i> Check</button></div>
+    </div>
+    <div class="btn-row"><button class="check-btn amber" onclick="showGFAnswers()"><i class="fas fa-eye"></i> Show Answers</button><button class="reset-btn" onclick="resetGF()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 18: COMMON MISTAKES -->
+<div class="slide" id="slide-18">
+  <div class="s-header"><h1>Common Mistakes to Avoid</h1><span class="s-badge red">Error Correction</span></div>
+  <div class="s-content">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="border-radius:14px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.08);">
+        <div style="padding:11px 16px;font-family:var(--hf);font-size:.86rem;font-weight:700;display:flex;align-items:center;gap:7px;background:#FEE2E2;color:#c62828;border-bottom:3px solid #c62828;"><i class="fas fa-times-circle"></i> Incorrect</div>
+        <div style="background:#fff;padding:9px;">
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#FFF5F5;color:#7F1D1D;border-left:3px solid #c62828;"><i class="fas fa-times-circle" style="color:#c62828"></i><em>"I go on holiday last summer." (wrong tense — should be went)</em></div>
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#FFF5F5;color:#7F1D1D;border-left:3px solid #c62828;"><i class="fas fa-times-circle" style="color:#c62828"></i><em>"I goed to Sapa." (goed is not a word — went)</em></div>
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#FFF5F5;color:#7F1D1D;border-left:3px solid #c62828;"><i class="fas fa-times-circle" style="color:#c62828"></i><em>"It was very good." (too vague — use specific adjectives)</em></div>
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#FFF5F5;color:#7F1D1D;border-left:3px solid #c62828;"><i class="fas fa-times-circle" style="color:#c62828"></i><em>"I went on holiday." (no time expression, no reason, no description)</em></div>
+        </div>
+      </div>
+      <div style="border-radius:14px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.08);">
+        <div style="padding:11px 16px;font-family:var(--hf);font-size:.86rem;font-weight:700;display:flex;align-items:center;gap:7px;background:#D1FAE5;color:#047857;border-bottom:3px solid var(--teal);"><i class="fas fa-check-circle"></i> Correct</div>
+        <div style="background:#fff;padding:9px;">
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#F0FDF4;color:#064E3B;border-left:3px solid var(--teal);"><i class="fas fa-check-circle" style="color:var(--teal)"></i><em>"The last time I <strong>went</strong> on holiday was last summer." (correct past tense)</em></div>
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#F0FDF4;color:#064E3B;border-left:3px solid var(--teal);"><i class="fas fa-check-circle" style="color:var(--teal)"></i><em>"My family and I <strong>went</strong> to Sapa." (correct irregular past tense)</em></div>
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#F0FDF4;color:#064E3B;border-left:3px solid var(--teal);"><i class="fas fa-check-circle" style="color:var(--teal)"></i><em>"It was really <strong>enjoyable and relaxing</strong>." (specific adjectives)</em></div>
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#F0FDF4;color:#064E3B;border-left:3px solid var(--teal);"><i class="fas fa-check-circle" style="color:var(--teal)"></i><em>"<strong>The last time</strong> I went on holiday was <strong>last summer</strong>. I went there <strong>to relax</strong>. It was really <strong>enjoyable</strong>."</em></div>
+        </div>
+      </div>
+    </div>
+    <div class="tip-box"><i class="fas fa-lightbulb"></i><span><strong>Key Rules:</strong> (1) Always use past tense verbs. (2) Learn irregular verbs — went, came, had, saw, etc. (3) Use specific adjectives, not just "good" or "nice". (4) Follow the 3-step formula: When + Why + What it was like.</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 19: PRACTICE QUESTIONS -->
+<div class="slide" id="slide-19">
+  <div class="s-header"><h1>Practice Questions</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use the 3-step formula (When + Why + What it was like) to answer these questions.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>1.</strong> When was the first time you used a smartphone?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>2.</strong> When was the last time you went shopping?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>3.</strong> When did you last visit your relatives?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>4.</strong> When was the last time you ate out?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>5.</strong> When did you last watch a TV show?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>6.</strong> When was the first time you traveled alone?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>7.</strong> When did you last play sports?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>8.</strong> When was the last time you helped someone?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>9.</strong> When did you last learn something new?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>10.</strong> When was the last time you felt really happy?</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 20: SELF-ASSESSMENT CHECKLIST -->
+<div class="slide" id="slide-20">
+  <div class="s-header"><h1>Self-Assessment Checklist</h1><span class="s-badge">Evaluation</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use this checklist to evaluate your own answer after practising. Click each item to mark it.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>1. Time given:</strong> Uses clear time expression (last..., ago, in..., during...)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>2. Correct structure:</strong> Uses "The first/last time I... was..." or similar</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>3. Past simple used:</strong> Correct past verbs (went, saw, had, etc.)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>4. Reason included:</strong> Explains why (because / to + verb)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>5. Experience described:</strong> Uses adjectives (exciting, boring, etc.)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>6. Logical order:</strong> Follows: time &rarr; reason &rarr; description</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>7. Vocabulary variety:</strong> Uses different verbs and adjectives</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>8. Clarity and fluency:</strong> Easy to understand, logical flow</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDES 21-35: ADDITIONAL QUIZZES AND REVIEW -->
+<div class="slide" id="slide-21">
+  <div class="s-header"><h1>Quiz: Choose the Right Adjective</h1><span class="s-badge amber">Vocabulary Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the most appropriate adjective of experience. Score: <strong id="q4-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I visited an ancient temple for the first time. It was _____ — I had never seen such beautiful architecture before.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-1"><button class="mc-opt" onclick="checkQ4(this,1,'intriguing')">intriguing</button><button class="mc-opt" onclick="checkQ4(this,1,'intriguing')">frustrating</button><button class="mc-opt" onclick="checkQ4(this,1,'intriguing')">embarrassing</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. I had to give a speech in front of 200 people. It was really _____ because I forgot my lines.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-2"><button class="mc-opt" onclick="checkQ4(this,2,'embarrassing')">embarrassing</button><button class="mc-opt" onclick="checkQ4(this,2,'embarrassing')">exciting</button><button class="mc-opt" onclick="checkQ4(this,2,'embarrassing')">enjoyable</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. I went to a theme park last month. The roller coasters were absolutely _____ — I screamed the whole time!</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-3"><button class="mc-opt" onclick="checkQ4(this,3,'exhilarating')">exhilarating</button><button class="mc-opt" onclick="checkQ4(this,3,'exhilarating')">depressing</button><button class="mc-opt" onclick="checkQ4(this,3,'exhilarating')">unpleasant</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. I tried to learn to play the guitar last year. It was quite _____ at first, but I eventually got better.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-4"><button class="mc-opt" onclick="checkQ4(this,4,'challenging')">challenging</button><button class="mc-opt" onclick="checkQ4(this,4,'challenging')">thrilling</button><button class="mc-opt" onclick="checkQ4(this,4,'challenging')">surprising</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ4()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-22">
+  <div class="s-header"><h1>Vocabulary Reference: All Key Expressions</h1><span class="s-badge">Quick Reference</span></div>
+  <div class="s-content">
+    <div class="intro-note">Review all the key expressions from Lesson 4. Click any card to highlight it.</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-top:3px solid var(--navy);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(74,20,140,0.06)'?'#fff':'rgba(74,20,140,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:4px;">Time Prepositions</div><div style="font-size:.76rem;color:var(--ink2);">around | last | in | during | on | about...ago</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-top:3px solid var(--amber);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(255,143,0,0.06)'?'#fff':'rgba(255,143,0,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#7a3800;margin-bottom:4px;">Key Structures</div><div style="font-size:.76rem;color:var(--ink2);">The last/first time I + past verb + was... | I last + past verb + about + time + ago</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-top:3px solid var(--teal);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(0,131,143,0.06)'?'#fff':'rgba(0,131,143,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--teal);margin-bottom:4px;">Positive Adjectives</div><div style="font-size:.76rem;color:var(--ink2);">exciting | thrilling | exhilarating | stimulating | enjoyable | fascinating | intriguing | surprising | challenging</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-top:3px solid var(--red);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(198,40,40,0.06)'?'#fff':'rgba(198,40,40,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--red);margin-bottom:4px;">Negative Adjectives</div><div style="font-size:.76rem;color:var(--ink2);">depressing | upsetting | unpleasant | embarrassing | humiliating | irritating | annoying | frustrating</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-top:3px solid var(--navy);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(74,20,140,0.06)'?'#fff':'rgba(74,20,140,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:4px;">Key Irregular Verbs</div><div style="font-size:.76rem;color:var(--ink2);">go&rarr;went | come&rarr;came | have&rarr;had | see&rarr;saw | take&rarr;took | make&rarr;made | feel&rarr;felt | become&rarr;became</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-top:3px solid var(--amber);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(255,143,0,0.06)'?'#fff':'rgba(255,143,0,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#7a3800;margin-bottom:4px;">Reason Linkers</div><div style="font-size:.76rem;color:var(--ink2);">to + verb (to relax) | because | as | so | which made it...</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-23">
+  <div class="s-header"><h1>Quiz: Past Tense Forms</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct past tense form. Score: <strong id="q5-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I _____ a new dish during the Tet holiday.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-1"><button class="mc-opt" onclick="checkQ5(this,1,'made')">made</button><button class="mc-opt" onclick="checkQ5(this,1,'made')">maked</button><button class="mc-opt" onclick="checkQ5(this,1,'made')">make</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. I _____ pretty satisfied in the end.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-2"><button class="mc-opt" onclick="checkQ5(this,2,'felt')">felt</button><button class="mc-opt" onclick="checkQ5(this,2,'felt')">feeled</button><button class="mc-opt" onclick="checkQ5(this,2,'felt')">feel</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. We _____ most of our time outdoors.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-3"><button class="mc-opt" onclick="checkQ5(this,3,'spent')">spent</button><button class="mc-opt" onclick="checkQ5(this,3,'spent')">spended</button><button class="mc-opt" onclick="checkQ5(this,3,'spent')">spend</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. I _____ to cook a new dish as I wanted to learn something different.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-4"><button class="mc-opt" onclick="checkQ5(this,4,'decided')">decided</button><button class="mc-opt" onclick="checkQ5(this,4,'decided')">decide</button><button class="mc-opt" onclick="checkQ5(this,4,'decided')">has decided</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ5()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-24">
+  <div class="s-header"><h1>Build Your Own Answer</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use the word bank to build a complete answer for: <strong>"When was the last time you went shopping?"</strong></div>
+    <div style="background:var(--navy);color:#fff;border-radius:10px;padding:12px 18px;font-size:.85rem;margin-bottom:10px;"><strong style="color:var(--amber)">Formula:</strong> When + Why + What it was like (adjective of experience)</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Time Expressions</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(74,20,140,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('The last time I went shopping was last weekend.','success')">last weekend</span><span style="background:rgba(74,20,140,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I last went shopping about three days ago.','success')">about three days ago</span><span style="background:rgba(74,20,140,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('The last time I went shopping was during the Tet holiday.','success')">during the Tet holiday</span></div></div>
+      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Reasons (Purpose)</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(255,143,0,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I went to buy some new clothes for school.','success')">to buy new clothes</span><span style="background:rgba(255,143,0,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I went to get some groceries for my family.','success')">to get groceries</span><span style="background:rgba(255,143,0,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I went to look for a birthday present for my friend.','success')">to find a birthday present</span></div></div>
+      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Experience Adjectives</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(0,131,143,.1);color:var(--teal);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('It was quite enjoyable — I found exactly what I was looking for.','success')">enjoyable</span><span style="background:rgba(0,131,143,.1);color:var(--teal);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('It was a bit exhausting — the mall was very crowded.','success')">exhausting</span><span style="background:rgba(0,131,143,.1);color:var(--teal);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('It was quite satisfying — I found a great deal.','success')">satisfying</span></div></div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 3px 10px rgba(74,20,140,.07);margin-top:8px;border-left:4px solid var(--teal);">
+      <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Sample Answer</div>
+      <div style="font-size:.86rem;color:var(--ink);line-height:1.7;"><span class="hl-time">The last time I went shopping was last weekend.</span> I <span class="hl-verb">went</span> to the mall <span class="hl-reason">to buy some new clothes for school.</span> It was quite <span class="hl-adj">enjoyable</span> because I <span class="hl-verb">found</span> exactly what I was looking for, and the prices were really reasonable. I also <span class="hl-verb">spent</span> some time in a bookshop, which was quite <span class="hl-adj">relaxing.</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-25">
+  <div class="s-header"><h1>Quiz: Time Expressions (Advanced)</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct time expression. Score: <strong id="q6-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I last visited my grandparents _____ the summer holiday.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-1"><button class="mc-opt" onclick="checkQ6(this,1,'during')">during</button><button class="mc-opt" onclick="checkQ6(this,1,'during')">on</button><button class="mc-opt" onclick="checkQ6(this,1,'during')">about</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. The first time I traveled abroad was _____ 2018.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-2"><button class="mc-opt" onclick="checkQ6(this,2,'in')">in</button><button class="mc-opt" onclick="checkQ6(this,2,'in')">on</button><button class="mc-opt" onclick="checkQ6(this,2,'in')">last</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. I last ate out _____ my parents 30th wedding anniversary.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-3"><button class="mc-opt" onclick="checkQ6(this,3,'on')">on</button><button class="mc-opt" onclick="checkQ6(this,3,'on')">in</button><button class="mc-opt" onclick="checkQ6(this,3,'on')">during</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. I last played sports _____ three weeks ago.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-4"><button class="mc-opt" onclick="checkQ6(this,4,'about')">about</button><button class="mc-opt" onclick="checkQ6(this,4,'about')">in</button><button class="mc-opt" onclick="checkQ6(this,4,'about')">during</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ6()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-26">
+  <div class="s-header"><h1>Grammar Focus: Past Simple Rules</h1><span class="s-badge" style="background:#6A1B9A;">Grammar</span></div>
+  <div class="s-content">
+    <div class="intro-note">Master the rules for forming the past simple tense.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;"><i class="fas fa-check-circle" style="margin-right:4px;color:#2e7d32"></i>Regular Verbs: add -ed</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+          <div style="padding:5px 9px;background:rgba(74,20,140,.06);border-radius:7px;">watch &rarr; <strong>watched</strong></div>
+          <div style="padding:5px 9px;background:rgba(74,20,140,.06);border-radius:7px;">visit &rarr; <strong>visited</strong></div>
+          <div style="padding:5px 9px;background:rgba(74,20,140,.06);border-radius:7px;">stay &rarr; <strong>stayed</strong></div>
+          <div style="padding:5px 9px;background:rgba(74,20,140,.06);border-radius:7px;">decide &rarr; <strong>decided</strong></div>
+          <div style="padding:5px 9px;background:rgba(74,20,140,.06);border-radius:7px;">celebrate &rarr; <strong>celebrated</strong></div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;"><i class="fas fa-exclamation-circle" style="margin-right:4px"></i>Irregular Verbs: must memorise</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+          <div style="padding:5px 9px;background:rgba(255,143,0,.06);border-radius:7px;">go &rarr; <strong>went</strong> (NOT goed)</div>
+          <div style="padding:5px 9px;background:rgba(255,143,0,.06);border-radius:7px;">come &rarr; <strong>came</strong> (NOT comed)</div>
+          <div style="padding:5px 9px;background:rgba(255,143,0,.06);border-radius:7px;">have &rarr; <strong>had</strong> (NOT haved)</div>
+          <div style="padding:5px 9px;background:rgba(255,143,0,.06);border-radius:7px;">feel &rarr; <strong>felt</strong> (NOT feeled)</div>
+          <div style="padding:5px 9px;background:rgba(255,143,0,.06);border-radius:7px;">become &rarr; <strong>became</strong> (NOT becomed)</div>
+        </div>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);margin-top:8px;">
+      <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:#c62828;text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;"><i class="fas fa-times-circle" style="margin-right:4px"></i>Negative: did not + base form</div>
+      <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+        <div style="padding:5px 9px;background:rgba(198,40,40,.06);border-radius:7px;border-left:3px solid #c62828;">I did not go. (NOT I did not went.)</div>
+        <div style="padding:5px 9px;background:rgba(198,40,40,.06);border-radius:7px;border-left:3px solid #c62828;">She did not come. (NOT She did not came.)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-27">
+  <div class="s-header"><h1>Quiz: Mixed Practice</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct option. Score: <strong id="q7-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Which sentence is correct?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-1"><button class="mc-opt" onclick="checkQ7(this,1,'The last time I went on holiday was last summer.')">The last time I went on holiday was last summer.</button><button class="mc-opt" onclick="checkQ7(this,1,'The last time I went on holiday was last summer.')">The last time I go on holiday was last summer.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Which adjective best describes a new and interesting experience?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-2"><button class="mc-opt" onclick="checkQ7(this,2,'fascinating')">fascinating</button><button class="mc-opt" onclick="checkQ7(this,2,'fascinating')">frustrating</button><button class="mc-opt" onclick="checkQ7(this,2,'fascinating')">depressing</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Which preposition is correct? "I last visited my grandparents _____ Christmas."</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-3"><button class="mc-opt" onclick="checkQ7(this,3,'around')">around</button><button class="mc-opt" onclick="checkQ7(this,3,'around')">in</button><button class="mc-opt" onclick="checkQ7(this,3,'around')">last</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Which sentence correctly uses the negative past simple?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-4"><button class="mc-opt" onclick="checkQ7(this,4,'I did not enjoy it.')">I did not enjoy it.</button><button class="mc-opt" onclick="checkQ7(this,4,'I did not enjoy it.')">I did not enjoyed it.</button><button class="mc-opt" onclick="checkQ7(this,4,'I did not enjoy it.')">I not enjoyed it.</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ7()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-28">
+  <div class="s-header"><h1>Formula Summary</h1><span class="s-badge">Formula Reference</span></div>
+  <div class="s-content">
+    <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+      <div style="background:var(--navy);color:#fff;border-radius:8px;padding:8px 14px;font-family:var(--hf);font-size:.88rem;font-weight:700;display:flex;align-items:center;gap:6px;"><i class="fas fa-calendar"></i> When</div>
+      <span style="font-family:var(--hf);font-size:1.2rem;font-weight:900;color:var(--ink2);">+</span>
+      <div style="background:var(--amber);color:#1a0000;border-radius:8px;padding:8px 14px;font-family:var(--hf);font-size:.88rem;font-weight:700;display:flex;align-items:center;gap:6px;"><i class="fas fa-question-circle"></i> Why</div>
+      <span style="font-family:var(--hf);font-size:1.2rem;font-weight:900;color:var(--ink2);">+</span>
+      <div style="background:var(--teal);color:#fff;border-radius:8px;padding:8px 14px;font-family:var(--hf);font-size:.88rem;font-weight:700;display:flex;align-items:center;gap:6px;"><i class="fas fa-star"></i> What it was like</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-top:4px solid var(--navy);"><div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Step 1: When</div><div style="font-size:.8rem;color:var(--ink2);line-height:1.5;">The last/first time I... was... | I last... about... ago | last summer / in 2019 / during the Tet holiday</div></div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-top:4px solid var(--amber);"><div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Step 2: Why + Past Verbs</div><div style="font-size:.8rem;color:var(--ink2);line-height:1.5;">to relax / to celebrate / because I wanted to... + correct irregular past tense verbs</div></div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-top:4px solid var(--teal);"><div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Step 3: Experience</div><div style="font-size:.8rem;color:var(--ink2);line-height:1.5;">exciting / fascinating / challenging / enjoyable / frustrating + so/which made it...</div></div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 3px 10px rgba(74,20,140,.07);margin-top:8px;border-left:4px solid var(--navy);">
+      <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Full Example</div>
+      <div style="font-size:.86rem;color:var(--ink);line-height:1.7;"><span class="hl-time">The last time I went on holiday was last summer.</span> I <span class="hl-verb">went</span> there <span class="hl-reason">to relax and spend time with my family.</span> We <span class="hl-verb">stayed</span> near the beach and <span class="hl-verb">spent</span> most of our time outdoors, which <span class="hl-reason">made</span> the trip really <span class="hl-adj">enjoyable and relaxing.</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-29">
+  <div class="s-header"><h1>Lesson Summary</h1><span class="s-badge">Key Takeaways</span></div>
+  <div class="s-content">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(74,20,140,.08);border-top:4px solid var(--navy);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-calendar"></i> Time Expressions</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(74,20,140,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">around</span><span style="background:rgba(74,20,140,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">last</span><span style="background:rgba(74,20,140,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">in</span><span style="background:rgba(74,20,140,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">during</span><span style="background:rgba(74,20,140,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">on</span><span style="background:rgba(74,20,140,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">about...ago</span></div></div>
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(74,20,140,.08);border-top:4px solid var(--amber);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:#7a3800;margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-history"></i> Key Irregular Verbs</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">go&rarr;went</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">come&rarr;came</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">have&rarr;had</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">see&rarr;saw</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">feel&rarr;felt</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">spend&rarr;spent</span></div></div>
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(74,20,140,.08);border-top:4px solid var(--teal);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:var(--teal);margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-star"></i> Positive Adjectives</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(0,131,143,.08);color:var(--teal);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">exciting</span><span style="background:rgba(0,131,143,.08);color:var(--teal);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">thrilling</span><span style="background:rgba(0,131,143,.08);color:var(--teal);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">fascinating</span><span style="background:rgba(0,131,143,.08);color:var(--teal);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">enjoyable</span><span style="background:rgba(0,131,143,.08);color:var(--teal);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">challenging</span></div></div>
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(74,20,140,.08);border-top:4px solid var(--red);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:var(--red);margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-times-circle"></i> Negative Adjectives</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(198,40,40,.08);color:var(--red);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">depressing</span><span style="background:rgba(198,40,40,.08);color:var(--red);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">embarrassing</span><span style="background:rgba(198,40,40,.08);color:var(--red);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">frustrating</span><span style="background:rgba(198,40,40,.08);color:var(--red);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">unpleasant</span></div></div>
+    </div>
+    <div style="background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;border-radius:14px;padding:18px 24px;text-align:center;margin-top:8px;">
+      <div style="font-family:var(--hf);font-size:1.1rem;font-weight:800;margin-bottom:6px;">&#127881; Lesson 4 Complete!</div>
+      <div style="font-size:.88rem;opacity:.85;">You have mastered the formula for expressing past experiences. Keep practising with the 10 practice questions!</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-30">
+  <div class="s-header"><h1>Final Review: Complete Answer</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Review the complete formula with all components. Click each highlighted part to learn more.</div>
+    <div class="model-q"><i class="fas fa-question-circle"></i> Question: When was the first time you used a computer?</div>
+    <div class="model-answer-box" style="font-size:.88rem;">
+      <span class="hl-time" style="cursor:pointer" onclick="showToast('Step 1 - Time expression: The first time I used... was around my 10th birthday — answers WHEN clearly','success')">The first time I used a computer was around my 10th birthday.</span>
+      I mainly <span class="hl-verb" style="cursor:pointer" onclick="showToast('Step 2 - Past simple verb: used — regular past tense','success')">used</span>
+      it <span class="hl-reason" style="cursor:pointer" onclick="showToast('Step 2 - Purpose: to play games and learn — explains WHY','success')">to play games and learn some basic skills.</span>
+      At that time, everything <span class="hl-verb" style="cursor:pointer" onclick="showToast('Step 2 - Past simple verb: felt — irregular past tense of feel','success')">felt</span>
+      new to me,
+      <span class="hl-reason" style="cursor:pointer" onclick="showToast('Linker: so — connects the situation to the result','success')">so</span>
+      it was quite <span class="hl-adj" style="cursor:pointer" onclick="showToast('Step 3 - Adjectives of experience: exciting and fascinating — describes what it was like','success')">exciting and fascinating.</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px;">
+      <div style="background:rgba(74,20,140,.08);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 1</div><div style="font-size:.82rem;color:var(--navy);font-weight:600;">When</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">around my 10th birthday</div></div>
+      <div style="background:rgba(255,143,0,.1);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 2</div><div style="font-size:.82rem;color:#7a3800;font-weight:600;">Why + Past Verbs</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">to play / to learn / used / felt</div></div>
+      <div style="background:rgba(46,125,50,.08);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#1b5e20;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 3</div><div style="font-size:.82rem;color:#1b5e20;font-weight:600;">Experience</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">exciting and fascinating</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-31">
+  <div class="s-header"><h1>IELTS Speaking Tips for Part 1</h1><span class="s-badge" style="background:#6A1B9A;">IELTS Tips</span></div>
+  <div class="s-content">
+    <div class="intro-note">Follow these tips to maximise your score in IELTS Speaking Part 1 past experience questions.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-left:4px solid var(--navy);">
+        <div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:6px;"><i class="fas fa-check-circle" style="margin-right:5px;color:#2e7d32"></i>DO</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.82rem;color:var(--ink);">
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Always use a clear time expression first</div>
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Use correct past tense verbs (went, not goed)</div>
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Give a reason (to relax / because I wanted to)</div>
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Use specific adjectives (fascinating, not just good)</div>
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Use linkers: so, which, because, as</div>
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Speak for 3-5 sentences per answer</div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);border-left:4px solid #c62828;">
+        <div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#c62828;margin-bottom:6px;"><i class="fas fa-times-circle" style="margin-right:5px"></i>DO NOT</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.82rem;color:var(--ink);">
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Use present tense for past events</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Say "goed", "comed", "haved" (wrong forms)</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Just say "It was good" (too vague)</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Forget to say when it happened</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Give one-word answers</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Memorise answers word for word</div>
+        </div>
+      </div>
+    </div>
+    <div style="background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;border-radius:14px;padding:16px 24px;text-align:center;margin-top:8px;">
+      <div style="font-family:var(--hf);font-size:1rem;font-weight:800;margin-bottom:6px;">Remember the Formula!</div>
+      <div style="font-size:.88rem;opacity:.9;"><strong>When</strong> (time expression) + <strong>Why</strong> (purpose/reason) + <strong>What it was like</strong> (adjective of experience)</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-32">
+  <div class="s-header"><h1>Quiz: Irregular Verbs (Advanced)</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct past tense form. Score: <strong id="q8-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I _____ a lot of interesting people during my trip.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-1"><button class="mc-opt" onclick="checkQ8(this,1,'met')">met</button><button class="mc-opt" onclick="checkQ8(this,1,'met')">meeted</button><button class="mc-opt" onclick="checkQ8(this,1,'met')">meet</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. I _____ a lot of photos during the trip.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-2"><button class="mc-opt" onclick="checkQ8(this,2,'took')">took</button><button class="mc-opt" onclick="checkQ8(this,2,'took')">taked</button><button class="mc-opt" onclick="checkQ8(this,2,'took')">take</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. We _____ a lot of traditional food during the festival.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-3"><button class="mc-opt" onclick="checkQ8(this,3,'ate')">ate</button><button class="mc-opt" onclick="checkQ8(this,3,'ate')">eated</button><button class="mc-opt" onclick="checkQ8(this,3,'ate')">eat</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. I _____ a postcard to my family from Paris.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-4"><button class="mc-opt" onclick="checkQ8(this,4,'sent')">sent</button><button class="mc-opt" onclick="checkQ8(this,4,'sent')">sended</button><button class="mc-opt" onclick="checkQ8(this,4,'sent')">send</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ8()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-33">
+  <div class="s-header"><h1>Extra Practice: Sentence Correction</h1><span class="s-badge red">Error Correction</span></div>
+  <div class="s-content">
+    <div class="intro-note">Find and correct the mistake in each sentence. Click Check to verify your answer.</div>
+    <div style="display:flex;flex-direction:column;gap:9px;">
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);">
+        <div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;"><span style="color:#c62828;font-weight:600;">Wrong:</span> "I go on holiday last summer."<br>Correct: I <input class="gap-input" id="ec-1" placeholder="___" style="width:80px" onkeydown="if(event.key==='Enter')checkEC(1,['went'])"> on holiday last summer.</div>
+        <button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkEC(1,['went'])"><i class="fas fa-check"></i> Check</button>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);">
+        <div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;"><span style="color:#c62828;font-weight:600;">Wrong:</span> "My family and I goed to Sapa."<br>Correct: My family and I <input class="gap-input" id="ec-2" placeholder="___" style="width:80px" onkeydown="if(event.key==='Enter')checkEC(2,['went'])"> to Sapa.</div>
+        <button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkEC(2,['went'])"><i class="fas fa-check"></i> Check</button>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(74,20,140,.07);">
+        <div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;"><span style="color:#c62828;font-weight:600;">Wrong:</span> "It was very good." (too vague)<br>Better: It was quite <input class="gap-input" id="ec-3" placeholder="___" style="width:200px" onkeydown="if(event.key==='Enter')checkEC(3,['exciting and fascinating','enjoyable and relaxing','fascinating','exciting'])">.</div>
+        <button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkEC(3,['exciting and fascinating','enjoyable and relaxing','fascinating','exciting'])"><i class="fas fa-check"></i> Check</button>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="check-btn amber" onclick="showECAnswers()"><i class="fas fa-eye"></i> Show Answers</button>
+      <button class="reset-btn" onclick="resetEC()"><i class="fas fa-redo"></i> Reset</button>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-34">
+  <div class="s-header"><h1>Extra Practice: Build Full Answers</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Review these sample answers. Notice how each follows the 3-step formula.</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);">
+        <div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">When did you last visit your relatives?</div>
+        <div style="background:rgba(74,20,140,.06);border-radius:8px;padding:10px 12px;font-size:.84rem;color:var(--ink2);line-height:1.6;"><span class="hl-time">I last visited my relatives about a month ago,</span> during the Tet holiday. I <span class="hl-verb">went</span> there <span class="hl-reason">to celebrate the New Year with my family</span> and catch up with my cousins. It was really <span class="hl-adj">enjoyable and memorable</span> because we <span class="hl-verb">had</span> a big family dinner together, which I always look forward to.</div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);">
+        <div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">When was the first time you traveled alone?</div>
+        <div style="background:rgba(74,20,140,.06);border-radius:8px;padding:10px 12px;font-size:.84rem;color:var(--ink2);line-height:1.6;"><span class="hl-time">The first time I traveled alone was in 2022,</span> when I <span class="hl-verb">went</span> to Ho Chi Minh City for a university interview. I <span class="hl-verb">took</span> the train by myself <span class="hl-reason">because I wanted to prove I could be independent.</span> It was quite <span class="hl-adj">challenging and nerve-wracking</span> at first, but it <span class="hl-verb">turned out</span> to be a really <span class="hl-adj">exciting and empowering</span> experience.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-35">
+  <div class="s-header"><h1>Lesson 4: Complete Review Quiz</h1><span class="s-badge green">Final Review</span></div>
+  <div class="s-content">
+    <div class="intro-note">Test yourself on all the key points from Lesson 4. Score: <strong id="qfinal-score">0</strong>/5</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Which is the correct past tense of "go"?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-1"><button class="mc-opt" onclick="checkQF(this,1,'went')">went</button><button class="mc-opt" onclick="checkQF(this,1,'went')">goed</button><button class="mc-opt" onclick="checkQF(this,1,'went')">go</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Which preposition is correct? "I last visited my grandparents _____ the summer holiday."</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-2"><button class="mc-opt" onclick="checkQF(this,2,'during')">during</button><button class="mc-opt" onclick="checkQF(this,2,'during')">on</button><button class="mc-opt" onclick="checkQF(this,2,'during')">last</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Which adjective describes something new and interesting?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-3"><button class="mc-opt" onclick="checkQF(this,3,'fascinating')">fascinating</button><button class="mc-opt" onclick="checkQF(this,3,'fascinating')">frustrating</button><button class="mc-opt" onclick="checkQF(this,3,'fascinating')">depressing</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. What is the correct structure for answering "When was the last time...?"</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-4"><button class="mc-opt" onclick="checkQF(this,4,'The last time I went... was...')">The last time I went... was...</button><button class="mc-opt" onclick="checkQF(this,4,'The last time I went... was...')">The last time I go... is...</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(74,20,140,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">5. What are the 3 steps in the answer formula?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-5"><button class="mc-opt" onclick="checkQF(this,5,'When + Why + What it was like')">When + Why + What it was like</button><button class="mc-opt" onclick="checkQF(this,5,'When + Why + What it was like')">Who + Where + When</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQF()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+  <div id="navbar">
+    <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i> Prev</button>
+    <div id="nav-dots"></div>
+    <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next <i class="fas fa-chevron-right"></i></button>
+    <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">35</span></div>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    var currentSlide = 1;
+    var totalSlides = 35;
+
+    function buildDots() {
+      var container = document.getElementById("nav-dots");
+      container.innerHTML = "";
+      for (var i = 1; i <= totalSlides; i++) {
+        var d = document.createElement("div");
+        d.className = "dot" + (i === 1 ? " active" : "");
+        d.setAttribute("data-slide", i);
+        d.onclick = (function(n){ return function(){ goToSlide(n); }; })(i);
+        container.appendChild(d);
+      }
+    }
+
+    function goToSlide(n) {
+      var prev = document.getElementById("slide-" + currentSlide);
+      if (prev) prev.classList.remove("active");
+      currentSlide = n;
+      var next = document.getElementById("slide-" + currentSlide);
+      if (next) next.classList.add("active");
+      document.getElementById("current-slide").textContent = currentSlide;
+      var dots = document.querySelectorAll(".dot");
+      dots.forEach(function(d, i) { d.classList.toggle("active", i + 1 === currentSlide); });
+      document.getElementById("prev-btn").disabled = currentSlide === 1;
+      document.getElementById("next-btn").disabled = currentSlide === totalSlides;
+      var pb = document.getElementById("progress-bar");
+      if (pb) pb.style.width = ((currentSlide / totalSlides) * 100) + "%";
+    }
+
+    function changeSlide(dir) {
+      var n = currentSlide + dir;
+      if (n >= 1 && n <= totalSlides) goToSlide(n);
+    }
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") changeSlide(1);
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") changeSlide(-1);
+    });
+
+    function showToast(msg, type) {
+      var t = document.getElementById("toast");
+      t.textContent = msg;
+      t.className = "toast show " + (type || "");
+      clearTimeout(t._timer);
+      t._timer = setTimeout(function(){ t.className = "toast"; }, 3200);
+    }
+
+    function toggleCheck(el) { el.classList.toggle("checked"); }
+
+    // ===== GAP FILL =====
+    function checkGF(num, accepted) {
+      var input = document.getElementById("gf-" + num);
+      if (!input) return;
+      var val = input.value.trim().toLowerCase();
+      var isCorrect = accepted.some(function(a) { return val === a.toLowerCase(); });
+      if (isCorrect) {
+        input.style.borderColor = "#2e7d32"; input.style.background = "#f0fdf4";
+        showToast("Correct!", "success");
+      } else {
+        input.style.borderColor = "#c62828"; input.style.background = "#fff5f5";
+        showToast("Try again! Hint: " + accepted[0], "error");
+      }
+    }
+
+    function showGFAnswers() {
+      var ans = {
+        "gf-1": "around my 10th birthday",
+        "gf-2": "about two weeks ago",
+        "gf-3": "last weekend",
+        "gf-4": "during the Tet holiday",
+        "gf-5": "fun and memorable"
+      };
+      Object.keys(ans).forEach(function(id) {
+        var input = document.getElementById(id);
+        if (input) { input.value = ans[id]; input.style.borderColor = "#2e7d32"; input.style.background = "#f0fdf4"; }
+      });
+      showToast("Answers revealed!", "success");
+    }
+
+    function resetGF() {
+      for (var i = 1; i <= 5; i++) {
+        var input = document.getElementById("gf-" + i);
+        if (input) { input.value = ""; input.style.borderColor = ""; input.style.background = ""; }
+      }
+    }
+
+    // ===== ERROR CORRECTION =====
+    function checkEC(num, accepted) {
+      var input = document.getElementById("ec-" + num);
+      if (!input) return;
+      var val = input.value.trim().toLowerCase();
+      var isCorrect = accepted.some(function(a) { return val === a.toLowerCase() || val.includes(a.toLowerCase()); });
+      if (isCorrect) {
+        input.style.borderColor = "#2e7d32"; input.style.background = "#f0fdf4";
+        showToast("Correct!", "success");
+      } else {
+        input.style.borderColor = "#c62828"; input.style.background = "#fff5f5";
+        showToast("Try again! Hint: " + accepted[0], "error");
+      }
+    }
+
+    function showECAnswers() {
+      var ans = { "ec-1": "went", "ec-2": "went", "ec-3": "exciting and fascinating" };
+      Object.keys(ans).forEach(function(id) {
+        var input = document.getElementById(id);
+        if (input) { input.value = ans[id]; input.style.borderColor = "#2e7d32"; input.style.background = "#f0fdf4"; }
+      });
+      showToast("Answers revealed!", "success");
+    }
+
+    function resetEC() {
+      ["ec-1","ec-2","ec-3"].forEach(function(id) {
+        var input = document.getElementById(id);
+        if (input) { input.value = ""; input.style.borderColor = ""; input.style.background = ""; }
+      });
+    }
+
+    // ===== QUIZ FACTORY =====
+    function makeQuiz(slideId, scoreId) {
+      var score = 0; var done = {};
+      return {
+        check: function(btn, qNum, correct) {
+          if (done[qNum]) return; done[qNum] = true;
+          var allOpts = btn.parentElement.querySelectorAll(".mc-opt");
+          allOpts.forEach(function(o) { o.disabled = true; });
+          if (btn.textContent.trim() === correct) {
+            btn.classList.add("correct"); score++;
+            var el = document.getElementById(scoreId);
+            if (el) el.textContent = score;
+            showToast("Correct!", "success");
+          } else {
+            btn.classList.add("wrong");
+            allOpts.forEach(function(o) { if (o.textContent.trim() === correct) o.classList.add("correct"); });
+            showToast("Not quite. The correct answer is highlighted.", "error");
+          }
+        },
+        reset: function() {
+          score = 0; done = {};
+          var el = document.getElementById(scoreId);
+          if (el) el.textContent = "0";
+          document.querySelectorAll("#" + slideId + " .mc-opt").forEach(function(b) { b.classList.remove("correct","wrong"); b.disabled = false; });
+        }
+      };
+    }
+
+    var q1 = makeQuiz("slide-14","q1-score");
+    var q2 = makeQuiz("slide-15","q2-score");
+    var q3 = makeQuiz("slide-16","q3-score");
+    var q4 = makeQuiz("slide-21","q4-score");
+    var q5 = makeQuiz("slide-23","q5-score");
+    var q6 = makeQuiz("slide-25","q6-score");
+    var q7 = makeQuiz("slide-27","q7-score");
+    var q8 = makeQuiz("slide-32","q8-score");
+    var qfinal = makeQuiz("slide-35","qfinal-score");
+
+    function checkQ1(btn, qNum, correct) { q1.check(btn, qNum, correct); }
+    function resetQ1() { q1.reset(); }
+    function checkQ2(btn, qNum, correct) { q2.check(btn, qNum, correct); }
+    function resetQ2() { q2.reset(); }
+    function checkQ3(btn, qNum, correct) { q3.check(btn, qNum, correct); }
+    function resetQ3() { q3.reset(); }
+    function checkQ4(btn, qNum, correct) { q4.check(btn, qNum, correct); }
+    function resetQ4() { q4.reset(); }
+    function checkQ5(btn, qNum, correct) { q5.check(btn, qNum, correct); }
+    function resetQ5() { q5.reset(); }
+    function checkQ6(btn, qNum, correct) { q6.check(btn, qNum, correct); }
+    function resetQ6() { q6.reset(); }
+    function checkQ7(btn, qNum, correct) { q7.check(btn, qNum, correct); }
+    function resetQ7() { q7.reset(); }
+    function checkQ8(btn, qNum, correct) { q8.check(btn, qNum, correct); }
+    function resetQ8() { q8.reset(); }
+    function checkQF(btn, qNum, correct) { qfinal.check(btn, qNum, correct); }
+    function resetQF() { qfinal.reset(); }
+
+    // ===== INIT =====
+    buildDots();
+    goToSlide(1);
+  </script>
+</body>
+</html>

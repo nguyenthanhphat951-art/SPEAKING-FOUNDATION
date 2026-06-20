@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPK F Lessons 6-7: Describe a Person | Interactive Classroom</title>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<link href="/fonts/Montserrat/index.css" rel="stylesheet">
+<link href="/fonts/Open Sans/index.css" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--navy:#006064;--blue:#00838F;--green:#00ACC1;--amber:#FF8F00;--red:#C62828;--teal:#00BCD4;--bg:#E0F7FA;--bg2:#B2EBF2;--ink:#001A1C;--ink2:#006064;--hf:Montserrat,sans-serif;--bf:Open Sans,sans-serif;}
+html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink);overflow:hidden;}
+.slide{display:none;width:100vw;height:100vh;position:relative;overflow:hidden;animation:fadeIn .4s ease;}
+.slide.active{display:flex;flex-direction:column;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+@keyframes shake{0%,100%{transform:translateX(0);}20%,60%{transform:translateX(-6px);}40%,80%{transform:translateX(6px);}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,96,100,.4);}70%{box-shadow:0 0 0 14px rgba(0,96,100,0);}}
+#progress-bar{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--navy),var(--amber));transition:width .4s ease;z-index:1001;}
+#navbar{position:fixed;bottom:0;left:0;right:0;height:52px;background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:1000;box-shadow:0 -4px 20px rgba(0,0,0,.25);}
+.nav-btn{background:rgba(255,255,255,.15);border:none;color:#fff;padding:6px 14px;border-radius:8px;cursor:pointer;font-family:var(--hf);font-size:.76rem;font-weight:700;transition:all .2s;display:flex;align-items:center;gap:5px;}
+.nav-btn:hover{background:rgba(255,255,255,.28);transform:translateY(-1px);}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed;transform:none;}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;transition:all .2s;flex-shrink:0;}
+.dot.active{background:#fff;transform:scale(1.3);}
+.dot:hover{background:rgba(255,255,255,.7);}
+#nav-dots{display:flex;align-items:center;gap:5px;flex-wrap:wrap;max-width:600px;justify-content:center;}
+.slide-counter{color:rgba(255,255,255,.75);font-family:var(--hf);font-size:.78rem;font-weight:600;min-width:55px;text-align:center;}
+.s-header{padding:18px 44px 10px;flex-shrink:0;border-bottom:3px solid var(--navy);display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;}
+.s-header h1{font-family:var(--hf);font-size:1.65rem;font-weight:800;color:var(--navy);line-height:1.1;}
+.s-badge{background:var(--navy);color:#fff;font-family:var(--hf);font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:20px;white-space:nowrap;letter-spacing:.05em;}
+.s-badge.amber{background:var(--amber);color:#1a0000;}
+.s-badge.green{background:#2e7d32;}
+.s-badge.red{background:var(--red);}
+.s-badge.purple{background:#6A1B9A;}
+.s-badge.s1{background:#006064;}
+.s-badge.s2{background:#FF8F00;color:#1a0000;}
+.s-badge.s3{background:#2e7d32;}
+.s-badge.s4{background:#6A1B9A;}
+.s-content{flex:1;padding:14px 44px 60px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;}
+.intro-note{background:rgba(0,96,100,.08);border-left:4px solid var(--navy);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.88rem;color:var(--ink);line-height:1.5;}
+.model-q{background:var(--navy);color:#fff;border-radius:10px;padding:11px 16px;font-size:.88rem;font-weight:600;display:flex;align-items:flex-start;gap:8px;}
+.model-q i{margin-top:2px;flex-shrink:0;color:var(--amber);}
+.model-answer-box{background:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 3px 12px rgba(0,96,100,.1);font-size:.88rem;line-height:1.75;color:var(--ink);border-left:5px solid var(--navy);}
+.hl-s1{background:rgba(0,96,100,.12);color:var(--navy);font-weight:700;padding:1px 5px;border-radius:4px;}
+.hl-s2{background:rgba(255,143,0,.18);color:#7a3800;font-weight:700;padding:1px 5px;border-radius:4px;}
+.hl-s3{background:rgba(46,125,50,.12);color:#1b5e20;font-weight:700;padding:1px 5px;border-radius:4px;}
+.hl-s4{background:rgba(106,27,154,.12);color:#4A148C;font-weight:700;padding:1px 5px;border-radius:4px;}
+.lang-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+.lang-tag{background:#fff;border:1.5px solid var(--bg2);border-radius:8px;padding:5px 10px;font-size:.78rem;display:flex;align-items:center;gap:5px;color:var(--ink2);}
+.lang-tag i{color:var(--navy);}
+.tip-box{background:rgba(255,143,0,.12);border-left:4px solid var(--amber);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;color:var(--ink);display:flex;align-items:flex-start;gap:8px;}
+.tip-box i{color:var(--amber);margin-top:2px;flex-shrink:0;}
+.mc-opt{background:var(--bg);border:2px solid var(--bg2);border-radius:8px;padding:7px 14px;font-size:.82rem;cursor:pointer;font-family:var(--bf);color:var(--ink);transition:all .2s;text-align:left;}
+.mc-opt:hover:not(:disabled){background:rgba(0,96,100,.08);border-color:var(--navy);}
+.mc-opt.correct{background:#e8f5e9;border-color:#2e7d32;color:#1b5e20;font-weight:700;}
+.mc-opt.wrong{background:#ffebee;border-color:#c62828;color:#7f1d1d;animation:shake .4s;}
+.mc-opt:disabled{cursor:not-allowed;opacity:.7;}
+.gap-input{border:2px solid var(--bg2);border-radius:8px;padding:5px 10px;font-size:.84rem;font-family:var(--bf);color:var(--ink);background:#fff;min-width:140px;transition:all .2s;outline:none;}
+.gap-input:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(0,96,100,.1);}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;}
+.check-btn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:var(--hf);display:flex;align-items:center;gap:6px;transition:all .2s;}
+.check-btn:hover{opacity:.88;transform:translateY(-1px);}
+.check-btn.amber{background:var(--amber);color:#1a0000;}
+.reset-btn{background:rgba(0,96,100,.1);color:var(--navy);border:none;border-radius:8px;padding:8px 16px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:var(--hf);display:flex;align-items:center;gap:6px;transition:all .2s;}
+.reset-btn:hover{background:rgba(0,96,100,.18);}
+.vocab-card{background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);cursor:pointer;transition:all .2s;border-left:4px solid var(--navy);}
+.vocab-card:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,96,100,.12);}
+.vocab-word{font-family:var(--hf);font-size:.9rem;font-weight:800;color:var(--navy);margin-bottom:3px;}
+.vocab-example{font-size:.78rem;color:var(--ink2);font-style:italic;line-height:1.4;}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:8px;cursor:pointer;transition:background .2s;}
+.check-item:hover{background:rgba(0,96,100,.05);}
+.check-item.checked .check-box{background:var(--navy);border-color:var(--navy);}
+.check-item.checked .check-box i{opacity:1;}
+.check-box{width:22px;height:22px;border-radius:5px;border:2px solid var(--bg2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+.check-box i{font-size:.7rem;color:#fff;opacity:0;transition:opacity .2s;}
+.check-text{font-size:.84rem;color:var(--ink);line-height:1.4;}
+.cover-content{text-align:center;padding:0 40px;}
+.cover-tag{background:rgba(255,255,255,.2);color:#fff;font-family:var(--hf);font-size:.85rem;font-weight:700;padding:6px 18px;border-radius:20px;display:inline-block;margin-bottom:18px;letter-spacing:.08em;}
+.cover-h1{font-family:var(--hf);font-size:3.2rem;font-weight:900;color:#fff;line-height:1.1;margin-bottom:14px;}
+.cover-h1 span{color:var(--amber);}
+.cover-p{font-size:1.05rem;color:rgba(255,255,255,.85);margin-bottom:28px;line-height:1.6;max-width:600px;margin-left:auto;margin-right:auto;}
+.start-btn{background:var(--amber);color:#1a0000;border:none;border-radius:12px;padding:14px 36px;font-size:1.05rem;font-weight:800;cursor:pointer;font-family:var(--hf);display:inline-flex;align-items:center;gap:10px;transition:all .25s;animation:pulse 2s infinite;}
+.start-btn:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.25);}
+.cover-stats{display:flex;gap:28px;justify-content:center;margin-top:28px;}
+.cover-stat .num{font-family:var(--hf);font-size:2rem;font-weight:900;color:#fff;}
+.cover-stat .lbl{font-size:.78rem;color:rgba(255,255,255,.7);font-weight:600;text-transform:uppercase;letter-spacing:.08em;}
+.toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%) translateY(20px);background:#001a1c;color:#fff;padding:10px 22px;border-radius:10px;font-size:.88rem;font-weight:600;opacity:0;transition:all .3s;z-index:2000;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.success{background:#1b5e20;}
+.toast.error{background:#7f1d1d;}
+</style>
+</head>
+<body>
+<div id="progress-bar" style="width:0%"></div>
+
+<div class="slide" id="slide-1">
+  <div style="position:absolute;inset:0;background:linear-gradient(135deg,#006064,#00838F,#00ACC1);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+    <div class="cover-content">
+      <div class="cover-tag"><i class="fas fa-user" style="margin-right:5px"></i>SPK F &middot; Lessons 6&ndash;7 &middot; Part 2</div>
+      <div class="cover-h1">Describe <span>a Person</span></div>
+      <div class="cover-p">Master the 4-Stage Formula for IELTS Part 2 person monologues: Who they are &rarr; What they are like &rarr; Their achievements &rarr; Why they are special.</div>
+      <button class="start-btn" onclick="goToSlide(2)"><i class="fas fa-play"></i> Start Lesson</button>
+      <div class="cover-stats">
+        <div class="cover-stat"><div class="num">35</div><div class="lbl">Slides</div></div>
+        <div class="cover-stat"><div class="num">4</div><div class="lbl">Stages</div></div>
+        <div class="cover-stat"><div class="num">2</div><div class="lbl">Model Answers</div></div>
+        <div class="cover-stat"><div class="num">1</div><div class="lbl">Practice Q</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-2">
+  <div class="s-header"><h1>Lesson Aims</h1><span class="s-badge">Lessons 6&ndash;7</span></div>
+  <div class="s-content">
+    <div class="intro-note">In this lesson, you will master the <strong>4-Stage Formula</strong> for describing a person in IELTS Part 2.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 2px 8px rgba(0,96,100,.08);border-top:4px solid var(--navy);">
+        <div style="font-family:var(--hf);font-size:.8rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Typical IELTS Part 2 Questions</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.82rem;">
+          <div style="padding:5px 9px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">Describe a teacher you know.</div>
+          <div style="padding:5px 9px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">Describe a person you enjoy spending time with.</div>
+          <div style="padding:5px 9px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">Describe a famous person you would like to meet.</div>
+          <div style="padding:5px 9px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">Describe a neighbour you have or have had.</div>
+          <div style="padding:5px 9px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">Describe one of your friends.</div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 2px 8px rgba(0,96,100,.08);border-top:4px solid var(--amber);">
+        <div style="font-family:var(--hf);font-size:.8rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">4-Stage Formula</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:rgba(0,96,100,.06);border-radius:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--hf);font-size:.78rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div><div style="font-size:.84rem;"><strong>Say who they are and how you know them</strong><br><span style="color:var(--ink2);font-size:.78rem;">relatives, occupations, relative clauses with who</span></div></div>
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:rgba(0,96,100,.06);border-radius:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--hf);font-size:.78rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div><div style="font-size:.84rem;"><strong>Say what they are like and what they do</strong><br><span style="color:var(--ink2);font-size:.78rem;">personality adjectives, adverbs of frequency</span></div></div>
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:rgba(0,96,100,.06);border-radius:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--hf);font-size:.78rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div><div style="font-size:.84rem;"><strong>Say what they have achieved and how they influenced you</strong><br><span style="color:var(--ink2);font-size:.78rem;">third conditional, present perfect, achievement phrases</span></div></div>
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:rgba(0,96,100,.06);border-radius:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--hf);font-size:.78rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div><div style="font-size:.84rem;"><strong>Say why they are special and how you feel</strong><br><span style="color:var(--ink2);font-size:.78rem;">admiration expressions, imitation expressions</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-3">
+  <div class="s-header"><h1>Stage 1: Relatives, Occupations &amp; Social Positions</h1><span class="s-badge s1">Stage 1</span></div>
+  <div class="s-content">
+    <div class="intro-note">Start by saying <strong>who the person is</strong> and <strong>how you know them</strong>. Click any card to see an example.</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Relatives</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;font-size:.78rem;">
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 8px;border-radius:20px;font-weight:600;cursor:pointer;" onclick="showToast('I would like to talk about my grandmother.','success')">grandmother</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 8px;border-radius:20px;font-weight:600;cursor:pointer;" onclick="showToast('I would like to talk about my uncle.','success')">uncle / aunt</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 8px;border-radius:20px;font-weight:600;cursor:pointer;" onclick="showToast('I would like to talk about my cousin.','success')">cousin</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 8px;border-radius:20px;font-weight:600;cursor:pointer;" onclick="showToast('I would like to talk about my brother-in-law.','success')">brother-in-law</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 8px;border-radius:20px;font-weight:600;cursor:pointer;" onclick="showToast('I would like to talk about my stepfather.','success')">stepfather</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 8px;border-radius:20px;font-weight:600;cursor:pointer;" onclick="showToast('I would like to talk about my nephew.','success')">nephew</span>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Occupations</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;font-size:.78rem;">
+          <span style="background:rgba(255,143,0,.08);color:#7a3800;padding:2px 8px;border-radius:20px;font-weight:600;cursor:pointer;" onclick="showToast('She is a surgeon at the local hospital.','success')">surgeon</span>
+          <span style="background:rgba(255,143,0,.08);color:#7a3800;padding:2px 8px;border-radius:20px;font-weight:600;cursor:pointer;" onclick="showToast('He works as an accountant.','success')">accountant</span>
+          <span style="background:rgba(255,143,0,.08);color:#7a3800;padding:2px 8px;border-radius:20px;font-weight:600;cursor:pointer;" onclick="showToast('She is an architect.','success')">architect</span>
+          <span style="background:rgba(255,143,0,.08);color:#7a3800;padding:2px 8px;border-radius:20px;font-weight:600;cursor:pointer;" onclick="showToast('He is a civil servant.','success')">civil servant</span>
+          <span style="background:rgba(255,143,0,.08);color:#7a3800;padding:2px 8px;border-radius:20px;font-weight:600;cursor:pointer;" onclick="showToast('He is a plumber like me.','success')">plumber</span>
+          <span style="background:rgba(255,143,0,.08);color:#7a3800;padding:2px 8px;border-radius:20px;font-weight:600;cursor:pointer;" onclick="showToast('She works as a waiter.','success')">waiter/waitress</span>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Social Position</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;font-size:.78rem;">
+          <span style="background:rgba(0,188,212,.08);color:#006064;padding:2px 8px;border-radius:20px;font-weight:600;cursor:pointer;" onclick="showToast('She is a celebrity.','success')">celebrity</span>
+          <span style="background:rgba(0,188,212,.08);color:#006064;padding:2px 8px;border-radius:20px;font-weight:600;cursor:pointer;" onclick="showToast('He is a politician.','success')">politician</span>
+          <span style="background:rgba(0,188,212,.08);color:#006064;padding:2px 8px;border-radius:20px;font-weight:600;cursor:pointer;" onclick="showToast('She is a TV presenter.','success')">TV presenter</span>
+          <span style="background:rgba(0,188,212,.08);color:#006064;padding:2px 8px;border-radius:20px;font-weight:600;cursor:pointer;" onclick="showToast('He is a sports personality.','success')">sports personality</span>
+          <span style="background:rgba(0,188,212,.08);color:#006064;padding:2px 8px;border-radius:20px;font-weight:600;cursor:pointer;" onclick="showToast('She is a childhood friend.','success')">childhood friend</span>
+          <span style="background:rgba(0,188,212,.08);color:#006064;padding:2px 8px;border-radius:20px;font-weight:600;cursor:pointer;" onclick="showToast('He is a distant relation.','success')">distant relation</span>
+        </div>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);margin-top:4px;">
+      <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Example Opening Sentences</div>
+      <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+        <div style="padding:5px 9px;background:rgba(0,96,100,.06);border-radius:7px;cursor:pointer;" onclick="showToast('I would like to talk about my nephew, who is a plumber like me.','success')">I would like to talk about my nephew, <strong>who is a plumber</strong> like me.</div>
+        <div style="padding:5px 9px;background:rgba(0,96,100,.06);border-radius:7px;cursor:pointer;" onclick="showToast('I really admire Daniel Craig, who is an excellent actor and has recently become a huge movie star.','success')">I really admire Daniel Craig, <strong>who is an excellent actor</strong> and has recently become a huge movie star.</div>
+        <div style="padding:5px 9px;background:rgba(0,96,100,.06);border-radius:7px;cursor:pointer;" onclick="showToast('I will always remember Dr. Shotter. He was one of my history teachers at university.','success')">I will always remember Dr. Shotter. He was one of my <strong>history teachers at university</strong>.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-4">
+  <div class="s-header"><h1>Stage 1: Relative Clauses with WHO</h1><span class="s-badge s1">Stage 1</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use relative clauses with <strong>who</strong> to add information about the person. There are two types.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+        <div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:7px;"><i class="fas fa-info-circle" style="margin-right:5px"></i>Non-defining (extra information)</div>
+        <div style="font-size:.78rem;color:var(--ink2);margin-bottom:6px;">Adds extra info. Remove it and the sentence still makes sense. Use commas.</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-size:.82rem;">
+          <div style="padding:4px 8px;background:rgba(0,96,100,.06);border-radius:6px;cursor:pointer;" onclick="showToast('My mother, who worked as a waitress for many years, thoroughly dislikes politics.','success')">My mother<strong>, who worked as a waitress,</strong> thoroughly dislikes politics.</div>
+          <div style="padding:4px 8px;background:rgba(0,96,100,.06);border-radius:6px;cursor:pointer;" onclick="showToast('My grandmother, who is my father s mother, had to look after me.','success')">My grandmother<strong>, who is my father s mother,</strong> had to look after me.</div>
+        </div>
+        <div class="tip-box" style="margin-top:8px;"><i class="fas fa-lightbulb"></i><span>Slight pause before and after the clause when speaking.</span></div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+        <div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:var(--amber);margin-bottom:7px;"><i class="fas fa-exclamation-circle" style="margin-right:5px"></i>Defining (necessary information)</div>
+        <div style="font-size:.78rem;color:var(--ink2);margin-bottom:6px;">Identifies which person. Remove it and the sentence loses meaning. No commas.</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-size:.82rem;">
+          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;cursor:pointer;" onclick="showToast('The woman who lived next door to us when I was a child was extremely kind.','success')">The woman <strong>who lived next door</strong> to us when I was a child was extremely kind.</div>
+          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;cursor:pointer;" onclick="showToast('The movie star who starred in the film Titanic has become hugely successful.','success')">The movie star <strong>who starred in Titanic</strong> has become hugely successful.</div>
+        </div>
+        <div class="tip-box" style="margin-top:8px;"><i class="fas fa-lightbulb"></i><span>No pause. Speak continuously through the clause.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-5">
+  <div class="s-header"><h1>Stage 1: Past Continuous &amp; How You Met</h1><span class="s-badge s1">Stage 1</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use the <strong>past continuous + past simple</strong> to explain how or when you met the person.</div>
+    <div style="background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:5px solid var(--navy);margin-bottom:8px;">
+      <div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:8px;">Structure: <span style="color:var(--amber)">was/were + verb-ing</span> (longer action) + <span style="color:var(--teal)">past simple</span> (shorter action)</div>
+      <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+        <div style="padding:5px 9px;background:rgba(0,96,100,.06);border-radius:7px;cursor:pointer;" onclick="showToast('When I was studying at university, my teacher told me to spend more time researching.','success')">When I <strong>was studying</strong> at university, my teacher <strong>told</strong> me to spend more time researching.</div>
+        <div style="padding:5px 9px;background:rgba(0,96,100,.06);border-radius:7px;cursor:pointer;" onclick="showToast('While my brother was visiting Vietnam, he lost his passport, wallet, and credit cards.','success')">While my brother <strong>was visiting</strong> Vietnam, he <strong>lost</strong> his passport, wallet, and credit cards.</div>
+        <div style="padding:5px 9px;background:rgba(0,96,100,.06);border-radius:7px;cursor:pointer;" onclick="showToast('We met when we were working together at the same company.','success')">We <strong>met</strong> when we <strong>were working</strong> together at the same company.</div>
+        <div style="padding:5px 9px;background:rgba(0,96,100,.06);border-radius:7px;cursor:pointer;" onclick="showToast('I first talked to my girlfriend when I asked her the time while we were waiting for the bus.','success')">I first <strong>talked</strong> to my girlfriend when I <strong>asked</strong> her the time while we <strong>were waiting</strong> for the bus.</div>
+        <div style="padding:5px 9px;background:rgba(0,96,100,.06);border-radius:7px;cursor:pointer;" onclick="showToast('When I was choosing my courses, I decided to try Roman History and so met Dr. Shotter.','success')">When I <strong>was choosing</strong> my courses, I <strong>decided</strong> to try Roman History and so <strong>met</strong> Dr. Shotter.</div>
+      </div>
+    </div>
+    <div class="tip-box"><i class="fas fa-lightbulb"></i><span><strong>Key Linkers:</strong> when / while / as / during the time that — all used to connect the past continuous with the past simple.</span></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-6">
+  <div class="s-header"><h1>Stage 2: Personality Adjectives</h1><span class="s-badge s2">Stage 2</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use personality adjectives to describe <strong>what the person is like</strong>. Click any card to see an example.</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+        <div style="font-family:var(--hf);font-size:.76rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Funny</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;font-size:.76rem;">
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('He is very humorous and always makes people laugh.','success')">humorous</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('She is very witty and clever with words.','success')">witty</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('He is hilarious and always tells great jokes.','success')">hilarious</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('She is very amusing and entertaining.','success')">amusing</span>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+        <div style="font-family:var(--hf);font-size:.76rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Helpful</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;font-size:.76rem;">
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('She is very considerate of other people s feelings.','success')">considerate</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('He is very supportive and always there for me.','success')">supportive</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('She is very sympathetic when I have problems.','success')">sympathetic</span>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+        <div style="font-family:var(--hf);font-size:.76rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Shy</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;font-size:.76rem;">
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('He is quite reserved and does not talk much.','success')">reserved</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('She is quite introverted and prefers small groups.','success')">introverted</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('He is quite timid and easily embarrassed.','success')">timid</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('She is quite sensitive and takes things personally.','success')">sensitive</span>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+        <div style="font-family:var(--hf);font-size:.76rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Confident</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;font-size:.76rem;">
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('She is very ambitious and always sets high goals.','success')">ambitious</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('He is very self-confident and never doubts himself.','success')">self-confident</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('She is very extroverted and loves meeting new people.','success')">extroverted</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('He is very adventurous and loves trying new things.','success')">adventurous</span>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+        <div style="font-family:var(--hf);font-size:.76rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Kind</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;font-size:.76rem;">
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('She is very gentle and never raises her voice.','success')">gentle</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('He is very generous and always helps others.','success')">generous</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('She is very loving and caring towards her family.','success')">loving</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('He is very thoughtful and always remembers birthdays.','success')">thoughtful</span>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:10px 12px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+        <div style="font-family:var(--hf);font-size:.76rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Intelligent</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;font-size:.76rem;">
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('She is very clever and always gets top marks.','success')">clever / bright</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('He is very mature for his age.','success')">mature</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('She is very talented and excels at everything she does.','success')">talented</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('He is very open-minded and accepts different views.','success')">open-minded</span>
+          <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:2px 7px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('She is very wise and gives great advice.','success')">wise</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-7">
+  <div class="s-header"><h1>Stage 2: Adverbs of Frequency for Habits</h1><span class="s-badge s2">Stage 2</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use adverbs of frequency to describe the person's <strong>habits and behaviour</strong>. Click any card to see an example.</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;">
+      <div class="vocab-card" onclick="showToast('She is constantly smiling and always looks happy.','success')"><div class="vocab-word">constantly / always</div><div class="vocab-example">She is <strong>constantly</strong> smiling and <strong>always</strong> looks happy.</div></div>
+      <div class="vocab-card" onclick="showToast('He frequently goes to the gym and regularly exercises.','success')"><div class="vocab-word">frequently / regularly</div><div class="vocab-example">He <strong>frequently</strong> goes to the gym and <strong>regularly</strong> exercises.</div></div>
+      <div class="vocab-card" onclick="showToast('She typically arrives early and usually prepares well.','success')"><div class="vocab-word">typically / usually</div><div class="vocab-example">She <strong>typically</strong> arrives early and <strong>usually</strong> prepares well.</div></div>
+      <div class="vocab-card" onclick="showToast('He sometimes forgets things but never misses important events.','success')"><div class="vocab-word">sometimes / occasionally</div><div class="vocab-example">He <strong>sometimes</strong> forgets things but <strong>never</strong> misses important events.</div></div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);margin-top:4px;">
+      <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Times + Time Period Structure</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;font-size:.78rem;">
+        <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('My friend Omar has to wash five times a day, every day.','success')">once a day</span>
+        <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('She goes to the gym twice a week.','success')">twice a week</span>
+        <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('He visits his parents three times a month.','success')">three times a month</span>
+        <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('Every summer vacation, my father would think of a trip for us to go on.','success')">every summer vacation</span>
+        <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('My grandmother would regularly go to the temple to pray.','success')">every morning</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-8">
+  <div class="s-header"><h1>Stage 3: The Third Conditional</h1><span class="s-badge s3">Stage 3</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use the <strong>third conditional</strong> to explain how the person influenced you — what would have been different without them.</div>
+    <div style="background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:5px solid var(--navy);margin-bottom:8px;">
+      <div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:8px;">Structure: <span style="color:var(--amber)">if + had(n't) + past participle + would(n't) have + past participle</span></div>
+      <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+        <div style="padding:5px 9px;background:rgba(0,96,100,.06);border-radius:7px;cursor:pointer;" onclick="showToast('If it had not been for her, I would never have studied nursing, which I love.','success')">If it <strong>had not been</strong> for her, I <strong>would never have studied</strong> nursing, which I love.</div>
+        <div style="padding:5px 9px;background:rgba(0,96,100,.06);border-radius:7px;cursor:pointer;" onclick="showToast('I am sure I would not have studied a Master s degree in Roman History if I had not met Dr. Shotter.','success')">I am sure I <strong>would not have studied</strong> a Master s degree if I <strong>had not met</strong> Dr. Shotter.</div>
+        <div style="padding:5px 9px;background:rgba(0,96,100,.06);border-radius:7px;cursor:pointer;" onclick="showToast('If my teacher had not been so relaxed, I am sure I would have studied harder.','success')">If my teacher <strong>had not been</strong> so relaxed, I am sure I <strong>would have studied</strong> harder.</div>
+        <div style="padding:5px 9px;background:rgba(0,96,100,.06);border-radius:7px;cursor:pointer;" onclick="showToast('I do not think I would be as outgoing as I am now if I had not spent so much time with him.','success')">I do not think I <strong>would be</strong> as outgoing if I <strong>had not spent</strong> so much time with him.</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Things that did NOT happen</div>
+        <div style="font-size:.82rem;color:var(--ink2);">If my grandmother had not looked after me as a child, a babysitter would have.</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Things that might not have happened</div>
+        <div style="font-size:.82rem;color:var(--ink2);">If my niece had not been so lazy at school, she would not have failed all her exams.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-9">
+  <div class="s-header"><h1>Stage 3: Present Perfect &amp; Achievement Phrases</h1><span class="s-badge s3">Stage 3</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use the <strong>present perfect</strong> to talk about the person's achievements and their impact on you.</div>
+    <div style="background:#fff;border-radius:12px;padding:12px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:5px solid var(--navy);margin-bottom:8px;">
+      <div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:6px;">Structure: have/has + past participle</div>
+      <div style="display:flex;flex-direction:column;gap:4px;font-size:.82rem;">
+        <div style="padding:4px 8px;background:rgba(0,96,100,.06);border-radius:6px;cursor:pointer;" onclick="showToast('My grandfather has had a great influence on my life.','success')">My grandfather <strong>has had</strong> a great influence on my life.</div>
+        <div style="padding:4px 8px;background:rgba(0,96,100,.06);border-radius:6px;cursor:pointer;" onclick="showToast('She has become one of the most famous actresses in the world.','success')">She <strong>has become</strong> one of the most famous actresses in the world.</div>
+        <div style="padding:4px 8px;background:rgba(0,96,100,.06);border-radius:6px;cursor:pointer;" onclick="showToast('He has inspired a lot of students, including me, to become more interested in history.','success')">He <strong>has inspired</strong> a lot of students, including me, to become more interested in history.</div>
+        <div style="padding:4px 8px;background:rgba(0,96,100,.06);border-radius:6px;cursor:pointer;" onclick="showToast('She has helped me become more confident, especially in social situations.','success')">She <strong>has helped</strong> me become more confident, especially in social situations.</div>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+      <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Achievement Phrases</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;font-size:.78rem;">
+        <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('She struggled to get where she is now - she deserves to be so famous!','success')">to struggle for something</span>
+        <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('He fought for everything he has achieved - I admire him greatly!','success')">to fight for something</span>
+        <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('Slowly but surely, she climbed the ladder of success.','success')">to climb the ladder of success</span>
+        <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('He had a long and brilliant career as a surgeon.','success')">to have a long and brilliant career</span>
+        <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('She has a gift for music and plays beautifully.','success')">to have a gift for something</span>
+        <span style="background:rgba(0,96,100,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('He has really developed his talent as an actor.','success')">to develop a talent as a...</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-10">
+  <div class="s-header"><h1>Stage 4: Expressions of Admiration</h1><span class="s-badge s4">Stage 4</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use these expressions to say <strong>why the person is special</strong> and how you feel about them. Click any card to see an example.</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;">
+      <div class="vocab-card" onclick="showToast('I love her because she is always there for me when I need support.','success')"><div class="vocab-word">I love (person) because...</div><div class="vocab-example">I love her because she is always there for me when I need support.</div></div>
+      <div class="vocab-card" onclick="showToast('Everyone respects wise and peaceful leaders such as Mahatma Gandhi.','success')"><div class="vocab-word">Everyone respects...</div><div class="vocab-example">Everyone respects wise and peaceful leaders such as Mahatma Gandhi.</div></div>
+      <div class="vocab-card" onclick="showToast('I look up to her because of her dedication and hard work.','success')"><div class="vocab-word">I look up to (person) because...</div><div class="vocab-example">I look up to her because of her dedication and hard work.</div></div>
+      <div class="vocab-card" onclick="showToast('I will always admire him for his courage and determination.','success')"><div class="vocab-word">I will always admire (person) for...</div><div class="vocab-example">I will always admire him for his courage and determination.</div></div>
+      <div class="vocab-card" onclick="showToast('I feel proud of my mother s achievements and everything she has accomplished.','success')"><div class="vocab-word">I feel proud of...</div><div class="vocab-example">I feel proud of my mother s achievements and everything she has accomplished.</div></div>
+      <div class="vocab-card" onclick="showToast('She is special to me because she has always believed in me.','success')"><div class="vocab-word">(Person) is special to me because...</div><div class="vocab-example">She is special to me because she has always believed in me.</div></div>
+      <div class="vocab-card" onclick="showToast('I truly hold in high regard people such as President Obama who have dedicated their lives to public service.','success')"><div class="vocab-word">I hold (person) in high regard...</div><div class="vocab-example">I truly hold in high regard people who have dedicated their lives to public service.</div></div>
+      <div class="vocab-card" onclick="showToast('Many movie enthusiasts consider him to be the best actor of his generation.','success')"><div class="vocab-word">I consider (person) to be the best...</div><div class="vocab-example">Many consider him to be the best actor of his generation.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-11">
+  <div class="s-header"><h1>Stage 4: Expressions of Imitation</h1><span class="s-badge s4">Stage 4</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use these expressions to say you want to <strong>be like the person</strong> in some way.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="background:#fff;border-radius:12px;padding:12px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:5px solid var(--navy);">
+        <div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:6px;">I hope I am as + adjective + as + person</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-size:.82rem;">
+          <div style="padding:4px 8px;background:rgba(0,96,100,.06);border-radius:6px;cursor:pointer;" onclick="showToast('I hope I am as successful as Bill Gates.','success')">I hope I am <strong>as successful as</strong> Bill Gates.</div>
+          <div style="padding:4px 8px;background:rgba(0,96,100,.06);border-radius:6px;cursor:pointer;" onclick="showToast('I hope I will be as kind a teacher as Mrs. Capp.','success')">I hope I will be <strong>as kind a teacher as</strong> Mrs. Capp.</div>
+          <div style="padding:4px 8px;background:rgba(0,96,100,.06);border-radius:6px;cursor:pointer;" onclick="showToast('I also hope that I am as good a grandmother as mine was.','success')">I also hope that I am <strong>as good a grandmother as</strong> mine was.</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+        <div class="vocab-card" onclick="showToast('I would love to be like my mother when I grow up.','success')"><div class="vocab-word">I would love to be like...</div><div class="vocab-example">I would love to be like my mother when I grow up.</div></div>
+        <div class="vocab-card" onclick="showToast('I would like to be as well respected as my grandfather.','success')"><div class="vocab-word">I would like to be as... as...</div><div class="vocab-example">I would like to be as well respected as my grandfather.</div></div>
+        <div class="vocab-card" onclick="showToast('I want to be like my neighbour Doris when I am older.','success')"><div class="vocab-word">I want to be like...</div><div class="vocab-example">I want to be like my neighbour Doris when I am older.</div></div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">From the Model Answers</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-size:.82rem;">
+          <div style="padding:4px 8px;background:rgba(0,96,100,.06);border-radius:6px;cursor:pointer;" onclick="showToast('Gran was a great role model for me when I was growing up, and now I am an adult I still admire her.','success')">Gran was a great <strong>role model</strong> for me when I was growing up, and now I am an adult I still admire her.</div>
+          <div style="padding:4px 8px;background:rgba(0,96,100,.06);border-radius:6px;cursor:pointer;" onclick="showToast('I also hope that in the future, I can be as dedicated and inspiring as he is.','success')">I also hope that in the future, I can be <strong>as dedicated and inspiring as</strong> he is.</div>
+          <div style="padding:4px 8px;background:rgba(0,96,100,.06);border-radius:6px;cursor:pointer;" onclick="showToast('I would also love to be as confident and positive as him.','success')">I would also love to be <strong>as confident and positive as</strong> him.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-12">
+  <div class="s-header"><h1>Model Answer 1: A Teacher</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> Describe a teacher you know.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:4px solid var(--navy);">
+        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 1: Who they are</div>
+        <div style="font-size:.84rem;line-height:1.65;"><span class="hl-s1">I would like to talk about my history teacher, Mr. Nam, who taught me in high school.</span> I first got to know him <span class="hl-s1">when I was choosing my subjects,</span> and he quickly became my favourite teacher.</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:4px solid var(--amber);">
+        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 2: What they are like</div>
+        <div style="font-size:.84rem;line-height:1.65;">He is <span class="hl-s2">extremely knowledgeable,</span> but what really stands out is how clearly he explains things. Instead of just giving definitions, he <span class="hl-s2">tends to break complex ideas down</span> into simple steps. He is also very <span class="hl-s2">enthusiastic</span> about his subject. He <span class="hl-s2">often brings lessons to life</span> by adding real historical stories. Another thing I really appreciate is that he is <span class="hl-s2">incredibly supportive.</span> He <span class="hl-s2">would stay behind</span> after class to go over things again.</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:4px solid var(--teal);">
+        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 3: Achievements &amp; influence</div>
+        <div style="font-size:.84rem;line-height:1.65;">He <span class="hl-s3">has inspired</span> a lot of students, including me, to become more interested in history. To be honest, I probably <span class="hl-s3">would not have chosen</span> this subject <span class="hl-s3">if I had not been taught</span> by him.</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:4px solid #6A1B9A;">
+        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#4A148C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 4: Why special &amp; feelings</div>
+        <div style="font-size:.84rem;line-height:1.65;">He is someone I really <span class="hl-s4">look up to,</span> mainly because of his passion for teaching. I also hope that in the future, I can be <span class="hl-s4">as dedicated and inspiring as</span> he is.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-13">
+  <div class="s-header"><h1>Model Answer 2: A Best Friend</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> Describe a person you enjoy spending time with.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:4px solid var(--navy);">
+        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 1</div>
+        <div style="font-size:.84rem;line-height:1.65;"><span class="hl-s1">I would like to talk about my best friend, Minh, who I met at school.</span> We became close <span class="hl-s1">when we were studying together</span> for exams, and we have stayed close ever since.</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:4px solid var(--amber);">
+        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 2</div>
+        <div style="font-size:.84rem;line-height:1.65;">Minh is <span class="hl-s2">naturally funny,</span> but not in an obvious way. He has a quick, subtle sense of humour, and he <span class="hl-s2">often comes up with jokes</span> at just the right moment. He is also very <span class="hl-s2">outgoing and approachable,</span> so he finds it easy to connect with people. He <span class="hl-s2">tends to start conversations</span> naturally, even in unfamiliar situations. What I value most, though, is how <span class="hl-s2">supportive</span> he is. Whenever I am dealing with something difficult, he is the kind of person who will sit and listen properly, <span class="hl-s2">rather than just giving quick advice.</span></div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:4px solid var(--teal);">
+        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 3</div>
+        <div style="font-size:.84rem;line-height:1.65;">He <span class="hl-s3">has helped me become</span> more confident, especially in social situations. I do not think I <span class="hl-s3">would be as outgoing</span> as I am now <span class="hl-s3">if I had not spent</span> so much time with him.</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:4px solid #6A1B9A;">
+        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#4A148C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 4</div>
+        <div style="font-size:.84rem;line-height:1.65;">He is really important to me, and I genuinely <span class="hl-s4">value our friendship.</span> I would also love to be <span class="hl-s4">as confident and positive as</span> him.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-14">
+  <div class="s-header"><h1>Full Formula: Annotated Example</h1><span class="s-badge">Formula in Action</span></div>
+  <div class="s-content">
+    <div class="intro-note">See how all 4 stages work together. Click each highlighted part to learn more.</div>
+    <div class="model-answer-box" style="font-size:.86rem;">
+      <span class="hl-s1" style="cursor:pointer" onclick="showToast('Stage 1 - Who + How you know them: I would like to talk about... who taught me... — introduces the person clearly','success')">I would like to talk about my history teacher, Mr. Nam, who taught me in high school.</span>
+      I first got to know him <span class="hl-s1" style="cursor:pointer" onclick="showToast('Stage 1 - Past continuous: when I was choosing my subjects — explains how you met','success')">when I was choosing my subjects.</span>
+      He is <span class="hl-s2" style="cursor:pointer" onclick="showToast('Stage 2 - Personality adjective: extremely knowledgeable — describes what they are like','success')">extremely knowledgeable,</span>
+      and he <span class="hl-s2" style="cursor:pointer" onclick="showToast('Stage 2 - Habit phrase: tends to break complex ideas down — describes typical behaviour','success')">tends to break complex ideas down</span>
+      into simple steps. He <span class="hl-s2" style="cursor:pointer" onclick="showToast('Stage 2 - Past habit: would stay behind — describes repeated past actions','success')">would stay behind</span>
+      after class to help students. He <span class="hl-s3" style="cursor:pointer" onclick="showToast('Stage 3 - Present perfect: has inspired — describes achievements and impact','success')">has inspired</span>
+      a lot of students, including me. I probably <span class="hl-s3" style="cursor:pointer" onclick="showToast('Stage 3 - Third conditional: would not have chosen... if I had not been taught — explains influence','success')">would not have chosen</span>
+      this subject <span class="hl-s3">if I had not been taught</span>
+      by him. He is someone I really <span class="hl-s4" style="cursor:pointer" onclick="showToast('Stage 4 - Admiration: look up to — expresses why they are special','success')">look up to,</span>
+      and I hope I can be <span class="hl-s4" style="cursor:pointer" onclick="showToast('Stage 4 - Imitation: as dedicated and inspiring as — expresses desire to be like them','success')">as dedicated and inspiring as</span>
+      he is.
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;">
+      <div style="background:rgba(0,96,100,.08);border-radius:10px;padding:10px;text-align:center;"><div style="font-family:var(--hf);font-size:.7rem;font-weight:700;color:var(--navy);text-transform:uppercase;margin-bottom:3px;">Stage 1</div><div style="font-size:.78rem;color:var(--navy);font-weight:600;">Who + How</div><div style="font-size:.72rem;color:var(--ink2);margin-top:2px;">relative clause + past continuous</div></div>
+      <div style="background:rgba(255,143,0,.1);border-radius:10px;padding:10px;text-align:center;"><div style="font-family:var(--hf);font-size:.7rem;font-weight:700;color:#7a3800;text-transform:uppercase;margin-bottom:3px;">Stage 2</div><div style="font-size:.78rem;color:#7a3800;font-weight:600;">What they are like</div><div style="font-size:.72rem;color:var(--ink2);margin-top:2px;">personality adjectives + habits</div></div>
+      <div style="background:rgba(46,125,50,.08);border-radius:10px;padding:10px;text-align:center;"><div style="font-family:var(--hf);font-size:.7rem;font-weight:700;color:#1b5e20;text-transform:uppercase;margin-bottom:3px;">Stage 3</div><div style="font-size:.78rem;color:#1b5e20;font-weight:600;">Achievements</div><div style="font-size:.72rem;color:var(--ink2);margin-top:2px;">present perfect + third conditional</div></div>
+      <div style="background:rgba(106,27,154,.08);border-radius:10px;padding:10px;text-align:center;"><div style="font-family:var(--hf);font-size:.7rem;font-weight:700;color:#4A148C;text-transform:uppercase;margin-bottom:3px;">Stage 4</div><div style="font-size:.78rem;color:#4A148C;font-weight:600;">Special + Feelings</div><div style="font-size:.72rem;color:var(--ink2);margin-top:2px;">admiration + imitation</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-15">
+  <div class="s-header"><h1>Quiz: Relative Clauses</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct relative clause type. Score: <strong id="q1-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. "My mother, who worked as a waitress, thoroughly dislikes politics." — This is a _____ relative clause.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-1"><button class="mc-opt" onclick="checkQ1(this,1,'non-defining')">non-defining</button><button class="mc-opt" onclick="checkQ1(this,1,'non-defining')">defining</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. "The woman who lived next door was extremely kind." — This is a _____ relative clause.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-2"><button class="mc-opt" onclick="checkQ1(this,2,'defining')">defining</button><button class="mc-opt" onclick="checkQ1(this,2,'defining')">non-defining</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Which sentence uses a non-defining relative clause correctly?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-3"><button class="mc-opt" onclick="checkQ1(this,3,'My grandmother, who is my father s mother, had to look after me.')">My grandmother, who is my father s mother, had to look after me.</button><button class="mc-opt" onclick="checkQ1(this,3,'My grandmother, who is my father s mother, had to look after me.')">My grandmother who is my father s mother had to look after me.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. "I would like to talk about my best friend, Minh, _____ I met at school."</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-4"><button class="mc-opt" onclick="checkQ1(this,4,'who')">who</button><button class="mc-opt" onclick="checkQ1(this,4,'who')">which</button><button class="mc-opt" onclick="checkQ1(this,4,'who')">that</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ1()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-16">
+  <div class="s-header"><h1>Quiz: Third Conditional</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct third conditional form. Score: <strong id="q2-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. If it _____ for her, I would never have studied nursing.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-1"><button class="mc-opt" onclick="checkQ2(this,1,'had not been')">had not been</button><button class="mc-opt" onclick="checkQ2(this,1,'had not been')">was not</button><button class="mc-opt" onclick="checkQ2(this,1,'had not been')">is not</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. I probably would not have chosen this subject if I _____ taught by him.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-2"><button class="mc-opt" onclick="checkQ2(this,2,'had not been')">had not been</button><button class="mc-opt" onclick="checkQ2(this,2,'had not been')">was not</button><button class="mc-opt" onclick="checkQ2(this,2,'had not been')">have not been</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. I do not think I _____ as outgoing if I had not spent so much time with him.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-3"><button class="mc-opt" onclick="checkQ2(this,3,'would be')">would be</button><button class="mc-opt" onclick="checkQ2(this,3,'would be')">will be</button><button class="mc-opt" onclick="checkQ2(this,3,'would be')">am</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Which sentence is a correct third conditional?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-4"><button class="mc-opt" onclick="checkQ2(this,4,'If she had not helped me, I would not have passed.')">If she had not helped me, I would not have passed.</button><button class="mc-opt" onclick="checkQ2(this,4,'If she had not helped me, I would not have passed.')">If she did not help me, I would not pass.</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ2()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-17">
+  <div class="s-header"><h1>Quiz: Personality Adjectives</h1><span class="s-badge amber">Vocabulary Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct personality adjective for each description. Score: <strong id="q3-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. She loves going to dinner with friends and meeting new people. She is very _____.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-1"><button class="mc-opt" onclick="checkQ3(this,1,'extroverted')">extroverted</button><button class="mc-opt" onclick="checkQ3(this,1,'extroverted')">introverted</button><button class="mc-opt" onclick="checkQ3(this,1,'extroverted')">timid</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. He sits in the classroom till early morning just reading and taking notes. He is very _____.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-2"><button class="mc-opt" onclick="checkQ3(this,2,'studious')">studious</button><button class="mc-opt" onclick="checkQ3(this,2,'studious')">apathetic</button><button class="mc-opt" onclick="checkQ3(this,2,'studious')">conservative</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. She spends nearly every weekend visiting her family. She is very _____.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-3"><button class="mc-opt" onclick="checkQ3(this,3,'family-oriented')">family-oriented</button><button class="mc-opt" onclick="checkQ3(this,3,'family-oriented')">curious</button><button class="mc-opt" onclick="checkQ3(this,3,'family-oriented')">energetic</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. He is interested in new things and likes to read about world philosophy and religion. He is very _____.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-4"><button class="mc-opt" onclick="checkQ3(this,4,'curious')">curious</button><button class="mc-opt" onclick="checkQ3(this,4,'curious')">conservative</button><button class="mc-opt" onclick="checkQ3(this,4,'curious')">reserved</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ3()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-18">
+  <div class="s-header"><h1>Self-Assessment Checklist</h1><span class="s-badge">Evaluation</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use this checklist to evaluate your own answer after practising. Click each item to mark it.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 1:</strong> Clearly introduced the person (who they are)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 1:</strong> Explained how you know them</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 1:</strong> Used a relative clause with who</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 2:</strong> Used a clear personality adjective</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 2:</strong> Described a habit or behaviour with frequency</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 2:</strong> Included a short, specific story or example</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 3:</strong> Mentioned achievements (present perfect)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 3:</strong> Explained influence on you</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 3:</strong> Used third conditional (if I had not... I would not have...)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 4:</strong> Expressed admiration (admire, look up to, etc.)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 4:</strong> Mentioned future intention (be like them)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Overall:</strong> Answer is clear and well-organized (4 stages)</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-19">
+  <div class="s-header"><h1>Quiz: Admiration Expressions</h1><span class="s-badge amber">Vocabulary Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct admiration expression. Score: <strong id="q4-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. He is someone I really _____ to, mainly because of his passion for teaching.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-1"><button class="mc-opt" onclick="checkQ4(this,1,'look up')">look up</button><button class="mc-opt" onclick="checkQ4(this,1,'look up')">look down</button><button class="mc-opt" onclick="checkQ4(this,1,'look up')">look at</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. I feel _____ of my mother s achievements and everything she has accomplished.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-2"><button class="mc-opt" onclick="checkQ4(this,2,'proud')">proud</button><button class="mc-opt" onclick="checkQ4(this,2,'proud')">ashamed</button><button class="mc-opt" onclick="checkQ4(this,2,'proud')">jealous</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. I will always _____ him for his courage and determination.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-3"><button class="mc-opt" onclick="checkQ4(this,3,'admire')">admire</button><button class="mc-opt" onclick="checkQ4(this,3,'admire')">ignore</button><button class="mc-opt" onclick="checkQ4(this,3,'admire')">criticise</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Gran was a great _____ for me when I was growing up.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-4"><button class="mc-opt" onclick="checkQ4(this,4,'role model')">role model</button><button class="mc-opt" onclick="checkQ4(this,4,'role model')">bad example</button><button class="mc-opt" onclick="checkQ4(this,4,'role model')">stranger</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ4()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-20">
+  <div class="s-header"><h1>Vocabulary Reference: All Key Expressions</h1><span class="s-badge">Quick Reference</span></div>
+  <div class="s-content">
+    <div class="intro-note">Review all the key expressions from Lessons 6&ndash;7. Click any card to highlight it.</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-top:3px solid var(--navy);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(0,96,100,0.06)'?'#fff':'rgba(0,96,100,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:4px;">Stage 1: Opening Phrases</div><div style="font-size:.76rem;color:var(--ink2);">I would like to talk about... | I will always remember... | I want to talk about... + who relative clause</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-top:3px solid var(--amber);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(255,143,0,0.06)'?'#fff':'rgba(255,143,0,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#7a3800;margin-bottom:4px;">Stage 2: Personality Adjectives</div><div style="font-size:.76rem;color:var(--ink2);">humorous / witty | considerate / supportive | reserved / introverted | ambitious / extroverted | gentle / generous | clever / talented / wise</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-top:3px solid var(--teal);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(0,188,212,0.06)'?'#fff':'rgba(0,188,212,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--teal);margin-bottom:4px;">Stage 3: Achievement Phrases</div><div style="font-size:.76rem;color:var(--ink2);">has inspired / has helped / has influenced | to struggle for | to climb the ladder of success | to have a gift for | if I had not... I would not have...</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-top:3px solid #6A1B9A;cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(106,27,154,0.06)'?'#fff':'rgba(106,27,154,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#4A148C;margin-bottom:4px;">Stage 4: Admiration + Imitation</div><div style="font-size:.76rem;color:var(--ink2);">I look up to | I admire | I feel proud of | role model | I hope I am as... as | I would love to be like | I want to be like</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-21">
+  <div class="s-header"><h1>Build Your Own Answer</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use the word bank to build a complete answer for: <strong>"Describe a person you admire."</strong></div>
+    <div style="background:var(--navy);color:#fff;border-radius:10px;padding:12px 18px;font-size:.85rem;margin-bottom:10px;"><strong style="color:var(--amber)">Formula:</strong> Stage 1 (Who + How) &rarr; Stage 2 (What they are like) &rarr; Stage 3 (Achievements + Influence) &rarr; Stage 4 (Special + Feelings)</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 1: Opening</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(0,96,100,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I would like to talk about my teacher, who taught me in high school.','success')">I would like to talk about...</span><span style="background:rgba(0,96,100,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('We became close when we were studying together for exams.','success')">when we were studying...</span></div></div>
+      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 2: Personality</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(255,143,0,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('She is extremely knowledgeable and very supportive.','success')">extremely knowledgeable</span><span style="background:rgba(255,143,0,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('He tends to break complex ideas down into simple steps.','success')">tends to break ideas down</span><span style="background:rgba(255,143,0,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('She would always stay behind after class to help students.','success')">would stay behind</span></div></div>
+      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 3: Achievements</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(0,131,143,.1);color:var(--teal);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('He has inspired a lot of students, including me.','success')">has inspired</span><span style="background:rgba(0,131,143,.1);color:var(--teal);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I would not have chosen this subject if I had not been taught by him.','success')">if I had not... I would not have...</span></div></div>
+      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 4: Feelings</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(106,27,154,.1);color:#4A148C;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('He is someone I really look up to.','success')">I look up to</span><span style="background:rgba(106,27,154,.1);color:#4A148C;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I hope I can be as dedicated and inspiring as he is.','success')">as dedicated as</span></div></div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 3px 10px rgba(0,96,100,.07);margin-top:8px;border-left:4px solid var(--teal);">
+      <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Sample Answer</div>
+      <div style="font-size:.86rem;color:var(--ink);line-height:1.7;"><span class="hl-s1">I would like to talk about my history teacher, Mr. Nam, who taught me in high school.</span> He is <span class="hl-s2">extremely knowledgeable</span> and he <span class="hl-s2">tends to break complex ideas down</span> into simple steps. He <span class="hl-s2">would always stay behind</span> after class to help students. He <span class="hl-s3">has inspired</span> a lot of students, including me. I probably <span class="hl-s3">would not have chosen</span> this subject <span class="hl-s3">if I had not been taught</span> by him. He is someone I really <span class="hl-s4">look up to,</span> and I hope I can be <span class="hl-s4">as dedicated and inspiring as</span> he is.</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-22">
+  <div class="s-header"><h1>Grammar Focus: Third Conditional Rules</h1><span class="s-badge purple">Grammar</span></div>
+  <div class="s-content">
+    <div class="intro-note">Master the third conditional for talking about how someone influenced you.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;">Structure 1: if + had(n't) + pp, would(n't) have + pp</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+          <div style="padding:5px 9px;background:rgba(0,96,100,.06);border-radius:7px;">If it <strong>had not been</strong> for her, I <strong>would never have studied</strong> nursing.</div>
+          <div style="padding:5px 9px;background:rgba(0,96,100,.06);border-radius:7px;">If I <strong>had not met</strong> Dr. Shotter, I <strong>would not have studied</strong> a Master s degree.</div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;">Structure 2: would(n't) have + pp + if + had(n't) + pp</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+          <div style="padding:5px 9px;background:rgba(255,143,0,.06);border-radius:7px;">I <strong>would never have studied</strong> nursing if it <strong>had not been</strong> for her.</div>
+          <div style="padding:5px 9px;background:rgba(255,143,0,.06);border-radius:7px;">I <strong>would not have studied</strong> a Master s degree if I <strong>had not met</strong> Dr. Shotter.</div>
+        </div>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);margin-top:8px;">
+      <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:#c62828;text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;">Common Mistakes</div>
+      <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+        <div style="padding:5px 9px;background:rgba(198,40,40,.06);border-radius:7px;text-decoration:line-through;color:#c62828;">If she did not help me, I would not pass. (WRONG — this is second conditional)</div>
+        <div style="padding:5px 9px;background:rgba(198,40,40,.06);border-radius:7px;text-decoration:line-through;color:#c62828;">If she had not helped me, I would not passed. (WRONG — missing have)</div>
+        <div style="padding:5px 9px;background:rgba(46,125,50,.06);border-radius:7px;border-left:3px solid #2e7d32;color:#1b5e20;">If she had not helped me, I would not have passed. (CORRECT)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-23">
+  <div class="s-header"><h1>Quiz: Past Continuous</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct past continuous form. Score: <strong id="q5-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. We became close when we _____ together for exams.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-1"><button class="mc-opt" onclick="checkQ5(this,1,'were studying')">were studying</button><button class="mc-opt" onclick="checkQ5(this,1,'were studying')">studied</button><button class="mc-opt" onclick="checkQ5(this,1,'were studying')">are studying</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. I first got to know him when I _____ my subjects.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-2"><button class="mc-opt" onclick="checkQ5(this,2,'was choosing')">was choosing</button><button class="mc-opt" onclick="checkQ5(this,2,'was choosing')">chose</button><button class="mc-opt" onclick="checkQ5(this,2,'was choosing')">choose</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. While my brother _____ Vietnam, he lost his passport.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-3"><button class="mc-opt" onclick="checkQ5(this,3,'was visiting')">was visiting</button><button class="mc-opt" onclick="checkQ5(this,3,'was visiting')">visited</button><button class="mc-opt" onclick="checkQ5(this,3,'was visiting')">visits</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. We met when we _____ together at the same company.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-4"><button class="mc-opt" onclick="checkQ5(this,4,'were working')">were working</button><button class="mc-opt" onclick="checkQ5(this,4,'were working')">worked</button><button class="mc-opt" onclick="checkQ5(this,4,'were working')">work</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ5()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-24">
+  <div class="s-header"><h1>Quiz: Present Perfect for Achievements</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct present perfect form. Score: <strong id="q6-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. He _____ a lot of students, including me, to become more interested in history.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-1"><button class="mc-opt" onclick="checkQ6(this,1,'has inspired')">has inspired</button><button class="mc-opt" onclick="checkQ6(this,1,'has inspired')">inspired</button><button class="mc-opt" onclick="checkQ6(this,1,'has inspired')">inspires</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. She _____ me become more confident, especially in social situations.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-2"><button class="mc-opt" onclick="checkQ6(this,2,'has helped')">has helped</button><button class="mc-opt" onclick="checkQ6(this,2,'has helped')">helped</button><button class="mc-opt" onclick="checkQ6(this,2,'has helped')">help</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. My grandfather _____ a great influence on my life.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-3"><button class="mc-opt" onclick="checkQ6(this,3,'has had')">has had</button><button class="mc-opt" onclick="checkQ6(this,3,'has had')">had</button><button class="mc-opt" onclick="checkQ6(this,3,'has had')">have had</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. She _____ one of the most famous actresses in the world.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-4"><button class="mc-opt" onclick="checkQ6(this,4,'has become')">has become</button><button class="mc-opt" onclick="checkQ6(this,4,'has become')">became</button><button class="mc-opt" onclick="checkQ6(this,4,'has become')">become</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ6()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-25">
+  <div class="s-header"><h1>Formula Summary</h1><span class="s-badge">Formula Reference</span></div>
+  <div class="s-content">
+    <div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+      <div style="background:var(--navy);color:#fff;border-radius:8px;padding:7px 12px;font-family:var(--hf);font-size:.82rem;font-weight:700;display:flex;align-items:center;gap:5px;"><i class="fas fa-user"></i> Stage 1</div>
+      <span style="font-family:var(--hf);font-size:1rem;font-weight:900;color:var(--ink2);">&rarr;</span>
+      <div style="background:var(--amber);color:#1a0000;border-radius:8px;padding:7px 12px;font-family:var(--hf);font-size:.82rem;font-weight:700;display:flex;align-items:center;gap:5px;"><i class="fas fa-smile"></i> Stage 2</div>
+      <span style="font-family:var(--hf);font-size:1rem;font-weight:900;color:var(--ink2);">&rarr;</span>
+      <div style="background:#2e7d32;color:#fff;border-radius:8px;padding:7px 12px;font-family:var(--hf);font-size:.82rem;font-weight:700;display:flex;align-items:center;gap:5px;"><i class="fas fa-trophy"></i> Stage 3</div>
+      <span style="font-family:var(--hf);font-size:1rem;font-weight:900;color:var(--ink2);">&rarr;</span>
+      <div style="background:#6A1B9A;color:#fff;border-radius:8px;padding:7px 12px;font-family:var(--hf);font-size:.82rem;font-weight:700;display:flex;align-items:center;gap:5px;"><i class="fas fa-heart"></i> Stage 4</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+      <div style="background:#fff;border-radius:12px;padding:11px 12px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-top:4px solid var(--navy);"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 1: Who + How</div><div style="font-size:.76rem;color:var(--ink2);line-height:1.5;">I would like to talk about... + who relative clause + past continuous (when I was...)</div></div>
+      <div style="background:#fff;border-radius:12px;padding:11px 12px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-top:4px solid var(--amber);"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 2: What they are like</div><div style="font-size:.76rem;color:var(--ink2);line-height:1.5;">personality adjectives + adverbs of frequency + habits (tends to / would)</div></div>
+      <div style="background:#fff;border-radius:12px;padding:11px 12px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-top:4px solid #2e7d32;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#1b5e20;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 3: Achievements</div><div style="font-size:.76rem;color:var(--ink2);line-height:1.5;">present perfect (has inspired) + third conditional (if I had not... I would not have...)</div></div>
+      <div style="background:#fff;border-radius:12px;padding:11px 12px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-top:4px solid #6A1B9A;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#4A148C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 4: Special + Feelings</div><div style="font-size:.76rem;color:var(--ink2);line-height:1.5;">admiration (look up to / admire) + imitation (I hope I am as... as)</div></div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 3px 10px rgba(0,96,100,.07);margin-top:8px;border-left:4px solid var(--navy);">
+      <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Full Example (condensed)</div>
+      <div style="font-size:.84rem;color:var(--ink);line-height:1.7;"><span class="hl-s1">I would like to talk about my teacher, Mr. Nam, who taught me in high school.</span> He is <span class="hl-s2">extremely knowledgeable</span> and <span class="hl-s2">tends to break complex ideas down</span> into simple steps. He <span class="hl-s3">has inspired</span> a lot of students. I probably <span class="hl-s3">would not have chosen</span> this subject <span class="hl-s3">if I had not been taught</span> by him. He is someone I really <span class="hl-s4">look up to,</span> and I hope I can be <span class="hl-s4">as dedicated and inspiring as</span> he is.</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-26">
+  <div class="s-header"><h1>Lesson Summary</h1><span class="s-badge">Key Takeaways</span></div>
+  <div class="s-content">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(0,96,100,.08);border-top:4px solid var(--navy);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-user"></i> Stage 1 Key Language</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(0,96,100,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">I would like to talk about...</span><span style="background:rgba(0,96,100,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">who relative clause</span><span style="background:rgba(0,96,100,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">when I was + verb-ing</span></div></div>
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(0,96,100,.08);border-top:4px solid var(--amber);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:#7a3800;margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-smile"></i> Stage 2 Key Language</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">personality adjectives</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">tends to / would + verb</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">adverbs of frequency</span></div></div>
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(0,96,100,.08);border-top:4px solid #2e7d32;"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:#2e7d32;margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-trophy"></i> Stage 3 Key Language</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(46,125,50,.08);color:#1b5e20;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">has inspired / has helped</span><span style="background:rgba(46,125,50,.08);color:#1b5e20;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">if I had not... I would not have...</span></div></div>
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(0,96,100,.08);border-top:4px solid #6A1B9A;"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:#4A148C;margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-heart"></i> Stage 4 Key Language</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(106,27,154,.08);color:#4A148C;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">I look up to / I admire</span><span style="background:rgba(106,27,154,.08);color:#4A148C;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">I hope I am as... as</span><span style="background:rgba(106,27,154,.08);color:#4A148C;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">role model</span></div></div>
+    </div>
+    <div style="background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;border-radius:14px;padding:18px 24px;text-align:center;margin-top:8px;">
+      <div style="font-family:var(--hf);font-size:1.1rem;font-weight:800;margin-bottom:6px;">Lessons 6-7 Complete!</div>
+      <div style="font-size:.88rem;opacity:.85;">You have mastered the 4-Stage Formula for describing a person. Keep practising with the practice question!</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-27">
+  <div class="s-header"><h1>Practice Question</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> DESCRIBE A PERSON YOU ADMIRE.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:4px solid var(--navy);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 1: Who they are &amp; how you know them</div>
+        <div style="font-size:.82rem;color:var(--ink2);">Identity of the person (relationship / job) &nbsp;|&nbsp; When / how you met them &nbsp;|&nbsp; Brief context (school, work, family, etc.)</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:4px solid var(--amber);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 2: What they are like &amp; what they do (3 qualities + stories)</div>
+        <div style="font-size:.82rem;color:var(--ink2);">Quality 1: Personality trait + typical behaviour + short real-life example<br>Quality 2: Personality trait + typical behaviour + example situation<br>Quality 3: Personality trait + typical behaviour + personal memory</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:4px solid #2e7d32;">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:#1b5e20;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 3: Achievements &amp; influence</div>
+        <div style="font-size:.82rem;color:var(--ink2);">Key achievements (present perfect) &nbsp;|&nbsp; How they influenced you &nbsp;|&nbsp; Third conditional (what would be different without them)</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:4px solid #6A1B9A;">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:#4A148C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 4: Why they are special &amp; how you feel</div>
+        <div style="font-size:.82rem;color:var(--ink2);">Expression of admiration &nbsp;|&nbsp; Personal feelings &nbsp;|&nbsp; Future intention (be like them / learn from them)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-28">
+  <div class="s-header"><h1>IELTS Part 2 Tips</h1><span class="s-badge purple">IELTS Tips</span></div>
+  <div class="s-content">
+    <div class="intro-note">Follow these tips to maximise your score in IELTS Speaking Part 2 person descriptions.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:4px solid var(--navy);">
+        <div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:6px;"><i class="fas fa-check-circle" style="margin-right:5px;color:#2e7d32"></i>DO</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.82rem;color:var(--ink);">
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Follow all 4 stages in order</div>
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Use relative clauses with who</div>
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Include personal stories and memories</div>
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Use the third conditional for influence</div>
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Use present perfect for achievements</div>
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Speak for the full 1-2 minutes</div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:4px solid #c62828;">
+        <div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#c62828;margin-bottom:6px;"><i class="fas fa-times-circle" style="margin-right:5px"></i>DO NOT</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.82rem;color:var(--ink);">
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Skip any of the 4 stages</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Just list adjectives without examples</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Use second conditional instead of third</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Forget to explain why they are special</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Memorise answers word for word</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Stop before the time is up</div>
+        </div>
+      </div>
+    </div>
+    <div style="background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;border-radius:14px;padding:16px 24px;text-align:center;margin-top:8px;">
+      <div style="font-family:var(--hf);font-size:1rem;font-weight:800;margin-bottom:6px;">Remember the 4-Stage Formula!</div>
+      <div style="font-size:.88rem;opacity:.9;"><strong>Stage 1</strong> (Who + How) &rarr; <strong>Stage 2</strong> (What they are like) &rarr; <strong>Stage 3</strong> (Achievements) &rarr; <strong>Stage 4</strong> (Special + Feelings)</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-29">
+  <div class="s-header"><h1>Quiz: Mixed Practice</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct option. Score: <strong id="q7-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Which sentence correctly uses a non-defining relative clause?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-1"><button class="mc-opt" onclick="checkQ7(this,1,'My grandmother, who is my father s mother, had to look after me.')">My grandmother, who is my father s mother, had to look after me.</button><button class="mc-opt" onclick="checkQ7(this,1,'My grandmother, who is my father s mother, had to look after me.')">My grandmother who is my father s mother had to look after me.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Which is the correct third conditional?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-2"><button class="mc-opt" onclick="checkQ7(this,2,'If she had not helped me, I would not have passed.')">If she had not helped me, I would not have passed.</button><button class="mc-opt" onclick="checkQ7(this,2,'If she had not helped me, I would not have passed.')">If she did not help me, I would not pass.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Which sentence correctly uses the present perfect for achievements?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-3"><button class="mc-opt" onclick="checkQ7(this,3,'He has inspired a lot of students.')">He has inspired a lot of students.</button><button class="mc-opt" onclick="checkQ7(this,3,'He has inspired a lot of students.')">He inspired a lot of students.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Which is the correct imitation expression?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-4"><button class="mc-opt" onclick="checkQ7(this,4,'I hope I am as dedicated as he is.')">I hope I am as dedicated as he is.</button><button class="mc-opt" onclick="checkQ7(this,4,'I hope I am as dedicated as he is.')">I hope I am more dedicated than he is.</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ7()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-30">
+  <div class="s-header"><h1>Final Review: Complete Answer</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Review the complete formula with all components. Click each highlighted part to learn more.</div>
+    <div class="model-answer-box" style="font-size:.86rem;">
+      <span class="hl-s1" style="cursor:pointer" onclick="showToast('Stage 1 - Who + How: I would like to talk about... who taught me... — introduces the person clearly','success')">I would like to talk about my history teacher, Mr. Nam, who taught me in high school.</span>
+      I first got to know him <span class="hl-s1" style="cursor:pointer" onclick="showToast('Stage 1 - Past continuous: when I was choosing my subjects — explains how you met','success')">when I was choosing my subjects.</span>
+      He is <span class="hl-s2" style="cursor:pointer" onclick="showToast('Stage 2 - Personality adjective: extremely knowledgeable — describes what they are like','success')">extremely knowledgeable,</span>
+      and he <span class="hl-s2" style="cursor:pointer" onclick="showToast('Stage 2 - Habit phrase: tends to break complex ideas down — describes typical behaviour','success')">tends to break complex ideas down</span>
+      into simple steps. He <span class="hl-s2" style="cursor:pointer" onclick="showToast('Stage 2 - Past habit: would stay behind — describes repeated past actions','success')">would stay behind</span>
+      after class to help students. He <span class="hl-s3" style="cursor:pointer" onclick="showToast('Stage 3 - Present perfect: has inspired — describes achievements and impact','success')">has inspired</span>
+      a lot of students, including me. I probably <span class="hl-s3" style="cursor:pointer" onclick="showToast('Stage 3 - Third conditional: would not have chosen... if I had not been taught — explains influence','success')">would not have chosen</span>
+      this subject <span class="hl-s3">if I had not been taught</span>
+      by him. He is someone I really <span class="hl-s4" style="cursor:pointer" onclick="showToast('Stage 4 - Admiration: look up to — expresses why they are special','success')">look up to,</span>
+      and I hope I can be <span class="hl-s4" style="cursor:pointer" onclick="showToast('Stage 4 - Imitation: as dedicated and inspiring as — expresses desire to be like them','success')">as dedicated and inspiring as</span>
+      he is.
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;">
+      <div style="background:rgba(0,96,100,.08);border-radius:10px;padding:10px;text-align:center;"><div style="font-family:var(--hf);font-size:.7rem;font-weight:700;color:var(--navy);text-transform:uppercase;margin-bottom:3px;">Stage 1</div><div style="font-size:.78rem;color:var(--navy);font-weight:600;">Who + How</div></div>
+      <div style="background:rgba(255,143,0,.1);border-radius:10px;padding:10px;text-align:center;"><div style="font-family:var(--hf);font-size:.7rem;font-weight:700;color:#7a3800;text-transform:uppercase;margin-bottom:3px;">Stage 2</div><div style="font-size:.78rem;color:#7a3800;font-weight:600;">What they are like</div></div>
+      <div style="background:rgba(46,125,50,.08);border-radius:10px;padding:10px;text-align:center;"><div style="font-family:var(--hf);font-size:.7rem;font-weight:700;color:#1b5e20;text-transform:uppercase;margin-bottom:3px;">Stage 3</div><div style="font-size:.78rem;color:#1b5e20;font-weight:600;">Achievements</div></div>
+      <div style="background:rgba(106,27,154,.08);border-radius:10px;padding:10px;text-align:center;"><div style="font-family:var(--hf);font-size:.7rem;font-weight:700;color:#4A148C;text-transform:uppercase;margin-bottom:3px;">Stage 4</div><div style="font-size:.78rem;color:#4A148C;font-weight:600;">Special + Feelings</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-31">
+  <div class="s-header"><h1>Quiz: Complete Review</h1><span class="s-badge amber">Final Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Test yourself on all the key points from Lessons 6-7. Score: <strong id="q8-score">0</strong>/5</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Which is the correct opening for a person description?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-1"><button class="mc-opt" onclick="checkQ8(this,1,'I would like to talk about my teacher, who taught me in high school.')">I would like to talk about my teacher, who taught me in high school.</button><button class="mc-opt" onclick="checkQ8(this,1,'I would like to talk about my teacher, who taught me in high school.')">I want talk about my teacher.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Which personality adjective means "not liking changes or new ideas"?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-2"><button class="mc-opt" onclick="checkQ8(this,2,'conservative')">conservative</button><button class="mc-opt" onclick="checkQ8(this,2,'conservative')">adventurous</button><button class="mc-opt" onclick="checkQ8(this,2,'conservative')">extroverted</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Which is the correct third conditional?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-3"><button class="mc-opt" onclick="checkQ8(this,3,'If I had not met him, I would not have studied history.')">If I had not met him, I would not have studied history.</button><button class="mc-opt" onclick="checkQ8(this,3,'If I had not met him, I would not have studied history.')">If I did not meet him, I would not study history.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Which is the correct admiration expression?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-4"><button class="mc-opt" onclick="checkQ8(this,4,'I look up to her because of her dedication.')">I look up to her because of her dedication.</button><button class="mc-opt" onclick="checkQ8(this,4,'I look up to her because of her dedication.')">I look down to her because of her dedication.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">5. Which is the correct imitation expression?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-5"><button class="mc-opt" onclick="checkQ8(this,5,'I hope I am as dedicated as she is.')">I hope I am as dedicated as she is.</button><button class="mc-opt" onclick="checkQ8(this,5,'I hope I am as dedicated as she is.')">I hope I am more dedicated than she is.</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ8()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-32">
+  <div class="s-header"><h1>Extra Practice: Sample Answer</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Review this sample answer. Notice how each stage follows the formula.</div>
+    <div class="model-q"><i class="fas fa-question-circle"></i> Describe a person you enjoy spending time with.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:4px solid var(--navy);">
+        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 1</div>
+        <div style="font-size:.84rem;line-height:1.65;"><span class="hl-s1">I would like to talk about my best friend, Minh, who I met at school.</span> We became close <span class="hl-s1">when we were studying together</span> for exams, and we have stayed close ever since.</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:4px solid var(--amber);">
+        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 2</div>
+        <div style="font-size:.84rem;line-height:1.65;">Minh is <span class="hl-s2">naturally funny,</span> but not in an obvious way. He has a quick, subtle sense of humour, and he <span class="hl-s2">often comes up with jokes</span> at just the right moment. He is also very <span class="hl-s2">outgoing and approachable.</span> He <span class="hl-s2">tends to start conversations</span> naturally, even in unfamiliar situations. What I value most is how <span class="hl-s2">supportive</span> he is. Whenever I am dealing with something difficult, he is the kind of person who will sit and listen properly, <span class="hl-s2">rather than just giving quick advice.</span></div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:4px solid var(--teal);">
+        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 3</div>
+        <div style="font-size:.84rem;line-height:1.65;">He <span class="hl-s3">has helped me become</span> more confident, especially in social situations. I do not think I <span class="hl-s3">would be as outgoing</span> as I am now <span class="hl-s3">if I had not spent</span> so much time with him.</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);border-left:4px solid #6A1B9A;">
+        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#4A148C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 4</div>
+        <div style="font-size:.84rem;line-height:1.65;">He is really important to me, and I genuinely <span class="hl-s4">value our friendship.</span> I would also love to be <span class="hl-s4">as confident and positive as</span> him.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-33">
+  <div class="s-header"><h1>Grammar Focus: Relative Clauses Summary</h1><span class="s-badge purple">Grammar</span></div>
+  <div class="s-content">
+    <div class="intro-note">Master the two types of relative clauses for IELTS Part 2.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;">Non-defining: extra info (use commas)</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+          <div style="padding:5px 9px;background:rgba(0,96,100,.06);border-radius:7px;">My grandmother<strong>, who is my father s mother,</strong> had to look after me.</div>
+          <div style="padding:5px 9px;background:rgba(0,96,100,.06);border-radius:7px;">My teacher<strong>, who taught me in high school,</strong> was very inspiring.</div>
+          <div style="padding:5px 9px;background:rgba(0,96,100,.06);border-radius:7px;">My friend Minh<strong>, who I met at school,</strong> is very supportive.</div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;">Defining: necessary info (no commas)</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+          <div style="padding:5px 9px;background:rgba(255,143,0,.06);border-radius:7px;">The woman <strong>who lived next door</strong> was extremely kind.</div>
+          <div style="padding:5px 9px;background:rgba(255,143,0,.06);border-radius:7px;">The teacher <strong>who inspired me most</strong> was Mr. Nam.</div>
+          <div style="padding:5px 9px;background:rgba(255,143,0,.06);border-radius:7px;">The friend <strong>who helped me through difficult times</strong> is Minh.</div>
+        </div>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,96,100,.07);margin-top:8px;">
+      <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:#c62828;text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;">Common Mistakes</div>
+      <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+        <div style="padding:5px 9px;background:rgba(198,40,40,.06);border-radius:7px;text-decoration:line-through;color:#c62828;">My grandmother which is my father s mother... (WRONG — use who for people)</div>
+        <div style="padding:5px 9px;background:rgba(198,40,40,.06);border-radius:7px;text-decoration:line-through;color:#c62828;">My grandmother, who is my father s mother had to look after me. (WRONG — missing comma after clause)</div>
+        <div style="padding:5px 9px;background:rgba(46,125,50,.06);border-radius:7px;border-left:3px solid #2e7d32;color:#1b5e20;">My grandmother, who is my father s mother, had to look after me. (CORRECT)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-34">
+  <div class="s-header"><h1>Extra Practice: Build Full Answers</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Review these sample answers for different types of people. Notice how each follows the 4-Stage Formula.</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+        <div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">Describe a famous person you would like to meet.</div>
+        <div style="background:rgba(0,96,100,.06);border-radius:8px;padding:10px 12px;font-size:.84rem;color:var(--ink2);line-height:1.6;"><span class="hl-s1">I would like to talk about Elon Musk, who is a famous entrepreneur and the founder of Tesla and SpaceX.</span> He is <span class="hl-s2">incredibly ambitious and innovative.</span> He <span class="hl-s2">constantly pushes the boundaries</span> of what is possible. He <span class="hl-s3">has inspired millions of people</span> around the world to think bigger and dream of the future. I think I <span class="hl-s3">would not be as interested in technology</span> as I am now <span class="hl-s3">if I had not read about his work.</span> He is someone I truly <span class="hl-s4">admire,</span> and I hope I can be <span class="hl-s4">as determined and visionary as</span> he is.</div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);">
+        <div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">Describe a neighbour you have or have had.</div>
+        <div style="background:rgba(0,96,100,.06);border-radius:8px;padding:10px 12px;font-size:.84rem;color:var(--ink2);line-height:1.6;"><span class="hl-s1">I want to talk about my next-door neighbour Win, who lived with her daughter and son-in-law.</span> We moved to our family home <span class="hl-s1">when I was only six months old,</span> so Win is the earliest neighbour I can remember. She was <span class="hl-s2">always a very friendly and gentle woman,</span> despite the fact that she often appeared to be frowning. She <span class="hl-s2">would always be very kind to me,</span> offering to make me a cup of tea. She <span class="hl-s3">has taught me</span> that you should never judge people by their appearance. We all <span class="hl-s4">feel proud to have known</span> her for so many years.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-35">
+  <div class="s-header"><h1>Lessons 6-7: Complete Review Quiz</h1><span class="s-badge green">Final Review</span></div>
+  <div class="s-content">
+    <div class="intro-note">Test yourself on all the key points from Lessons 6-7. Score: <strong id="qfinal-score">0</strong>/5</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Which is the correct way to introduce a person?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-1"><button class="mc-opt" onclick="checkQF(this,1,'I would like to talk about my teacher, who taught me in high school.')">I would like to talk about my teacher, who taught me in high school.</button><button class="mc-opt" onclick="checkQF(this,1,'I would like to talk about my teacher, who taught me in high school.')">I want talk about my teacher which taught me.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Which personality adjective means "studying a lot, even in free time"?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-2"><button class="mc-opt" onclick="checkQF(this,2,'studious')">studious</button><button class="mc-opt" onclick="checkQF(this,2,'studious')">apathetic</button><button class="mc-opt" onclick="checkQF(this,2,'studious')">timid</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Which is the correct third conditional?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-3"><button class="mc-opt" onclick="checkQF(this,3,'If I had not met her, I would not have studied nursing.')">If I had not met her, I would not have studied nursing.</button><button class="mc-opt" onclick="checkQF(this,3,'If I had not met her, I would not have studied nursing.')">If I did not meet her, I would not study nursing.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. What are the 4 stages of the formula?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-4"><button class="mc-opt" onclick="checkQF(this,4,'Who + How / What they are like / Achievements / Special + Feelings')">Who + How / What they are like / Achievements / Special + Feelings</button><button class="mc-opt" onclick="checkQF(this,4,'Who + How / What they are like / Achievements / Special + Feelings')">Name / Age / Job / Hobby</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,96,100,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">5. Which is the correct imitation expression?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-5"><button class="mc-opt" onclick="checkQF(this,5,'I hope I am as dedicated as she is.')">I hope I am as dedicated as she is.</button><button class="mc-opt" onclick="checkQF(this,5,'I hope I am as dedicated as she is.')">I hope I am more dedicated than she is.</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQF()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+  <div id="navbar">
+    <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i> Prev</button>
+    <div id="nav-dots"></div>
+    <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next <i class="fas fa-chevron-right"></i></button>
+    <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">35</span></div>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    var currentSlide = 1;
+    var totalSlides = 35;
+
+    function buildDots() {
+      var container = document.getElementById("nav-dots");
+      container.innerHTML = "";
+      for (var i = 1; i <= totalSlides; i++) {
+        var d = document.createElement("div");
+        d.className = "dot" + (i === 1 ? " active" : "");
+        d.setAttribute("data-slide", i);
+        d.onclick = (function(n){ return function(){ goToSlide(n); }; })(i);
+        container.appendChild(d);
+      }
+    }
+
+    function goToSlide(n) {
+      var prev = document.getElementById("slide-" + currentSlide);
+      if (prev) prev.classList.remove("active");
+      currentSlide = n;
+      var next = document.getElementById("slide-" + currentSlide);
+      if (next) next.classList.add("active");
+      document.getElementById("current-slide").textContent = currentSlide;
+      var dots = document.querySelectorAll(".dot");
+      dots.forEach(function(d, i) { d.classList.toggle("active", i + 1 === currentSlide); });
+      document.getElementById("prev-btn").disabled = currentSlide === 1;
+      document.getElementById("next-btn").disabled = currentSlide === totalSlides;
+      var pb = document.getElementById("progress-bar");
+      if (pb) pb.style.width = ((currentSlide / totalSlides) * 100) + "%";
+    }
+
+    function changeSlide(dir) {
+      var n = currentSlide + dir;
+      if (n >= 1 && n <= totalSlides) goToSlide(n);
+    }
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") changeSlide(1);
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") changeSlide(-1);
+    });
+
+    function showToast(msg, type) {
+      var t = document.getElementById("toast");
+      t.textContent = msg;
+      t.className = "toast show " + (type || "");
+      clearTimeout(t._timer);
+      t._timer = setTimeout(function(){ t.className = "toast"; }, 3200);
+    }
+
+    function toggleCheck(el) { el.classList.toggle("checked"); }
+
+    function makeQuiz(slideId, scoreId) {
+      var score = 0; var done = {};
+      return {
+        check: function(btn, qNum, correct) {
+          if (done[qNum]) return; done[qNum] = true;
+          var allOpts = btn.parentElement.querySelectorAll(".mc-opt");
+          allOpts.forEach(function(o) { o.disabled = true; });
+          if (btn.textContent.trim() === correct) {
+            btn.classList.add("correct"); score++;
+            var el = document.getElementById(scoreId);
+            if (el) el.textContent = score;
+            showToast("Correct!", "success");
+          } else {
+            btn.classList.add("wrong");
+            allOpts.forEach(function(o) { if (o.textContent.trim() === correct) o.classList.add("correct"); });
+            showToast("Not quite. The correct answer is highlighted.", "error");
+          }
+        },
+        reset: function() {
+          score = 0; done = {};
+          var el = document.getElementById(scoreId);
+          if (el) el.textContent = "0";
+          document.querySelectorAll("#" + slideId + " .mc-opt").forEach(function(b) { b.classList.remove("correct","wrong"); b.disabled = false; });
+        }
+      };
+    }
+
+    var q1 = makeQuiz("slide-15","q1-score");
+    var q2 = makeQuiz("slide-16","q2-score");
+    var q3 = makeQuiz("slide-17","q3-score");
+    var q4 = makeQuiz("slide-19","q4-score");
+    var q5 = makeQuiz("slide-23","q5-score");
+    var q6 = makeQuiz("slide-24","q6-score");
+    var q7 = makeQuiz("slide-29","q7-score");
+    var q8 = makeQuiz("slide-31","q8-score");
+    var qfinal = makeQuiz("slide-35","qfinal-score");
+
+    function checkQ1(btn, qNum, correct) { q1.check(btn, qNum, correct); }
+    function resetQ1() { q1.reset(); }
+    function checkQ2(btn, qNum, correct) { q2.check(btn, qNum, correct); }
+    function resetQ2() { q2.reset(); }
+    function checkQ3(btn, qNum, correct) { q3.check(btn, qNum, correct); }
+    function resetQ3() { q3.reset(); }
+    function checkQ4(btn, qNum, correct) { q4.check(btn, qNum, correct); }
+    function resetQ4() { q4.reset(); }
+    function checkQ5(btn, qNum, correct) { q5.check(btn, qNum, correct); }
+    function resetQ5() { q5.reset(); }
+    function checkQ6(btn, qNum, correct) { q6.check(btn, qNum, correct); }
+    function resetQ6() { q6.reset(); }
+    function checkQ7(btn, qNum, correct) { q7.check(btn, qNum, correct); }
+    function resetQ7() { q7.reset(); }
+    function checkQ8(btn, qNum, correct) { q8.check(btn, qNum, correct); }
+    function resetQ8() { q8.reset(); }
+    function checkQF(btn, qNum, correct) { qfinal.check(btn, qNum, correct); }
+    function resetQF() { qfinal.reset(); }
+
+    buildDots();
+    goToSlide(1);
+  </script>
+</body>
+</html>

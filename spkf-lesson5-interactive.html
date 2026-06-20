@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPK F Lesson 5: Express Changes | Interactive Classroom</title>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<link href="/fonts/Montserrat/index.css" rel="stylesheet">
+<link href="/fonts/Open Sans/index.css" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--navy:#BF360C;--blue:#D84315;--green:#E64A19;--amber:#FF8F00;--red:#C62828;--teal:#00838F;--bg:#FBE9E7;--bg2:#FFCCBC;--ink:#1A0800;--ink2:#BF360C;--hf:Montserrat,sans-serif;--bf:Open Sans,sans-serif;}
+html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink);overflow:hidden;}
+.slide{display:none;width:100vw;height:100vh;position:relative;overflow:hidden;animation:fadeIn .4s ease;}
+.slide.active{display:flex;flex-direction:column;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+@keyframes shake{0%,100%{transform:translateX(0);}20%,60%{transform:translateX(-6px);}40%,80%{transform:translateX(6px);}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(191,54,12,.4);}70%{box-shadow:0 0 0 14px rgba(191,54,12,0);}}
+#progress-bar{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--navy),var(--amber));transition:width .4s ease;z-index:1001;}
+#navbar{position:fixed;bottom:0;left:0;right:0;height:52px;background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:1000;box-shadow:0 -4px 20px rgba(0,0,0,.25);}
+.nav-btn{background:rgba(255,255,255,.15);border:none;color:#fff;padding:6px 14px;border-radius:8px;cursor:pointer;font-family:var(--hf);font-size:.76rem;font-weight:700;transition:all .2s;display:flex;align-items:center;gap:5px;}
+.nav-btn:hover{background:rgba(255,255,255,.28);transform:translateY(-1px);}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed;transform:none;}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;transition:all .2s;flex-shrink:0;}
+.dot.active{background:#fff;transform:scale(1.3);}
+.dot:hover{background:rgba(255,255,255,.7);}
+#nav-dots{display:flex;align-items:center;gap:5px;flex-wrap:wrap;max-width:600px;justify-content:center;}
+.slide-counter{color:rgba(255,255,255,.75);font-family:var(--hf);font-size:.78rem;font-weight:600;min-width:55px;text-align:center;}
+.s-header{padding:18px 44px 10px;flex-shrink:0;border-bottom:3px solid var(--navy);display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;}
+.s-header h1{font-family:var(--hf);font-size:1.65rem;font-weight:800;color:var(--navy);line-height:1.1;}
+.s-badge{background:var(--navy);color:#fff;font-family:var(--hf);font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:20px;white-space:nowrap;letter-spacing:.05em;}
+.s-badge.amber{background:var(--amber);color:#1a0000;}
+.s-badge.teal{background:var(--teal);}
+.s-badge.green{background:#2e7d32;}
+.s-badge.red{background:var(--red);}
+.s-badge.purple{background:#6A1B9A;}
+.s-content{flex:1;padding:14px 44px 60px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;}
+.intro-note{background:rgba(191,54,12,.08);border-left:4px solid var(--navy);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.88rem;color:var(--ink);line-height:1.5;}
+.model-q{background:var(--navy);color:#fff;border-radius:10px;padding:11px 16px;font-size:.88rem;font-weight:600;display:flex;align-items:flex-start;gap:8px;}
+.model-q i{margin-top:2px;flex-shrink:0;color:var(--amber);}
+.model-answer-box{background:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 3px 12px rgba(191,54,12,.1);font-size:.88rem;line-height:1.75;color:var(--ink);border-left:5px solid var(--navy);}
+.hl-pp{background:rgba(191,54,12,.12);color:var(--navy);font-weight:700;padding:1px 5px;border-radius:4px;}
+.hl-past{background:rgba(255,143,0,.18);color:#7a3800;font-weight:700;padding:1px 5px;border-radius:4px;}
+.hl-now{background:rgba(46,125,50,.12);color:#1b5e20;font-weight:700;padding:1px 5px;border-radius:4px;}
+.hl-comp{background:rgba(0,131,143,.12);color:#005f67;font-weight:700;padding:1px 5px;border-radius:4px;}
+.lang-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+.lang-tag{background:#fff;border:1.5px solid var(--bg2);border-radius:8px;padding:5px 10px;font-size:.78rem;display:flex;align-items:center;gap:5px;color:var(--ink2);}
+.lang-tag i{color:var(--navy);}
+.tip-box{background:rgba(255,143,0,.12);border-left:4px solid var(--amber);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;color:var(--ink);display:flex;align-items:flex-start;gap:8px;}
+.tip-box i{color:var(--amber);margin-top:2px;flex-shrink:0;}
+.mc-opt{background:var(--bg);border:2px solid var(--bg2);border-radius:8px;padding:7px 14px;font-size:.82rem;cursor:pointer;font-family:var(--bf);color:var(--ink);transition:all .2s;text-align:left;}
+.mc-opt:hover:not(:disabled){background:rgba(191,54,12,.08);border-color:var(--navy);}
+.mc-opt.correct{background:#e8f5e9;border-color:#2e7d32;color:#1b5e20;font-weight:700;}
+.mc-opt.wrong{background:#ffebee;border-color:#c62828;color:#7f1d1d;animation:shake .4s;}
+.mc-opt:disabled{cursor:not-allowed;opacity:.7;}
+.gap-input{border:2px solid var(--bg2);border-radius:8px;padding:5px 10px;font-size:.84rem;font-family:var(--bf);color:var(--ink);background:#fff;min-width:140px;transition:all .2s;outline:none;}
+.gap-input:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(191,54,12,.1);}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;}
+.check-btn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:var(--hf);display:flex;align-items:center;gap:6px;transition:all .2s;}
+.check-btn:hover{opacity:.88;transform:translateY(-1px);}
+.check-btn.amber{background:var(--amber);color:#1a0000;}
+.reset-btn{background:rgba(191,54,12,.1);color:var(--navy);border:none;border-radius:8px;padding:8px 16px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:var(--hf);display:flex;align-items:center;gap:6px;transition:all .2s;}
+.reset-btn:hover{background:rgba(191,54,12,.18);}
+.vocab-card{background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);cursor:pointer;transition:all .2s;border-left:4px solid var(--navy);}
+.vocab-card:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(191,54,12,.12);}
+.vocab-word{font-family:var(--hf);font-size:.9rem;font-weight:800;color:var(--navy);margin-bottom:3px;}
+.vocab-example{font-size:.78rem;color:var(--ink2);font-style:italic;line-height:1.4;}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:8px;cursor:pointer;transition:background .2s;}
+.check-item:hover{background:rgba(191,54,12,.05);}
+.check-item.checked .check-box{background:var(--navy);border-color:var(--navy);}
+.check-item.checked .check-box i{opacity:1;}
+.check-box{width:22px;height:22px;border-radius:5px;border:2px solid var(--bg2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+.check-box i{font-size:.7rem;color:#fff;opacity:0;transition:opacity .2s;}
+.check-text{font-size:.84rem;color:var(--ink);line-height:1.4;}
+.cover-content{text-align:center;padding:0 40px;}
+.cover-tag{background:rgba(255,255,255,.2);color:#fff;font-family:var(--hf);font-size:.85rem;font-weight:700;padding:6px 18px;border-radius:20px;display:inline-block;margin-bottom:18px;letter-spacing:.08em;}
+.cover-h1{font-family:var(--hf);font-size:3.2rem;font-weight:900;color:#fff;line-height:1.1;margin-bottom:14px;}
+.cover-h1 span{color:var(--amber);}
+.cover-p{font-size:1.05rem;color:rgba(255,255,255,.85);margin-bottom:28px;line-height:1.6;max-width:600px;margin-left:auto;margin-right:auto;}
+.start-btn{background:var(--amber);color:#1a0000;border:none;border-radius:12px;padding:14px 36px;font-size:1.05rem;font-weight:800;cursor:pointer;font-family:var(--hf);display:inline-flex;align-items:center;gap:10px;transition:all .25s;animation:pulse 2s infinite;}
+.start-btn:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.25);}
+.cover-stats{display:flex;gap:28px;justify-content:center;margin-top:28px;}
+.cover-stat .num{font-family:var(--hf);font-size:2rem;font-weight:900;color:#fff;}
+.cover-stat .lbl{font-size:.78rem;color:rgba(255,255,255,.7);font-weight:600;text-transform:uppercase;letter-spacing:.08em;}
+.toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a0800;color:#fff;padding:10px 22px;border-radius:10px;font-size:.88rem;font-weight:600;opacity:0;transition:all .3s;z-index:2000;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.success{background:#1b5e20;}
+.toast.error{background:#7f1d1d;}
+</style>
+</head>
+<body>
+<div id="progress-bar" style="width:0%"></div>
+
+<!-- SLIDE 1: COVER -->
+<div class="slide" id="slide-1">
+  <div style="position:absolute;inset:0;background:linear-gradient(135deg,#BF360C 0%,#D84315 50%,#E64A19 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+    <div class="cover-content">
+      <div class="cover-tag"><i class="fas fa-exchange-alt" style="margin-right:5px"></i>SPK F &middot; Lesson 5 &middot; Part 1</div>
+      <div class="cover-h1">Express <span>Changes</span></div>
+      <div class="cover-p">Master how to answer "How has X changed?" questions using the Present Perfect, Past vs Now comparisons, and comparative adjectives.</div>
+      <button class="start-btn" onclick="goToSlide(2)"><i class="fas fa-play"></i> Start Lesson</button>
+      <div class="cover-stats">
+        <div class="cover-stat"><div class="num">35</div><div class="lbl">Slides</div></div>
+        <div class="cover-stat"><div class="num">3</div><div class="lbl">Language Steps</div></div>
+        <div class="cover-stat"><div class="num">5</div><div class="lbl">Model Answers</div></div>
+        <div class="cover-stat"><div class="num">10</div><div class="lbl">Practice Qs</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2: LESSON AIMS -->
+<div class="slide" id="slide-2">
+  <div class="s-header"><h1>Lesson Aims</h1><span class="s-badge">Lesson 5</span></div>
+  <div class="s-content">
+    <div class="intro-note">In this lesson, you will master the Formula to talk about <strong>changes</strong>.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 2px 8px rgba(191,54,12,.08);border-top:4px solid var(--navy);">
+        <div style="font-family:var(--hf);font-size:.8rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;"><i class="fas fa-bullseye" style="margin-right:5px"></i>Target Question Types</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:.84rem;padding:6px 10px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">How have shops changed in your city in the last five years?</div>
+          <div style="font-size:.84rem;padding:6px 10px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">How has your hometown changed in recent years?</div>
+          <div style="font-size:.84rem;padding:6px 10px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">How have restaurants in your country changed since you were young?</div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 2px 8px rgba(191,54,12,.08);border-top:4px solid var(--amber);">
+        <div style="font-family:var(--hf);font-size:.8rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;"><i class="fas fa-flask" style="margin-right:5px"></i>Answer Order</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:rgba(191,54,12,.06);border-radius:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--hf);font-size:.78rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div><div style="font-size:.84rem;"><strong>Say whether it has changed or not</strong><br><span style="color:var(--ink2);font-size:.78rem;">Yes, it has changed a lot / It has changed quite a bit...</span></div></div>
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:rgba(191,54,12,.06);border-radius:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--hf);font-size:.78rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div><div style="font-size:.84rem;"><strong>Compare what it was like in the past and what it is like now</strong><br><span style="color:var(--ink2);font-size:.78rem;">It used to be... / Now it is... / It has become more...</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: PRESENT PERFECT - STRUCTURE -->
+<div class="slide" id="slide-3">
+  <div class="s-header"><h1>Step 1: The Present Perfect</h1><span class="s-badge">Language Step 1</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use the <strong>Present Perfect</strong> to talk about changes that have happened up to now.</div>
+    <div style="background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-left:5px solid var(--navy);margin-bottom:8px;">
+      <div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:8px;">Structure: <span style="color:var(--amber)">have/has + past participle</span></div>
+      <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+        <div style="padding:5px 9px;background:rgba(191,54,12,.06);border-radius:7px;cursor:pointer;" onclick="showToast('She has invested lots of money in a KTV bar.','success')">She <strong>has invested</strong> lots of money in a KTV bar.</div>
+        <div style="padding:5px 9px;background:rgba(191,54,12,.06);border-radius:7px;cursor:pointer;" onclick="showToast('The government has spent lots of money on public transport recently.','success')">The government <strong>has spent</strong> lots of money on public transport recently.</div>
+        <div style="padding:5px 9px;background:rgba(191,54,12,.06);border-radius:7px;cursor:pointer;" onclick="showToast('The traffic situation has become a lot worse in the last few years.','success')">The traffic situation <strong>has become</strong> a lot worse in the last few years.</div>
+        <div style="padding:5px 9px;background:rgba(191,54,12,.06);border-radius:7px;cursor:pointer;" onclick="showToast('Restaurants and eateries have changed a great deal since I was young.','success')">Restaurants and eateries <strong>have changed</strong> a great deal since I was young.</div>
+        <div style="padding:5px 9px;background:rgba(191,54,12,.06);border-radius:7px;cursor:pointer;" onclick="showToast('The local government has replaced them with tall apartment buildings.','success')">The local government <strong>has replaced</strong> them with tall apartment buildings.</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Use "has" with:</div>
+        <div style="font-size:.82rem;color:var(--ink2);">he / she / it / singular noun<br><em>The city <strong>has</strong> changed. / It <strong>has</strong> improved.</em></div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Use "have" with:</div>
+        <div style="font-size:.82rem;color:var(--ink2);">I / you / we / they / plural noun<br><em>Shops <strong>have</strong> changed. / They <strong>have</strong> improved.</em></div>
+      </div>
+    </div>
+    <div class="tip-box"><i class="fas fa-lightbulb"></i><span><strong>Key Time Expressions:</strong> in recent years / in the last five years / since I was young / over the past decade / these days / recently / nowadays</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 4: PAST vs NOW STRUCTURE -->
+<div class="slide" id="slide-4">
+  <div class="s-header"><h1>Step 2: Past vs Now Comparison</h1><span class="s-badge">Language Step 2</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use <strong>past simple</strong> to describe the past and <strong>present simple</strong> to describe now. Click any card to see an example.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;"><i class="fas fa-history" style="margin-right:4px"></i>Past (was/were/used to)</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.82rem;">
+          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;cursor:pointer;" onclick="showToast('My town was small; now it is quite big.','success')">My town <strong>was</strong> small; now it is quite big.</div>
+          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;cursor:pointer;" onclick="showToast('The streets used to be very quiet; now they are noisy.','success')">The streets <strong>used to be</strong> very quiet; now they are noisy.</div>
+          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;cursor:pointer;" onclick="showToast('The shops sold poor-quality clothes; now they sell the latest designer fashions.','success')">The shops <strong>sold</strong> poor-quality clothes; now they sell designer fashions.</div>
+          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;cursor:pointer;" onclick="showToast('Before many people ate at small eateries, but now people choose more expensive restaurants.','success')"><strong>Before</strong> many people ate at small eateries, but now people choose expensive restaurants.</div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;"><i class="fas fa-arrow-right" style="margin-right:4px"></i>Now (is/are/now)</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.82rem;">
+          <div style="padding:4px 8px;background:rgba(191,54,12,.06);border-radius:6px;cursor:pointer;" onclick="showToast('The streets are now much wider than before.','success')">The streets <strong>are now</strong> much wider than before.</div>
+          <div style="padding:4px 8px;background:rgba(191,54,12,.06);border-radius:6px;cursor:pointer;" onclick="showToast('Now the local government has replaced them with tall apartment buildings.','success')"><strong>Now</strong> the local government has replaced them with tall apartment buildings.</div>
+          <div style="padding:4px 8px;background:rgba(191,54,12,.06);border-radius:6px;cursor:pointer;" onclick="showToast('A wide range of Vietnamese and many international restaurants line every street.','success')"><strong>Now</strong> a wide range of Vietnamese and international restaurants line every street.</div>
+          <div style="padding:4px 8px;background:rgba(191,54,12,.06);border-radius:6px;cursor:pointer;" onclick="showToast('These days, the city is much more modern and developed.','success')"><strong>These days,</strong> the city is much more modern and developed.</div>
+        </div>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);margin-top:4px;">
+      <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;"><i class="fas fa-star" style="margin-right:4px"></i>Key Contrast Linkers</div>
+      <div style="display:flex;flex-wrap:wrap;gap:7px;">
+        <span style="background:rgba(191,54,12,.08);color:var(--navy);font-size:.8rem;font-weight:600;padding:4px 11px;border-radius:20px;cursor:pointer;" onclick="showToast('It used to be small, but now it is much bigger.','success')">but now</span>
+        <span style="background:rgba(191,54,12,.08);color:var(--navy);font-size:.8rem;font-weight:600;padding:4px 11px;border-radius:20px;cursor:pointer;" onclick="showToast('The streets used to be quiet; now they are noisy.','success')">; now</span>
+        <span style="background:rgba(191,54,12,.08);color:var(--navy);font-size:.8rem;font-weight:600;padding:4px 11px;border-radius:20px;cursor:pointer;" onclick="showToast('Before, people ate at small eateries, whereas now they choose expensive restaurants.','success')">whereas now</span>
+        <span style="background:rgba(191,54,12,.08);color:var(--navy);font-size:.8rem;font-weight:600;padding:4px 11px;border-radius:20px;cursor:pointer;" onclick="showToast('However, the city is now much more modern.','success')">however</span>
+        <span style="background:rgba(191,54,12,.08);color:var(--navy);font-size:.8rem;font-weight:600;padding:4px 11px;border-radius:20px;cursor:pointer;" onclick="showToast('At the same time, the food and service tend to be better.','success')">at the same time</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: COMPARATIVE ADJECTIVES -->
+<div class="slide" id="slide-5">
+  <div class="s-header"><h1>Step 3: Comparative Adjectives</h1><span class="s-badge">Language Step 3</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use comparatives to explain <strong>how</strong> things have changed. Click any card to see an example.</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;">1 Syllable: add -er</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-size:.8rem;">
+          <div style="padding:4px 8px;background:rgba(191,54,12,.06);border-radius:6px;cursor:pointer;" onclick="showToast('The streets are now much wider than before.','success')">wide &rarr; <strong>wider</strong></div>
+          <div style="padding:4px 8px;background:rgba(191,54,12,.06);border-radius:6px;cursor:pointer;" onclick="showToast('The city is a lot bigger than it was ten years ago.','success')">big &rarr; <strong>bigger</strong></div>
+          <div style="padding:4px 8px;background:rgba(191,54,12,.06);border-radius:6px;cursor:pointer;" onclick="showToast('Roads are now faster and safer than before.','success')">fast &rarr; <strong>faster</strong></div>
+          <div style="padding:4px 8px;background:rgba(191,54,12,.06);border-radius:6px;cursor:pointer;" onclick="showToast('The new buildings are much taller than the old ones.','success')">tall &rarr; <strong>taller</strong></div>
+          <div style="padding:4px 8px;background:rgba(191,54,12,.06);border-radius:6px;cursor:pointer;" onclick="showToast('The restaurants are cleaner than they used to be.','success')">clean &rarr; <strong>cleaner</strong></div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;">Ends in -y: change to -ier</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-size:.8rem;">
+          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;cursor:pointer;" onclick="showToast('The city is much busier than it was before.','success')">busy &rarr; <strong>busier</strong></div>
+          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;cursor:pointer;" onclick="showToast('The city is prettier than it was ten years ago.','success')">pretty &rarr; <strong>prettier</strong></div>
+          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;cursor:pointer;" onclick="showToast('Life is noisier than it used to be.','success')">noisy &rarr; <strong>noisier</strong></div>
+          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;cursor:pointer;" onclick="showToast('The streets are tidier than they were before.','success')">tidy &rarr; <strong>tidier</strong></div>
+          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;cursor:pointer;" onclick="showToast('The area is friendlier than it used to be.','success')">friendly &rarr; <strong>friendlier</strong></div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;">2+ Syllables: add more</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-size:.8rem;">
+          <div style="padding:4px 8px;background:rgba(0,131,143,.06);border-radius:6px;cursor:pointer;" onclick="showToast('The city is more beautiful than it was before.','success')">beautiful &rarr; <strong>more beautiful</strong></div>
+          <div style="padding:4px 8px;background:rgba(0,131,143,.06);border-radius:6px;cursor:pointer;" onclick="showToast('Shopping has become much more convenient than it used to be.','success')">convenient &rarr; <strong>more convenient</strong></div>
+          <div style="padding:4px 8px;background:rgba(0,131,143,.06);border-radius:6px;cursor:pointer;" onclick="showToast('The restaurants are more elegant than the small eateries.','success')">elegant &rarr; <strong>more elegant</strong></div>
+          <div style="padding:4px 8px;background:rgba(0,131,143,.06);border-radius:6px;cursor:pointer;" onclick="showToast('The city is more modern and better developed overall.','success')">modern &rarr; <strong>more modern</strong></div>
+          <div style="padding:4px 8px;background:rgba(0,131,143,.06);border-radius:6px;cursor:pointer;" onclick="showToast('The food is more expensive but also more professional.','success')">expensive &rarr; <strong>more expensive</strong></div>
+        </div>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-left:4px solid var(--navy);margin-top:4px;cursor:pointer;" onclick="showToast('My city is prettier than it was ten years ago. / The university library is much better stocked now than it was before.','success')">
+      <div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:4px;">Key Structure: X + is/are + comparative + than + time in the past</div>
+      <div style="font-size:.78rem;color:var(--ink2);font-style:italic;">My city is <strong>prettier than</strong> it was ten years ago. &nbsp;/&nbsp; The city is <strong>a lot greener than</strong> it was when I was a child.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: INTENSIFIERS -->
+<div class="slide" id="slide-6">
+  <div class="s-header"><h1>Intensifiers with Comparatives</h1><span class="s-badge">Language Step 3</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use these intensifiers to make your comparatives stronger and more natural. Click any card to see an example.</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;">
+      <div class="vocab-card" onclick="showToast('The streets are now much wider than before.','success')"><div class="vocab-word">much + comparative</div><div class="vocab-example">The streets are now <strong>much wider</strong> than before.</div></div>
+      <div class="vocab-card" onclick="showToast('The city is a lot bigger than it was ten years ago.','success')"><div class="vocab-word">a lot + comparative</div><div class="vocab-example">The city is <strong>a lot bigger</strong> than it was ten years ago.</div></div>
+      <div class="vocab-card" onclick="showToast('These restaurants are far more expensive than the old eateries.','success')"><div class="vocab-word">far + comparative</div><div class="vocab-example">These restaurants are <strong>far more expensive</strong> than the old eateries.</div></div>
+      <div class="vocab-card" onclick="showToast('Life is slightly busier than it used to be.','success')"><div class="vocab-word">slightly + comparative</div><div class="vocab-example">Life is <strong>slightly busier</strong> than it used to be.</div></div>
+      <div class="vocab-card" onclick="showToast('The city is considerably more modern than it was before.','success')"><div class="vocab-word">considerably + comparative</div><div class="vocab-example">The city is <strong>considerably more modern</strong> than it was before.</div></div>
+      <div class="vocab-card" onclick="showToast('The roads are even wider than they were last year.','success')"><div class="vocab-word">even + comparative</div><div class="vocab-example">The roads are <strong>even wider</strong> than they were last year.</div></div>
+    </div>
+    <div class="tip-box"><i class="fas fa-lightbulb"></i><span><strong>Strategy:</strong> Use "much" or "a lot" for big changes, "slightly" or "a bit" for small changes. This shows you can express degree precisely — a key IELTS skill!</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 7: MODEL ANSWER 1 - HOMETOWN -->
+<div class="slide" id="slide-7">
+  <div class="s-header"><h1>Model Answer 1: Hometown Changes</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> How has your hometown changed in recent years?</div>
+    <div class="model-answer-box">Yes, it <span class="hl-pp">has changed</span> quite a lot in recent years. It <span class="hl-past">used to be</span> quite small and quiet, but <span class="hl-now">now it is</span> <span class="hl-comp">much bigger and busier</span> than before. The local government <span class="hl-pp">has built</span> more roads and buildings, which makes the town <span class="hl-comp">more modern and better developed</span> overall. You can see more shopping areas and public spaces now.</div>
+    <div class="lang-tags">
+      <div class="lang-tag"><i class="fas fa-check-circle"></i> Present Perfect: has changed / has built</div>
+      <div class="lang-tag"><i class="fas fa-history"></i> Past vs Now: used to be small &rarr; is bigger</div>
+      <div class="lang-tag"><i class="fas fa-not-equal"></i> Comparatives: bigger / busier / more modern</div>
+      <div class="lang-tag"><i class="fas fa-star"></i> Natural feature: used to... / you can see...</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: MODEL ANSWER 2 - SHOPS -->
+<div class="slide" id="slide-8">
+  <div class="s-header"><h1>Model Answer 2: Shops</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> How have shops changed in your city in the last five years?</div>
+    <div class="model-answer-box">Yes, they <span class="hl-pp">have changed</span> quite a bit. Shops <span class="hl-past">used to sell</span> fairly basic and low-quality products, but <span class="hl-now">now they offer</span> <span class="hl-comp">more fashionable and better-quality</span> goods. A lot of new supermarkets and malls <span class="hl-pp">have appeared,</span> so shopping <span class="hl-pp">has become</span> <span class="hl-comp">much more convenient</span> than it used to be.</div>
+    <div class="lang-tags">
+      <div class="lang-tag"><i class="fas fa-check-circle"></i> Present Perfect: have changed / have appeared / has become</div>
+      <div class="lang-tag"><i class="fas fa-history"></i> Past vs Now: used to sell &rarr; now offer</div>
+      <div class="lang-tag"><i class="fas fa-not-equal"></i> Comparatives: more fashionable / better-quality / more convenient</div>
+      <div class="lang-tag"><i class="fas fa-star"></i> Structure: than it used to be</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: MODEL ANSWER 3 - RESTAURANTS -->
+<div class="slide" id="slide-9">
+  <div class="s-header"><h1>Model Answer 3: Restaurants</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> How have restaurants in your country changed since you were young?</div>
+    <div class="model-answer-box">They have definitely changed a lot. When I was younger, most places <span class="hl-past">were</span> quite small and simple, whereas <span class="hl-now">now they are</span> <span class="hl-comp">cleaner and more modern</span> than before. Many restaurants <span class="hl-pp">have become</span> <span class="hl-comp">more expensive,</span> but at the same time, the food and service tend to be <span class="hl-comp">better and more professional.</span></div>
+    <div class="lang-tags">
+      <div class="lang-tag"><i class="fas fa-check-circle"></i> Present Perfect: have changed / have become</div>
+      <div class="lang-tag"><i class="fas fa-history"></i> Past vs Now: were simple &rarr; are cleaner</div>
+      <div class="lang-tag"><i class="fas fa-not-equal"></i> Comparatives: cleaner / more modern / more expensive</div>
+      <div class="lang-tag"><i class="fas fa-link"></i> Linkers: whereas / at the same time</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: MODEL ANSWER 4 - TRANSPORTATION -->
+<div class="slide" id="slide-10">
+  <div class="s-header"><h1>Model Answer 4: Transportation</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> How has transportation changed in your city?</div>
+    <div class="model-answer-box">It <span class="hl-pp">has improved</span> quite a lot. In the past, traffic <span class="hl-past">used to be</span> <span class="hl-comp">slower and less organised,</span> but <span class="hl-now">now it is</span> <span class="hl-comp">faster and more convenient</span> than before. The government <span class="hl-pp">has invested</span> in better roads and public transport, so getting around the city is <span class="hl-comp">much easier</span> these days.</div>
+    <div class="lang-tags">
+      <div class="lang-tag"><i class="fas fa-check-circle"></i> Present Perfect: has improved / has invested</div>
+      <div class="lang-tag"><i class="fas fa-history"></i> Past vs Now: used to be slower &rarr; now faster</div>
+      <div class="lang-tag"><i class="fas fa-not-equal"></i> Comparatives: faster / more convenient / much easier</div>
+      <div class="lang-tag"><i class="fas fa-star"></i> Feature: these days</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 11: MODEL ANSWER 5 - LIFESTYLE -->
+<div class="slide" id="slide-11">
+  <div class="s-header"><h1>Model Answer 5: Lifestyle</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> How has your lifestyle changed in recent years?</div>
+    <div class="model-answer-box">Yes, it <span class="hl-pp">has changed</span> quite a bit. I <span class="hl-past">used to spend</span> more time playing outside, but <span class="hl-now">now I spend</span> more time studying and using technology. My daily routine is <span class="hl-comp">busier</span> than before, although it is also <span class="hl-comp">more productive,</span> since I can use online tools to support my learning.</div>
+    <div class="lang-tags">
+      <div class="lang-tag"><i class="fas fa-check-circle"></i> Present Perfect: has changed</div>
+      <div class="lang-tag"><i class="fas fa-history"></i> Past vs Now: used to spend &rarr; now spend</div>
+      <div class="lang-tag"><i class="fas fa-not-equal"></i> Comparatives: busier / more productive</div>
+      <div class="lang-tag"><i class="fas fa-link"></i> Linkers: although / since</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 12: ANNOTATED MODEL ANSWER -->
+<div class="slide" id="slide-12">
+  <div class="s-header"><h1>Full Formula: Annotated Example</h1><span class="s-badge">Formula in Action</span></div>
+  <div class="s-content">
+    <div class="intro-note">See how all 3 steps work together. Click each highlighted part to learn more.</div>
+    <div class="model-q"><i class="fas fa-question-circle"></i> How has your hometown changed in recent years?</div>
+    <div class="model-answer-box" style="font-size:.88rem;">
+      Yes, it <span class="hl-pp" style="cursor:pointer" onclick="showToast('Step 1 - Present Perfect: has changed — shows change up to now','success')">has changed</span>
+      quite a lot in recent years. It
+      <span class="hl-past" style="cursor:pointer" onclick="showToast('Step 2 - Past description: used to be — describes what it was like before','success')">used to be</span>
+      quite small and quiet, but
+      <span class="hl-now" style="cursor:pointer" onclick="showToast('Step 2 - Now description: now it is — describes what it is like today','success')">now it is</span>
+      <span class="hl-comp" style="cursor:pointer" onclick="showToast('Step 3 - Comparative: much bigger and busier — shows HOW it has changed','success')">much bigger and busier</span>
+      than before. The local government
+      <span class="hl-pp" style="cursor:pointer" onclick="showToast('Step 1 - Present Perfect: has built — another change that has happened','success')">has built</span>
+      more roads and buildings, which makes the town
+      <span class="hl-comp" style="cursor:pointer" onclick="showToast('Step 3 - Comparative: more modern and better developed — describes the improvement','success')">more modern and better developed</span>
+      overall.
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px;">
+      <div style="background:rgba(191,54,12,.08);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 1</div><div style="font-size:.82rem;color:var(--navy);font-weight:600;">Present Perfect</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">has changed / has built</div></div>
+      <div style="background:rgba(255,143,0,.1);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 2</div><div style="font-size:.82rem;color:#7a3800;font-weight:600;">Past vs Now</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">used to be small &rarr; now bigger</div></div>
+      <div style="background:rgba(0,131,143,.08);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 3</div><div style="font-size:.82rem;color:var(--teal);font-weight:600;">Comparatives</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">much bigger / more modern</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 13: QUIZ - PRESENT PERFECT -->
+<div class="slide" id="slide-13">
+  <div class="s-header"><h1>Quiz: Present Perfect</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct Present Perfect form. Score: <strong id="q1-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. The city _____ a lot in recent years.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-1"><button class="mc-opt" onclick="checkQ1(this,1,'has changed')">has changed</button><button class="mc-opt" onclick="checkQ1(this,1,'has changed')">changed</button><button class="mc-opt" onclick="checkQ1(this,1,'has changed')">is changing</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Shops _____ a great deal since I was young.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-2"><button class="mc-opt" onclick="checkQ1(this,2,'have changed')">have changed</button><button class="mc-opt" onclick="checkQ1(this,2,'have changed')">has changed</button><button class="mc-opt" onclick="checkQ1(this,2,'have changed')">changed</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. The government _____ lots of money on public transport recently.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-3"><button class="mc-opt" onclick="checkQ1(this,3,'has spent')">has spent</button><button class="mc-opt" onclick="checkQ1(this,3,'has spent')">have spent</button><button class="mc-opt" onclick="checkQ1(this,3,'has spent')">spent</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. A lot of new supermarkets and malls _____ in the city.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-4"><button class="mc-opt" onclick="checkQ1(this,4,'have appeared')">have appeared</button><button class="mc-opt" onclick="checkQ1(this,4,'have appeared')">has appeared</button><button class="mc-opt" onclick="checkQ1(this,4,'have appeared')">appeared</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ1()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 14: QUIZ - COMPARATIVES -->
+<div class="slide" id="slide-14">
+  <div class="s-header"><h1>Quiz: Comparative Adjectives</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct comparative form. Score: <strong id="q2-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. The streets are now much _____ than before. (wide)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-1"><button class="mc-opt" onclick="checkQ2(this,1,'wider')">wider</button><button class="mc-opt" onclick="checkQ2(this,1,'wider')">more wide</button><button class="mc-opt" onclick="checkQ2(this,1,'wider')">widest</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Shopping has become _____ than it used to be. (convenient)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-2"><button class="mc-opt" onclick="checkQ2(this,2,'more convenient')">more convenient</button><button class="mc-opt" onclick="checkQ2(this,2,'more convenient')">convenienter</button><button class="mc-opt" onclick="checkQ2(this,2,'more convenient')">most convenient</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. The city is _____ than it was ten years ago. (busy)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-3"><button class="mc-opt" onclick="checkQ2(this,3,'busier')">busier</button><button class="mc-opt" onclick="checkQ2(this,3,'busier')">more busy</button><button class="mc-opt" onclick="checkQ2(this,3,'busier')">busiest</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. The restaurants are _____ than the old eateries. (elegant)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-4"><button class="mc-opt" onclick="checkQ2(this,4,'more elegant')">more elegant</button><button class="mc-opt" onclick="checkQ2(this,4,'more elegant')">eleganter</button><button class="mc-opt" onclick="checkQ2(this,4,'more elegant')">most elegant</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ2()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 15: GAP FILL EXERCISE -->
+<div class="slide" id="slide-15">
+  <div class="s-header"><h1>Gap Fill: Complete the Answers</h1><span class="s-badge amber">Exercise</span></div>
+  <div class="s-content">
+    <div class="intro-note">Fill in the blanks with the correct word or phrase. Press Enter or click Check to verify.</div>
+    <div style="display:flex;flex-direction:column;gap:9px;">
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">1. The city <input class="gap-input" id="gf-1" placeholder="___" style="width:130px" onkeydown="if(event.key==='Enter')checkGF(1,['has changed','has improved'])"> quite a lot in recent years.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(1,['has changed','has improved'])"><i class="fas fa-check"></i> Check</button></div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">2. It <input class="gap-input" id="gf-2" placeholder="___" style="width:130px" onkeydown="if(event.key==='Enter')checkGF(2,['used to be'])"> quite small and quiet, but now it is much bigger.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(2,['used to be'])"><i class="fas fa-check"></i> Check</button></div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">3. Shopping has become much <input class="gap-input" id="gf-3" placeholder="___" style="width:160px" onkeydown="if(event.key==='Enter')checkGF(3,['more convenient'])"> than it used to be.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(3,['more convenient'])"><i class="fas fa-check"></i> Check</button></div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">4. The government <input class="gap-input" id="gf-4" placeholder="___" style="width:130px" onkeydown="if(event.key==='Enter')checkGF(4,['has invested','has spent'])"> in better roads and public transport.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(4,['has invested','has spent'])"><i class="fas fa-check"></i> Check</button></div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">5. My city is <input class="gap-input" id="gf-5" placeholder="___" style="width:100px" onkeydown="if(event.key==='Enter')checkGF(5,['prettier','bigger','more modern'])"> than it was ten years ago.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(5,['prettier','bigger','more modern'])"><i class="fas fa-check"></i> Check</button></div>
+    </div>
+    <div class="btn-row"><button class="check-btn amber" onclick="showGFAnswers()"><i class="fas fa-eye"></i> Show Answers</button><button class="reset-btn" onclick="resetGF()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 16: COMMON MISTAKES -->
+<div class="slide" id="slide-16">
+  <div class="s-header"><h1>Common Mistakes to Avoid</h1><span class="s-badge red">Error Correction</span></div>
+  <div class="s-content">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="border-radius:14px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.08);">
+        <div style="padding:11px 16px;font-family:var(--hf);font-size:.86rem;font-weight:700;display:flex;align-items:center;gap:7px;background:#FEE2E2;color:#c62828;border-bottom:3px solid #c62828;"><i class="fas fa-times-circle"></i> Incorrect</div>
+        <div style="background:#fff;padding:9px;">
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#FFF5F5;color:#7F1D1D;border-left:3px solid #c62828;"><i class="fas fa-times-circle" style="color:#c62828"></i><em>"The city change a lot." (missing has/have)</em></div>
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#FFF5F5;color:#7F1D1D;border-left:3px solid #c62828;"><i class="fas fa-times-circle" style="color:#c62828"></i><em>"Shops have changed. They are more good." (more good = WRONG)</em></div>
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#FFF5F5;color:#7F1D1D;border-left:3px solid #c62828;"><i class="fas fa-times-circle" style="color:#c62828"></i><em>"The city is more bigger than before." (double comparative)</em></div>
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#FFF5F5;color:#7F1D1D;border-left:3px solid #c62828;"><i class="fas fa-times-circle" style="color:#c62828"></i><em>"It changed." (no comparison, no description)</em></div>
+        </div>
+      </div>
+      <div style="border-radius:14px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.08);">
+        <div style="padding:11px 16px;font-family:var(--hf);font-size:.86rem;font-weight:700;display:flex;align-items:center;gap:7px;background:#D1FAE5;color:#047857;border-bottom:3px solid var(--teal);"><i class="fas fa-check-circle"></i> Correct</div>
+        <div style="background:#fff;padding:9px;">
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#F0FDF4;color:#064E3B;border-left:3px solid var(--teal);"><i class="fas fa-check-circle" style="color:var(--teal)"></i><em>"The city <strong>has changed</strong> a lot." (has + past participle)</em></div>
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#F0FDF4;color:#064E3B;border-left:3px solid var(--teal);"><i class="fas fa-check-circle" style="color:var(--teal)"></i><em>"Shops have changed. They are <strong>better</strong> now." (better = irregular comparative)</em></div>
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#F0FDF4;color:#064E3B;border-left:3px solid var(--teal);"><i class="fas fa-check-circle" style="color:var(--teal)"></i><em>"The city is <strong>much bigger</strong> than before." (much + comparative)</em></div>
+          <div style="padding:8px 11px;border-radius:8px;margin-bottom:6px;font-size:.83rem;line-height:1.45;font-style:italic;display:flex;align-items:flex-start;gap:6px;background:#F0FDF4;color:#064E3B;border-left:3px solid var(--teal);"><i class="fas fa-check-circle" style="color:var(--teal)"></i><em>"It <strong>used to be</strong> small, but <strong>now it is much bigger</strong> than before."</em></div>
+        </div>
+      </div>
+    </div>
+    <div class="tip-box"><i class="fas fa-lightbulb"></i><span><strong>Irregular Comparatives:</strong> good &rarr; <strong>better</strong> | bad &rarr; <strong>worse</strong> | far &rarr; <strong>further/farther</strong>. Never say "more good" or "more bad"!</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 17: PRACTICE QUESTIONS -->
+<div class="slide" id="slide-17">
+  <div class="s-header"><h1>Practice Questions</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use the 3-step formula (Present Perfect + Past vs Now + Comparatives) to answer these questions.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>1.</strong> How has your school changed in recent years?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>2.</strong> How has your city changed in the last decade?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>3.</strong> How have people's lifestyles changed in your country?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>4.</strong> How has technology changed your life?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>5.</strong> How have public places changed in your area?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>6.</strong> How has transportation changed in your country?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>7.</strong> How have shopping habits changed recently?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>8.</strong> How has education changed compared to the past?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>9.</strong> How have houses changed in your hometown?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>10.</strong> How has your daily routine changed over time?</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 18: SELF-ASSESSMENT CHECKLIST -->
+<div class="slide" id="slide-18">
+  <div class="s-header"><h1>Self-Assessment Checklist</h1><span class="s-badge">Evaluation</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use this checklist to evaluate your own answer after practising. Click each item to mark it.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>1. Change stated:</strong> Says "has/have changed" or similar</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>2. Present Perfect used:</strong> has/have + past participle</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>3. Past description:</strong> Uses past simple (was, were, used to, etc.)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>4. Present description:</strong> Uses present simple (is, are, now...)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>5. Comparison made:</strong> Clearly compares past vs now</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>6. Comparatives used:</strong> bigger, cleaner, more + adj, etc.</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>7. "Than before" structure:</strong> Uses than before / than it was</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>8. Example included:</strong> for example / for instance</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>9. Clear development:</strong> Logical and easy to follow</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDES 19-35: ADDITIONAL QUIZZES AND REVIEW -->
+<div class="slide" id="slide-19">
+  <div class="s-header"><h1>Quiz: has or have?</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose "has" or "have" to complete each sentence. Score: <strong id="q3-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. The traffic situation _____ become a lot worse in the last few years.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-1"><button class="mc-opt" onclick="checkQ3(this,1,'has')">has</button><button class="mc-opt" onclick="checkQ3(this,1,'has')">have</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Restaurants and eateries _____ changed a great deal since I was young.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-2"><button class="mc-opt" onclick="checkQ3(this,2,'have')">have</button><button class="mc-opt" onclick="checkQ3(this,2,'have')">has</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. She _____ invested lots of money in a new business.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-3"><button class="mc-opt" onclick="checkQ3(this,3,'has')">has</button><button class="mc-opt" onclick="checkQ3(this,3,'has')">have</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Many new buildings _____ appeared in the city centre.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-4"><button class="mc-opt" onclick="checkQ3(this,4,'have')">have</button><button class="mc-opt" onclick="checkQ3(this,4,'have')">has</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ3()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-20">
+  <div class="s-header"><h1>Vocabulary Reference: All Key Expressions</h1><span class="s-badge">Quick Reference</span></div>
+  <div class="s-content">
+    <div class="intro-note">Review all the key expressions from Lesson 5. Click any card to highlight it.</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-top:3px solid var(--navy);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(191,54,12,0.06)'?'#fff':'rgba(191,54,12,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:4px;">Present Perfect Phrases</div><div style="font-size:.76rem;color:var(--ink2);">has/have changed | has/have improved | has/have become | has/have built | has/have invested | has/have appeared</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-top:3px solid var(--amber);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(255,143,0,0.06)'?'#fff':'rgba(255,143,0,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#7a3800;margin-bottom:4px;">Past Descriptions</div><div style="font-size:.76rem;color:var(--ink2);">used to be | was/were | before | in the past | when I was young | not so long ago</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-top:3px solid var(--teal);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(0,131,143,0.06)'?'#fff':'rgba(0,131,143,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--teal);margin-bottom:4px;">Now Descriptions</div><div style="font-size:.76rem;color:var(--ink2);">now | these days | nowadays | at the moment | currently | today</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-top:3px solid var(--navy);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(191,54,12,0.06)'?'#fff':'rgba(191,54,12,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:4px;">Comparative Structures</div><div style="font-size:.76rem;color:var(--ink2);">much/a lot/far + comparative + than before | more + adj + than it used to be | X is + comparative + than + time in the past</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-top:3px solid var(--amber);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(255,143,0,0.06)'?'#fff':'rgba(255,143,0,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#7a3800;margin-bottom:4px;">Contrast Linkers</div><div style="font-size:.76rem;color:var(--ink2);">but now | whereas now | however | at the same time | although | on the other hand</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-top:3px solid var(--teal);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(0,131,143,0.06)'?'#fff':'rgba(0,131,143,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--teal);margin-bottom:4px;">Time Expressions</div><div style="font-size:.76rem;color:var(--ink2);">in recent years | in the last five years | since I was young | over the past decade | recently | nowadays</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-21">
+  <div class="s-header"><h1>Quiz: Past vs Now</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct tense for each blank. Score: <strong id="q4-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. My town _____ small; now it is quite big.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-1"><button class="mc-opt" onclick="checkQ4(this,1,'was')">was</button><button class="mc-opt" onclick="checkQ4(this,1,'was')">is</button><button class="mc-opt" onclick="checkQ4(this,1,'was')">has been</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. The streets _____ to be very quiet; now they are noisy.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-2"><button class="mc-opt" onclick="checkQ4(this,2,'used')">used</button><button class="mc-opt" onclick="checkQ4(this,2,'used')">use</button><button class="mc-opt" onclick="checkQ4(this,2,'used')">have used</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Before many people ate at small eateries, but now people _____ more expensive restaurants.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-3"><button class="mc-opt" onclick="checkQ4(this,3,'choose')">choose</button><button class="mc-opt" onclick="checkQ4(this,3,'choose')">chose</button><button class="mc-opt" onclick="checkQ4(this,3,'choose')">have chosen</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. The shops _____ poor-quality clothes; now they sell designer fashions.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-4"><button class="mc-opt" onclick="checkQ4(this,4,'sold')">sold</button><button class="mc-opt" onclick="checkQ4(this,4,'sold')">sell</button><button class="mc-opt" onclick="checkQ4(this,4,'sold')">have sold</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ4()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-22">
+  <div class="s-header"><h1>Build Your Own Answer</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use the word bank to build a complete answer for: <strong>"How has technology changed your life?"</strong></div>
+    <div style="background:var(--navy);color:#fff;border-radius:10px;padding:12px 18px;font-size:.85rem;margin-bottom:10px;"><strong style="color:var(--amber)">Formula:</strong> Present Perfect + Past vs Now + Comparatives</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Present Perfect</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(191,54,12,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('Technology has changed my life a lot in recent years.','success')">has changed</span><span style="background:rgba(191,54,12,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('It has made my life much easier.','success')">has made</span><span style="background:rgba(191,54,12,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('Smartphones have become an essential part of daily life.','success')">have become</span></div></div>
+      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Past vs Now</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(255,143,0,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I used to write letters; now I send emails instantly.','success')">used to write letters</span><span style="background:rgba(255,143,0,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('Before, I had to go to the library; now I can find information online.','success')">before / now</span></div></div>
+      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Comparatives</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(0,131,143,.1);color:var(--teal);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('Life is much more convenient than it used to be.','success')">much more convenient</span><span style="background:rgba(0,131,143,.1);color:var(--teal);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('Communication is a lot faster and easier than before.','success')">a lot faster and easier</span></div></div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 3px 10px rgba(191,54,12,.07);margin-top:8px;border-left:4px solid var(--teal);">
+      <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Sample Answer</div>
+      <div style="font-size:.86rem;color:var(--ink);line-height:1.7;"><span class="hl-pp">Technology has changed</span> my life a great deal in recent years. I <span class="hl-past">used to</span> write letters and go to the library to find information, but <span class="hl-now">now</span> I can do everything online. Communication is <span class="hl-comp">a lot faster and easier</span> than it used to be, and my daily routine is <span class="hl-comp">much more productive</span> because I can use apps and online tools to support my learning.</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-23">
+  <div class="s-header"><h1>Quiz: Intensifiers with Comparatives</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the most natural intensifier. Score: <strong id="q5-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. The city has changed enormously. It is _____ bigger than it was ten years ago.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-1"><button class="mc-opt" onclick="checkQ5(this,1,'much')">much</button><button class="mc-opt" onclick="checkQ5(this,1,'much')">slightly</button><button class="mc-opt" onclick="checkQ5(this,1,'much')">a bit</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. The prices have gone up a little. They are _____ more expensive than before.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-2"><button class="mc-opt" onclick="checkQ5(this,2,'slightly')">slightly</button><button class="mc-opt" onclick="checkQ5(this,2,'slightly')">much</button><button class="mc-opt" onclick="checkQ5(this,2,'slightly')">far</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. The new restaurants are _____ more elegant than the old eateries.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-3"><button class="mc-opt" onclick="checkQ5(this,3,'a lot')">a lot</button><button class="mc-opt" onclick="checkQ5(this,3,'a lot')">slightly</button><button class="mc-opt" onclick="checkQ5(this,3,'a lot')">a bit</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. The roads are _____ wider than they were before — they have doubled in size!</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-4"><button class="mc-opt" onclick="checkQ5(this,4,'far')">far</button><button class="mc-opt" onclick="checkQ5(this,4,'far')">slightly</button><button class="mc-opt" onclick="checkQ5(this,4,'far')">a bit</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ5()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-24">
+  <div class="s-header"><h1>Grammar Focus: Present Perfect Rules</h1><span class="s-badge" style="background:#6A1B9A;">Grammar</span></div>
+  <div class="s-content">
+    <div class="intro-note">Master the Present Perfect for talking about changes.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;"><i class="fas fa-check-circle" style="margin-right:4px;color:#2e7d32"></i>Affirmative: have/has + past participle</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+          <div style="padding:5px 9px;background:rgba(191,54,12,.06);border-radius:7px;">The city <strong>has changed</strong> a lot.</div>
+          <div style="padding:5px 9px;background:rgba(191,54,12,.06);border-radius:7px;">Shops <strong>have improved</strong> greatly.</div>
+          <div style="padding:5px 9px;background:rgba(191,54,12,.06);border-radius:7px;">The government <strong>has built</strong> new roads.</div>
+          <div style="padding:5px 9px;background:rgba(191,54,12,.06);border-radius:7px;">Many malls <strong>have appeared</strong> recently.</div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;"><i class="fas fa-exclamation-circle" style="margin-right:4px"></i>Common Past Participles</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+          <div style="padding:5px 9px;background:rgba(255,143,0,.06);border-radius:7px;">change &rarr; <strong>changed</strong> | improve &rarr; <strong>improved</strong></div>
+          <div style="padding:5px 9px;background:rgba(255,143,0,.06);border-radius:7px;">build &rarr; <strong>built</strong> | spend &rarr; <strong>spent</strong></div>
+          <div style="padding:5px 9px;background:rgba(255,143,0,.06);border-radius:7px;">become &rarr; <strong>become</strong> | replace &rarr; <strong>replaced</strong></div>
+          <div style="padding:5px 9px;background:rgba(255,143,0,.06);border-radius:7px;">invest &rarr; <strong>invested</strong> | appear &rarr; <strong>appeared</strong></div>
+        </div>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);margin-top:8px;">
+      <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:#c62828;text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;"><i class="fas fa-times-circle" style="margin-right:4px"></i>Common Mistakes</div>
+      <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+        <div style="padding:5px 9px;background:rgba(198,40,40,.06);border-radius:7px;border-left:3px solid #c62828;text-decoration:line-through;color:#c62828;">The city <em>change</em> a lot. (missing has)</div>
+        <div style="padding:5px 9px;background:rgba(198,40,40,.06);border-radius:7px;border-left:3px solid #c62828;text-decoration:line-through;color:#c62828;">Shops <em>has</em> changed. (should be have — plural)</div>
+        <div style="padding:5px 9px;background:rgba(198,40,40,.06);border-radius:7px;border-left:3px solid #c62828;text-decoration:line-through;color:#c62828;">The city <em>have</em> changed. (should be has — singular)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-25">
+  <div class="s-header"><h1>Quiz: Mixed Practice</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct option. Score: <strong id="q6-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Which sentence is correct?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-1"><button class="mc-opt" onclick="checkQ6(this,1,'The city has changed a lot in recent years.')">The city has changed a lot in recent years.</button><button class="mc-opt" onclick="checkQ6(this,1,'The city has changed a lot in recent years.')">The city have changed a lot in recent years.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Which comparative is correct?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-2"><button class="mc-opt" onclick="checkQ6(this,2,'The city is much more beautiful than before.')">The city is much more beautiful than before.</button><button class="mc-opt" onclick="checkQ6(this,2,'The city is much more beautiful than before.')">The city is much more beautifuler than before.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Which sentence correctly uses "used to"?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-3"><button class="mc-opt" onclick="checkQ6(this,3,'The streets used to be very quiet.')">The streets used to be very quiet.</button><button class="mc-opt" onclick="checkQ6(this,3,'The streets used to be very quiet.')">The streets use to be very quiet.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Which is the correct irregular comparative?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-4"><button class="mc-opt" onclick="checkQ6(this,4,'The food is better now.')">The food is better now.</button><button class="mc-opt" onclick="checkQ6(this,4,'The food is better now.')">The food is more good now.</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ6()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-26">
+  <div class="s-header"><h1>Irregular Comparatives</h1><span class="s-badge">Grammar Reference</span></div>
+  <div class="s-content">
+    <div class="intro-note">These adjectives have irregular comparative forms. Click any card to see an example.</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div class="vocab-card" onclick="showToast('The food is much better now than it used to be.','success')"><div class="vocab-word">good &rarr; <span style="color:var(--amber)">better</span></div><div class="vocab-example">The food is much <strong>better</strong> now than it used to be.</div></div>
+      <div class="vocab-card" onclick="showToast('The traffic situation has become a lot worse in recent years.','success')"><div class="vocab-word">bad &rarr; <span style="color:var(--amber)">worse</span></div><div class="vocab-example">The traffic situation has become a lot <strong>worse</strong> in recent years.</div></div>
+      <div class="vocab-card" onclick="showToast('People can travel much further than they could before.','success')"><div class="vocab-word">far &rarr; <span style="color:var(--amber)">further/farther</span></div><div class="vocab-example">People can travel much <strong>further</strong> than they could before.</div></div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);margin-top:8px;">
+      <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:#c62828;text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;"><i class="fas fa-times-circle" style="margin-right:4px"></i>NEVER say these</div>
+      <div style="display:flex;flex-direction:column;gap:5px;font-size:.84rem;">
+        <div style="padding:5px 9px;background:rgba(198,40,40,.06);border-radius:7px;border-left:3px solid #c62828;text-decoration:line-through;color:#c62828;">more good &rarr; should be <strong>better</strong></div>
+        <div style="padding:5px 9px;background:rgba(198,40,40,.06);border-radius:7px;border-left:3px solid #c62828;text-decoration:line-through;color:#c62828;">more bad &rarr; should be <strong>worse</strong></div>
+        <div style="padding:5px 9px;background:rgba(198,40,40,.06);border-radius:7px;border-left:3px solid #c62828;text-decoration:line-through;color:#c62828;">gooder &rarr; should be <strong>better</strong></div>
+        <div style="padding:5px 9px;background:rgba(198,40,40,.06);border-radius:7px;border-left:3px solid #c62828;text-decoration:line-through;color:#c62828;">badder &rarr; should be <strong>worse</strong></div>
+      </div>
+    </div>
+    <div class="tip-box"><i class="fas fa-lightbulb"></i><span><strong>Memory Tip:</strong> good/better/best | bad/worse/worst | far/further/furthest. These three are the most important irregular comparatives for IELTS Speaking.</span></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-27">
+  <div class="s-header"><h1>Quiz: Irregular Comparatives</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct irregular comparative. Score: <strong id="q7-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. The service in restaurants is _____ than it used to be. (good)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-1"><button class="mc-opt" onclick="checkQ7(this,1,'better')">better</button><button class="mc-opt" onclick="checkQ7(this,1,'better')">more good</button><button class="mc-opt" onclick="checkQ7(this,1,'better')">gooder</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. The traffic situation has become _____ in recent years. (bad)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-2"><button class="mc-opt" onclick="checkQ7(this,2,'worse')">worse</button><button class="mc-opt" onclick="checkQ7(this,2,'worse')">more bad</button><button class="mc-opt" onclick="checkQ7(this,2,'worse')">badder</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. The quality of food is _____ than it was before. (good)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-3"><button class="mc-opt" onclick="checkQ7(this,3,'better')">better</button><button class="mc-opt" onclick="checkQ7(this,3,'better')">gooder</button><button class="mc-opt" onclick="checkQ7(this,3,'better')">more good</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Air pollution has become _____ than it was ten years ago. (bad)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-4"><button class="mc-opt" onclick="checkQ7(this,4,'worse')">worse</button><button class="mc-opt" onclick="checkQ7(this,4,'worse')">more bad</button><button class="mc-opt" onclick="checkQ7(this,4,'worse')">badder</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ7()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-28">
+  <div class="s-header"><h1>Formula Summary</h1><span class="s-badge">Formula Reference</span></div>
+  <div class="s-content">
+    <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+      <div style="background:var(--navy);color:#fff;border-radius:8px;padding:8px 14px;font-family:var(--hf);font-size:.88rem;font-weight:700;display:flex;align-items:center;gap:6px;"><i class="fas fa-check-circle"></i> Present Perfect</div>
+      <span style="font-family:var(--hf);font-size:1.2rem;font-weight:900;color:var(--ink2);">+</span>
+      <div style="background:var(--amber);color:#1a0000;border-radius:8px;padding:8px 14px;font-family:var(--hf);font-size:.88rem;font-weight:700;display:flex;align-items:center;gap:6px;"><i class="fas fa-exchange-alt"></i> Past vs Now</div>
+      <span style="font-family:var(--hf);font-size:1.2rem;font-weight:900;color:var(--ink2);">+</span>
+      <div style="background:var(--teal);color:#fff;border-radius:8px;padding:8px 14px;font-family:var(--hf);font-size:.88rem;font-weight:700;display:flex;align-items:center;gap:6px;"><i class="fas fa-not-equal"></i> Comparatives</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-top:4px solid var(--navy);"><div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Step 1: Present Perfect</div><div style="font-size:.8rem;color:var(--ink2);line-height:1.5;">has/have + past participle | has changed / have improved / has built / have appeared</div></div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-top:4px solid var(--amber);"><div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Step 2: Past vs Now</div><div style="font-size:.8rem;color:var(--ink2);line-height:1.5;">used to be... but now... | was/were... now is/are... | before... whereas now...</div></div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-top:4px solid var(--teal);"><div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Step 3: Comparatives</div><div style="font-size:.8rem;color:var(--ink2);line-height:1.5;">much/a lot + comparative + than before | more + adj + than it used to be | better/worse (irregular)</div></div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 3px 10px rgba(191,54,12,.07);margin-top:8px;border-left:4px solid var(--navy);">
+      <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Full Example</div>
+      <div style="font-size:.86rem;color:var(--ink);line-height:1.7;"><span class="hl-pp">The city has changed</span> quite a lot in recent years. It <span class="hl-past">used to be</span> quite small and quiet, but <span class="hl-now">now it is</span> <span class="hl-comp">much bigger and busier</span> than before. The local government <span class="hl-pp">has built</span> more roads and buildings, which makes the town <span class="hl-comp">more modern and better developed</span> overall.</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-29">
+  <div class="s-header"><h1>Lesson Summary</h1><span class="s-badge">Key Takeaways</span></div>
+  <div class="s-content">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(191,54,12,.08);border-top:4px solid var(--navy);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-check-circle"></i> Present Perfect</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(191,54,12,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">has changed</span><span style="background:rgba(191,54,12,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">have improved</span><span style="background:rgba(191,54,12,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">has built</span><span style="background:rgba(191,54,12,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">have appeared</span><span style="background:rgba(191,54,12,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">has invested</span></div></div>
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(191,54,12,.08);border-top:4px solid var(--amber);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:#7a3800;margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-exchange-alt"></i> Past vs Now</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">used to be</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">was/were</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">but now</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">whereas now</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">these days</span></div></div>
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(191,54,12,.08);border-top:4px solid var(--teal);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:var(--teal);margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-not-equal"></i> Comparatives</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(0,131,143,.08);color:var(--teal);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">much bigger</span><span style="background:rgba(0,131,143,.08);color:var(--teal);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">a lot more convenient</span><span style="background:rgba(0,131,143,.08);color:var(--teal);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">far more elegant</span><span style="background:rgba(0,131,143,.08);color:var(--teal);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">better/worse</span></div></div>
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(191,54,12,.08);border-top:4px solid #2e7d32;"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:#2e7d32;margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-exclamation-circle"></i> Key Rules</h3><div style="font-size:.84rem;color:var(--ink2);line-height:1.5;">has (singular) / have (plural) | good&rarr;better | bad&rarr;worse | Never say "more good" or "more bad"</div></div>
+    </div>
+    <div style="background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;border-radius:14px;padding:18px 24px;text-align:center;margin-top:8px;">
+      <div style="font-family:var(--hf);font-size:1.1rem;font-weight:800;margin-bottom:6px;">&#127881; Lesson 5 Complete!</div>
+      <div style="font-size:.88rem;opacity:.85;">You have mastered the formula for expressing changes. Keep practising with the 10 practice questions!</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-30">
+  <div class="s-header"><h1>Final Review: Complete Answer</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Review the complete formula with all components. Click each highlighted part to learn more.</div>
+    <div class="model-q"><i class="fas fa-question-circle"></i> Question: How have shops changed in your city in the last five years?</div>
+    <div class="model-answer-box" style="font-size:.88rem;">
+      Yes, they <span class="hl-pp" style="cursor:pointer" onclick="showToast('Step 1 - Present Perfect: have changed — shows change up to now','success')">have changed</span>
+      quite a bit. Shops
+      <span class="hl-past" style="cursor:pointer" onclick="showToast('Step 2 - Past description: used to sell — describes what it was like before','success')">used to sell</span>
+      fairly basic and low-quality products, but
+      <span class="hl-now" style="cursor:pointer" onclick="showToast('Step 2 - Now description: now they offer — describes what it is like today','success')">now they offer</span>
+      <span class="hl-comp" style="cursor:pointer" onclick="showToast('Step 3 - Comparative: more fashionable and better-quality — shows HOW it has changed','success')">more fashionable and better-quality</span>
+      goods. A lot of new supermarkets and malls
+      <span class="hl-pp" style="cursor:pointer" onclick="showToast('Step 1 - Present Perfect: have appeared — another change that has happened','success')">have appeared,</span>
+      so shopping
+      <span class="hl-pp" style="cursor:pointer" onclick="showToast('Step 1 - Present Perfect: has become — describes the result of the change','success')">has become</span>
+      <span class="hl-comp" style="cursor:pointer" onclick="showToast('Step 3 - Comparative with intensifier: much more convenient — shows degree of change','success')">much more convenient</span>
+      than it used to be.
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px;">
+      <div style="background:rgba(191,54,12,.08);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 1</div><div style="font-size:.82rem;color:var(--navy);font-weight:600;">Present Perfect</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">have changed / have appeared / has become</div></div>
+      <div style="background:rgba(255,143,0,.1);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 2</div><div style="font-size:.82rem;color:#7a3800;font-weight:600;">Past vs Now</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">used to sell &rarr; now offer</div></div>
+      <div style="background:rgba(0,131,143,.08);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 3</div><div style="font-size:.82rem;color:var(--teal);font-weight:600;">Comparatives</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">more fashionable / much more convenient</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-31">
+  <div class="s-header"><h1>IELTS Speaking Tips for Part 1</h1><span class="s-badge purple">IELTS Tips</span></div>
+  <div class="s-content">
+    <div class="intro-note">Follow these tips to maximise your score in IELTS Speaking Part 1 change questions.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-left:4px solid var(--navy);">
+        <div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:6px;"><i class="fas fa-check-circle" style="margin-right:5px;color:#2e7d32"></i>DO</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.82rem;color:var(--ink);">
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Use Present Perfect (has/have + past participle)</div>
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Compare past and present clearly</div>
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Use "used to" for past habits/states</div>
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Use comparative adjectives with intensifiers</div>
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Use "than before" / "than it used to be"</div>
+          <div style="padding:4px 8px;background:rgba(46,125,50,.06);border-radius:6px;">Use better/worse (not more good/more bad)</div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);border-left:4px solid #c62828;">
+        <div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#c62828;margin-bottom:6px;"><i class="fas fa-times-circle" style="margin-right:5px"></i>DO NOT</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.82rem;color:var(--ink);">
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Forget to use has/have (say "it change")</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Use "have" with singular (the city have)</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Say "more good" or "more bad"</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Use double comparatives (more bigger)</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Forget to compare past and present</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;">Give one-word answers</div>
+        </div>
+      </div>
+    </div>
+    <div style="background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;border-radius:14px;padding:16px 24px;text-align:center;margin-top:8px;">
+      <div style="font-family:var(--hf);font-size:1rem;font-weight:800;margin-bottom:6px;">Remember the Formula!</div>
+      <div style="font-size:.88rem;opacity:.9;"><strong>Present Perfect</strong> + <strong>Past vs Now</strong> (used to be... but now...) + <strong>Comparatives</strong> (much bigger/more convenient than before)</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-32">
+  <div class="s-header"><h1>Quiz: Complete the Answer</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct option to complete each sentence. Score: <strong id="q8-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. The city _____ a lot in recent years. It is much bigger now.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-1"><button class="mc-opt" onclick="checkQ8(this,1,'has changed')">has changed</button><button class="mc-opt" onclick="checkQ8(this,1,'has changed')">changed</button><button class="mc-opt" onclick="checkQ8(this,1,'has changed')">is changing</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. The streets _____ very narrow; now they are much wider.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-2"><button class="mc-opt" onclick="checkQ8(this,2,'used to be')">used to be</button><button class="mc-opt" onclick="checkQ8(this,2,'used to be')">are</button><button class="mc-opt" onclick="checkQ8(this,2,'used to be')">have been</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. The food quality is _____ than it used to be.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-3"><button class="mc-opt" onclick="checkQ8(this,3,'much better')">much better</button><button class="mc-opt" onclick="checkQ8(this,3,'much better')">much more good</button><button class="mc-opt" onclick="checkQ8(this,3,'much better')">much gooder</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Many new malls _____ in the city, so shopping is more convenient.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-4"><button class="mc-opt" onclick="checkQ8(this,4,'have appeared')">have appeared</button><button class="mc-opt" onclick="checkQ8(this,4,'have appeared')">has appeared</button><button class="mc-opt" onclick="checkQ8(this,4,'have appeared')">appeared</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ8()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<div class="slide" id="slide-33">
+  <div class="s-header"><h1>Extra Practice: Sentence Correction</h1><span class="s-badge red">Error Correction</span></div>
+  <div class="s-content">
+    <div class="intro-note">Find and correct the mistake in each sentence. Click Check to verify your answer.</div>
+    <div style="display:flex;flex-direction:column;gap:9px;">
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);">
+        <div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;"><span style="color:#c62828;font-weight:600;">Wrong:</span> "The city change a lot in recent years."<br>Correct: The city <input class="gap-input" id="ec-1" placeholder="___" style="width:130px" onkeydown="if(event.key==='Enter')checkEC(1,['has changed'])"> a lot in recent years.</div>
+        <button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkEC(1,['has changed'])"><i class="fas fa-check"></i> Check</button>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);">
+        <div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;"><span style="color:#c62828;font-weight:600;">Wrong:</span> "The food is more good than before."<br>Correct: The food is <input class="gap-input" id="ec-2" placeholder="___" style="width:80px" onkeydown="if(event.key==='Enter')checkEC(2,['better'])"> than before.</div>
+        <button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkEC(2,['better'])"><i class="fas fa-check"></i> Check</button>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(191,54,12,.07);">
+        <div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;"><span style="color:#c62828;font-weight:600;">Wrong:</span> "The city is more bigger than before."<br>Correct: The city is <input class="gap-input" id="ec-3" placeholder="___" style="width:120px" onkeydown="if(event.key==='Enter')checkEC(3,['much bigger','a lot bigger'])"> than before.</div>
+        <button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkEC(3,['much bigger','a lot bigger'])"><i class="fas fa-check"></i> Check</button>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="check-btn amber" onclick="showECAnswers()"><i class="fas fa-eye"></i> Show Answers</button>
+      <button class="reset-btn" onclick="resetEC()"><i class="fas fa-redo"></i> Reset</button>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-34">
+  <div class="s-header"><h1>Extra Practice: Build Full Answers</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Review these sample answers. Notice how each follows the 3-step formula.</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);">
+        <div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">How has your school changed in recent years?</div>
+        <div style="background:rgba(191,54,12,.06);border-radius:8px;padding:10px 12px;font-size:.84rem;color:var(--ink2);line-height:1.6;"><span class="hl-pp">Yes, it has changed</span> quite a lot. It <span class="hl-past">used to be</span> quite small with limited facilities, but <span class="hl-now">now it is</span> <span class="hl-comp">much bigger and better equipped</span> than before. The school <span class="hl-pp">has built</span> new classrooms and a modern library, which makes studying <span class="hl-comp">much more comfortable and effective</span> for students.</div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);">
+        <div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">How have people's lifestyles changed in your country?</div>
+        <div style="background:rgba(191,54,12,.06);border-radius:8px;padding:10px 12px;font-size:.84rem;color:var(--ink2);line-height:1.6;"><span class="hl-pp">They have changed</span> a great deal in recent years. People <span class="hl-past">used to</span> spend more time outdoors and socialising face-to-face, whereas <span class="hl-now">now</span> many people spend <span class="hl-comp">much more time</span> online and on their smartphones. Life has become <span class="hl-comp">busier and more fast-paced</span> than it used to be, although it is also <span class="hl-comp">more convenient</span> in many ways.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" id="slide-35">
+  <div class="s-header"><h1>Lesson 5: Complete Review Quiz</h1><span class="s-badge green">Final Review</span></div>
+  <div class="s-content">
+    <div class="intro-note">Test yourself on all the key points from Lesson 5. Score: <strong id="qfinal-score">0</strong>/5</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Which is the correct Present Perfect form?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-1"><button class="mc-opt" onclick="checkQF(this,1,'The city has changed a lot.')">The city has changed a lot.</button><button class="mc-opt" onclick="checkQF(this,1,'The city has changed a lot.')">The city have changed a lot.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Which sentence correctly uses "used to"?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-2"><button class="mc-opt" onclick="checkQF(this,2,'The streets used to be very quiet.')">The streets used to be very quiet.</button><button class="mc-opt" onclick="checkQF(this,2,'The streets used to be very quiet.')">The streets use to be very quiet.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. What is the comparative of "good"?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-3"><button class="mc-opt" onclick="checkQF(this,3,'better')">better</button><button class="mc-opt" onclick="checkQF(this,3,'better')">more good</button><button class="mc-opt" onclick="checkQF(this,3,'better')">gooder</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Which intensifier is correct?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-4"><button class="mc-opt" onclick="checkQF(this,4,'The city is much bigger than before.')">The city is much bigger than before.</button><button class="mc-opt" onclick="checkQF(this,4,'The city is much bigger than before.')">The city is more bigger than before.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(191,54,12,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">5. What are the 3 steps in the answer formula?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-5"><button class="mc-opt" onclick="checkQF(this,5,'Present Perfect + Past vs Now + Comparatives')">Present Perfect + Past vs Now + Comparatives</button><button class="mc-opt" onclick="checkQF(this,5,'Present Perfect + Past vs Now + Comparatives')">Past Simple + Future + Adjectives</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQF()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+  <div id="navbar">
+    <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i> Prev</button>
+    <div id="nav-dots"></div>
+    <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next <i class="fas fa-chevron-right"></i></button>
+    <div class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">35</span></div>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    var currentSlide = 1;
+    var totalSlides = 35;
+
+    function buildDots() {
+      var container = document.getElementById("nav-dots");
+      container.innerHTML = "";
+      for (var i = 1; i <= totalSlides; i++) {
+        var d = document.createElement("div");
+        d.className = "dot" + (i === 1 ? " active" : "");
+        d.setAttribute("data-slide", i);
+        d.onclick = (function(n){ return function(){ goToSlide(n); }; })(i);
+        container.appendChild(d);
+      }
+    }
+
+    function goToSlide(n) {
+      var prev = document.getElementById("slide-" + currentSlide);
+      if (prev) prev.classList.remove("active");
+      currentSlide = n;
+      var next = document.getElementById("slide-" + currentSlide);
+      if (next) next.classList.add("active");
+      document.getElementById("current-slide").textContent = currentSlide;
+      var dots = document.querySelectorAll(".dot");
+      dots.forEach(function(d, i) { d.classList.toggle("active", i + 1 === currentSlide); });
+      document.getElementById("prev-btn").disabled = currentSlide === 1;
+      document.getElementById("next-btn").disabled = currentSlide === totalSlides;
+      var pb = document.getElementById("progress-bar");
+      if (pb) pb.style.width = ((currentSlide / totalSlides) * 100) + "%";
+    }
+
+    function changeSlide(dir) {
+      var n = currentSlide + dir;
+      if (n >= 1 && n <= totalSlides) goToSlide(n);
+    }
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") changeSlide(1);
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") changeSlide(-1);
+    });
+
+    function showToast(msg, type) {
+      var t = document.getElementById("toast");
+      t.textContent = msg;
+      t.className = "toast show " + (type || "");
+      clearTimeout(t._timer);
+      t._timer = setTimeout(function(){ t.className = "toast"; }, 3200);
+    }
+
+    function toggleCheck(el) { el.classList.toggle("checked"); }
+
+    // ===== GAP FILL =====
+    function checkGF(num, accepted) {
+      var input = document.getElementById("gf-" + num);
+      if (!input) return;
+      var val = input.value.trim().toLowerCase();
+      var isCorrect = accepted.some(function(a) { return val === a.toLowerCase(); });
+      if (isCorrect) {
+        input.style.borderColor = "#2e7d32"; input.style.background = "#f0fdf4";
+        showToast("Correct!", "success");
+      } else {
+        input.style.borderColor = "#c62828"; input.style.background = "#fff5f5";
+        showToast("Try again! Hint: " + accepted[0], "error");
+      }
+    }
+
+    function showGFAnswers() {
+      var ans = {
+        "gf-1": "has changed",
+        "gf-2": "used to be",
+        "gf-3": "more convenient",
+        "gf-4": "has invested",
+        "gf-5": "prettier"
+      };
+      Object.keys(ans).forEach(function(id) {
+        var input = document.getElementById(id);
+        if (input) { input.value = ans[id]; input.style.borderColor = "#2e7d32"; input.style.background = "#f0fdf4"; }
+      });
+      showToast("Answers revealed!", "success");
+    }
+
+    function resetGF() {
+      for (var i = 1; i <= 5; i++) {
+        var input = document.getElementById("gf-" + i);
+        if (input) { input.value = ""; input.style.borderColor = ""; input.style.background = ""; }
+      }
+    }
+
+    // ===== ERROR CORRECTION =====
+    function checkEC(num, accepted) {
+      var input = document.getElementById("ec-" + num);
+      if (!input) return;
+      var val = input.value.trim().toLowerCase();
+      var isCorrect = accepted.some(function(a) { return val === a.toLowerCase(); });
+      if (isCorrect) {
+        input.style.borderColor = "#2e7d32"; input.style.background = "#f0fdf4";
+        showToast("Correct!", "success");
+      } else {
+        input.style.borderColor = "#c62828"; input.style.background = "#fff5f5";
+        showToast("Try again! Hint: " + accepted[0], "error");
+      }
+    }
+
+    function showECAnswers() {
+      var ans = { "ec-1": "has changed", "ec-2": "better", "ec-3": "much bigger" };
+      Object.keys(ans).forEach(function(id) {
+        var input = document.getElementById(id);
+        if (input) { input.value = ans[id]; input.style.borderColor = "#2e7d32"; input.style.background = "#f0fdf4"; }
+      });
+      showToast("Answers revealed!", "success");
+    }
+
+    function resetEC() {
+      ["ec-1","ec-2","ec-3"].forEach(function(id) {
+        var input = document.getElementById(id);
+        if (input) { input.value = ""; input.style.borderColor = ""; input.style.background = ""; }
+      });
+    }
+
+    // ===== QUIZ FACTORY =====
+    function makeQuiz(slideId, scoreId) {
+      var score = 0; var done = {};
+      return {
+        check: function(btn, qNum, correct) {
+          if (done[qNum]) return; done[qNum] = true;
+          var allOpts = btn.parentElement.querySelectorAll(".mc-opt");
+          allOpts.forEach(function(o) { o.disabled = true; });
+          if (btn.textContent.trim() === correct) {
+            btn.classList.add("correct"); score++;
+            var el = document.getElementById(scoreId);
+            if (el) el.textContent = score;
+            showToast("Correct!", "success");
+          } else {
+            btn.classList.add("wrong");
+            allOpts.forEach(function(o) { if (o.textContent.trim() === correct) o.classList.add("correct"); });
+            showToast("Not quite. The correct answer is highlighted.", "error");
+          }
+        },
+        reset: function() {
+          score = 0; done = {};
+          var el = document.getElementById(scoreId);
+          if (el) el.textContent = "0";
+          document.querySelectorAll("#" + slideId + " .mc-opt").forEach(function(b) { b.classList.remove("correct","wrong"); b.disabled = false; });
+        }
+      };
+    }
+
+    var q1 = makeQuiz("slide-13","q1-score");
+    var q2 = makeQuiz("slide-14","q2-score");
+    var q3 = makeQuiz("slide-19","q3-score");
+    var q4 = makeQuiz("slide-21","q4-score");
+    var q5 = makeQuiz("slide-23","q5-score");
+    var q6 = makeQuiz("slide-25","q6-score");
+    var q7 = makeQuiz("slide-27","q7-score");
+    var q8 = makeQuiz("slide-32","q8-score");
+    var qfinal = makeQuiz("slide-35","qfinal-score");
+
+    function checkQ1(btn, qNum, correct) { q1.check(btn, qNum, correct); }
+    function resetQ1() { q1.reset(); }
+    function checkQ2(btn, qNum, correct) { q2.check(btn, qNum, correct); }
+    function resetQ2() { q2.reset(); }
+    function checkQ3(btn, qNum, correct) { q3.check(btn, qNum, correct); }
+    function resetQ3() { q3.reset(); }
+    function checkQ4(btn, qNum, correct) { q4.check(btn, qNum, correct); }
+    function resetQ4() { q4.reset(); }
+    function checkQ5(btn, qNum, correct) { q5.check(btn, qNum, correct); }
+    function resetQ5() { q5.reset(); }
+    function checkQ6(btn, qNum, correct) { q6.check(btn, qNum, correct); }
+    function resetQ6() { q6.reset(); }
+    function checkQ7(btn, qNum, correct) { q7.check(btn, qNum, correct); }
+    function resetQ7() { q7.reset(); }
+    function checkQ8(btn, qNum, correct) { q8.check(btn, qNum, correct); }
+    function resetQ8() { q8.reset(); }
+    function checkQF(btn, qNum, correct) { qfinal.check(btn, qNum, correct); }
+    function resetQF() { qfinal.reset(); }
+
+    // ===== INIT =====
+    buildDots();
+    goToSlide(1);
+  </script>
+</body>
+</html>

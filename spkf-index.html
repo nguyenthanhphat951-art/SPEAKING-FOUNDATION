@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPK F Interactive Classroom</title>
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+<link href="/fonts/Montserrat/index.css" rel="stylesheet">
+<link href="/fonts/Open Sans/index.css" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:Open Sans,sans-serif;background:#F0FDF4;color:#001a16;min-height:100%;}
+.hero{background:linear-gradient(135deg,#004D40 0%,#00695C 40%,#00897B 100%);padding:60px 40px 50px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(0,172,193,.2) 0%,transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(255,143,0,.1) 0%,transparent 60%);pointer-events:none;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.85);font-family:Montserrat,sans-serif;font-size:.78rem;font-weight:700;padding:6px 18px;border-radius:999px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;border:1px solid rgba(255,255,255,.15);}
+.hero h1{font-family:Montserrat,sans-serif;font-size:3rem;font-weight:900;color:#fff;line-height:1.1;margin-bottom:14px;}
+.hero h1 span{background:linear-gradient(90deg,#80CBC4,#FFD54F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero p{font-size:1.05rem;color:rgba(255,255,255,.75);max-width:560px;margin:0 auto 32px;line-height:1.65;}
+.hero-stats{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;}
+.hero-stat .num{font-family:Montserrat,sans-serif;font-size:2rem;font-weight:900;color:#fff;}
+.hero-stat .lbl{font-size:.75rem;color:rgba(255,255,255,.55);font-weight:600;text-transform:uppercase;letter-spacing:.08em;}
+.controls{max-width:900px;margin:0 auto;padding:28px 24px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.search-box{flex:1;min-width:200px;display:flex;align-items:center;gap:10px;background:#fff;border:2px solid #B2DFDB;border-radius:12px;padding:10px 16px;transition:border-color .2s;}
+.search-box:focus-within{border-color:#00897B;}
+.search-box i{color:#A0AEC0;font-size:.9rem;}
+.search-box input{border:none;outline:none;font-family:Open Sans,sans-serif;font-size:.9rem;color:#001a16;width:100%;background:transparent;}
+.filter-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.filter-btn{background:#fff;border:2px solid #B2DFDB;border-radius:10px;padding:8px 16px;font-family:Montserrat,sans-serif;font-size:.75rem;font-weight:700;color:#00695C;cursor:pointer;transition:all .2s;letter-spacing:.04em;}
+.filter-btn:hover,.filter-btn.active{background:#00897B;border-color:#00897B;color:#fff;}
+.grid{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;padding:24px 24px 60px;}
+.card{border-radius:14px;transition:all .25s;}
+.card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.15);}
+.section-header{max-width:900px;margin:0 auto;padding:32px 24px 4px;display:flex;align-items:center;gap:12px;}
+.section-header h2{font-family:Montserrat,sans-serif;font-size:1.1rem;font-weight:800;color:#004D40;}
+.section-line{flex:1;height:2px;background:#B2DFDB;border-radius:2px;}
+footer{text-align:center;padding:24px;font-size:.8rem;color:#A0AEC0;border-top:1px solid #B2DFDB;background:#fff;}
+@media(max-width:600px){.hero h1{font-size:2rem;}.grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-badge"><i class="fas fa-microphone"></i> IELTS Speaking Part 1 &amp; 2</div>
+  <h1>SPK F<br><span>Interactive Classroom</span></h1>
+  <p>Master IELTS Speaking Part 1 and Part 2 with interactive lessons covering all key formulas, vocabulary, grammar, and exercises.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">7</div><div class="lbl">Available</div></div>
+    <div class="hero-stat"><div class="num">245+</div><div class="lbl">Slides</div></div>
+    <div class="hero-stat"><div class="num">52+</div><div class="lbl">Exercises</div></div>
+    <div class="hero-stat"><div class="num">9</div><div class="lbl">Lessons Total</div></div>
+  </div>
+</div>
+<div class="controls">
+  <div class="search-box"><i class="fas fa-search"></i><input type="text" id="search" placeholder="Search lessons..." oninput="filterCards()"></div>
+  <div class="filter-btns">
+    <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setFilter('available',this)">Available</button>
+  </div>
+</div>
+<div class="section-header"><h2>All Lessons</h2><div class="section-line"></div></div>
+<div class="grid" id="card-grid">
+    <div class="card" data-status="available" data-title="lesson 1 express likes & dislikes">
+      <div style="background:linear-gradient(135deg,#B71C1C 0%,#C62828 100%);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px;height:100%;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-heart" style="color:#fff;font-size:1rem;"></i></div>
+          <div><div style="font-family:Montserrat,sans-serif;font-size:.7rem;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.1em;">Lesson 1</div><div style="font-family:Montserrat,sans-serif;font-size:1rem;font-weight:800;color:#fff;line-height:1.2;">Express Likes & Dislikes</div></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Synonyms for Like/Dislike</span><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Benefit Phrases</span><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Reason Types</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;"><div style="font-size:.75rem;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:10px;"><span><i class="fas fa-layer-group" style="margin-right:3px"></i>35 slides</span><span><i class="fas fa-tasks" style="margin-right:3px"></i>6 exercises</span></div><a href="spkf-lesson1-interactive.html" style="background:rgba(255,255,255,.2);color:#fff;border:1.5px solid rgba(255,255,255,.3);border-radius:9px;padding:8px 16px;font-family:Montserrat,sans-serif;font-size:.76rem;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;" onmouseover="this.style.background='rgba(255,255,255,.3)'" onmouseout="this.style.background='rgba(255,255,255,.2)'"><i class="fas fa-play"></i> Open</a></div>
+      </div>
+    </div>
+    <div class="card" data-status="available" data-title="lesson 2 express preferences">
+      <div style="background:linear-gradient(135deg,#1A237E 0%,#283593 100%);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px;height:100%;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-balance-scale" style="color:#fff;font-size:1rem;"></i></div>
+          <div><div style="font-family:Montserrat,sans-serif;font-size:.7rem;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.1em;">Lesson 2</div><div style="font-family:Montserrat,sans-serif;font-size:1rem;font-weight:800;color:#fff;line-height:1.2;">Express Preferences</div></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Prefer Structures</span><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Comparatives</span><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Discourse Markers</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;"><div style="font-size:.75rem;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:10px;"><span><i class="fas fa-layer-group" style="margin-right:3px"></i>35 slides</span><span><i class="fas fa-tasks" style="margin-right:3px"></i>8 exercises</span></div><a href="spkf-lesson2-interactive.html" style="background:rgba(255,255,255,.2);color:#fff;border:1.5px solid rgba(255,255,255,.3);border-radius:9px;padding:8px 16px;font-family:Montserrat,sans-serif;font-size:.76rem;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;" onmouseover="this.style.background='rgba(255,255,255,.3)'" onmouseout="this.style.background='rgba(255,255,255,.2)'"><i class="fas fa-play"></i> Open</a></div>
+      </div>
+    </div>
+    <div class="card" data-status="available" data-title="lesson 3 express habits & routines">
+      <div style="background:linear-gradient(135deg,#004D40 0%,#00695C 100%);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px;height:100%;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-clock" style="color:#fff;font-size:1rem;"></i></div>
+          <div><div style="font-family:Montserrat,sans-serif;font-size:.7rem;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.1em;">Lesson 3</div><div style="font-family:Montserrat,sans-serif;font-size:1rem;font-weight:800;color:#fff;line-height:1.2;">Express Habits & Routines</div></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Adverbs of Frequency</span><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Colloquial Expressions</span><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Extension Phrases</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;"><div style="font-size:.75rem;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:10px;"><span><i class="fas fa-layer-group" style="margin-right:3px"></i>35 slides</span><span><i class="fas fa-tasks" style="margin-right:3px"></i>7 exercises</span></div><a href="spkf-lesson3-interactive.html" style="background:rgba(255,255,255,.2);color:#fff;border:1.5px solid rgba(255,255,255,.3);border-radius:9px;padding:8px 16px;font-family:Montserrat,sans-serif;font-size:.76rem;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;" onmouseover="this.style.background='rgba(255,255,255,.3)'" onmouseout="this.style.background='rgba(255,255,255,.2)'"><i class="fas fa-play"></i> Open</a></div>
+      </div>
+    </div>
+    <div class="card" data-status="available" data-title="lesson 4 express past experiences">
+      <div style="background:linear-gradient(135deg,#4A148C 0%,#6A1B9A 100%);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px;height:100%;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-history" style="color:#fff;font-size:1rem;"></i></div>
+          <div><div style="font-family:Montserrat,sans-serif;font-size:.7rem;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.1em;">Lesson 4</div><div style="font-family:Montserrat,sans-serif;font-size:1rem;font-weight:800;color:#fff;line-height:1.2;">Express Past Experiences</div></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Time Prepositions</span><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Irregular Verbs</span><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Adjectives of Experience</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;"><div style="font-size:.75rem;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:10px;"><span><i class="fas fa-layer-group" style="margin-right:3px"></i>35 slides</span><span><i class="fas fa-tasks" style="margin-right:3px"></i>7 exercises</span></div><a href="spkf-lesson4-interactive.html" style="background:rgba(255,255,255,.2);color:#fff;border:1.5px solid rgba(255,255,255,.3);border-radius:9px;padding:8px 16px;font-family:Montserrat,sans-serif;font-size:.76rem;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;" onmouseover="this.style.background='rgba(255,255,255,.3)'" onmouseout="this.style.background='rgba(255,255,255,.2)'"><i class="fas fa-play"></i> Open</a></div>
+      </div>
+    </div>
+    <div class="card" data-status="available" data-title="lesson 5 express changes">
+      <div style="background:linear-gradient(135deg,#BF360C 0%,#D84315 100%);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px;height:100%;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-exchange-alt" style="color:#fff;font-size:1rem;"></i></div>
+          <div><div style="font-family:Montserrat,sans-serif;font-size:.7rem;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.1em;">Lesson 5</div><div style="font-family:Montserrat,sans-serif;font-size:1rem;font-weight:800;color:#fff;line-height:1.2;">Express Changes</div></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Present Perfect</span><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Past vs Now</span><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Comparative Adjectives</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;"><div style="font-size:.75rem;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:10px;"><span><i class="fas fa-layer-group" style="margin-right:3px"></i>35 slides</span><span><i class="fas fa-tasks" style="margin-right:3px"></i>7 exercises</span></div><a href="spkf-lesson5-interactive.html" style="background:rgba(255,255,255,.2);color:#fff;border:1.5px solid rgba(255,255,255,.3);border-radius:9px;padding:8px 16px;font-family:Montserrat,sans-serif;font-size:.76rem;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;" onmouseover="this.style.background='rgba(255,255,255,.3)'" onmouseout="this.style.background='rgba(255,255,255,.2)'"><i class="fas fa-play"></i> Open</a></div>
+      </div>
+    </div>
+    <div class="card" data-status="available" data-title="lesson 6,7 describe a person">
+      <div style="background:linear-gradient(135deg,#006064 0%,#00838F 100%);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px;height:100%;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-user" style="color:#fff;font-size:1rem;"></i></div>
+          <div><div style="font-family:Montserrat,sans-serif;font-size:.7rem;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.1em;">Lesson 6,7</div><div style="font-family:Montserrat,sans-serif;font-size:1rem;font-weight:800;color:#fff;line-height:1.2;">Describe a Person</div></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Relative Clauses</span><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Third Conditional</span><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Admiration Expressions</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;"><div style="font-size:.75rem;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:10px;"><span><i class="fas fa-layer-group" style="margin-right:3px"></i>35 slides</span><span><i class="fas fa-tasks" style="margin-right:3px"></i>8 exercises</span></div><a href="spkf-lesson67-interactive.html" style="background:rgba(255,255,255,.2);color:#fff;border:1.5px solid rgba(255,255,255,.3);border-radius:9px;padding:8px 16px;font-family:Montserrat,sans-serif;font-size:.76rem;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;" onmouseover="this.style.background='rgba(255,255,255,.3)'" onmouseout="this.style.background='rgba(255,255,255,.2)'"><i class="fas fa-play"></i> Open</a></div>
+      </div>
+    </div>
+    <div class="card" data-status="available" data-title="lesson 8,9 describe a place">
+      <div style="background:linear-gradient(135deg,#1B5E20 0%,#2E7D32 100%);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px;height:100%;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fas fa-map-marker-alt" style="color:#fff;font-size:1rem;"></i></div>
+          <div><div style="font-family:Montserrat,sans-serif;font-size:.7rem;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.1em;">Lesson 8,9</div><div style="font-family:Montserrat,sans-serif;font-size:1rem;font-weight:800;color:#fff;line-height:1.2;">Describe a Place</div></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Types of Places</span><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Passive Voice</span><span style="background:rgba(255,255,255,.15);color:#fff;font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:20px;">Zero/First Conditional</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;"><div style="font-size:.75rem;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:10px;"><span><i class="fas fa-layer-group" style="margin-right:3px"></i>35 slides</span><span><i class="fas fa-tasks" style="margin-right:3px"></i>9 exercises</span></div><a href="spkf-lesson89-interactive.html" style="background:rgba(255,255,255,.2);color:#fff;border:1.5px solid rgba(255,255,255,.3);border-radius:9px;padding:8px 16px;font-family:Montserrat,sans-serif;font-size:.76rem;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;" onmouseover="this.style.background='rgba(255,255,255,.3)'" onmouseout="this.style.background='rgba(255,255,255,.2)'"><i class="fas fa-play"></i> Open</a></div>
+      </div>
+    </div></div>
+<footer><p>SPK F Interactive Classroom &mdash; IELTS Speaking Part 1 &amp; 2 &mdash; All lessons created for classroom use.</p></footer>
+<script>
+  var currentFilter = 'all';
+  function setFilter(filter, btn) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    filterCards();
+  }
+  function filterCards() {
+    var query = document.getElementById('search').value.toLowerCase();
+    document.querySelectorAll('.card').forEach(function(card) {
+      var title = card.getAttribute('data-title') || '';
+      var matchSearch = title.includes(query) || card.innerText.toLowerCase().includes(query);
+      card.style.display = matchSearch ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>
