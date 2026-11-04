@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SPK F Lessons 8-9: Describe a Place | Interactive Classroom</title>
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
-<link href="/fonts/Montserrat/index.css" rel="stylesheet">
-<link href="/fonts/Open Sans/index.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{--navy:#1B5E20;--blue:#2E7D32;--green:#388E3C;--amber:#FF8F00;--red:#C62828;--teal:#00838F;--bg:#E8F5E9;--bg2:#C8E6C9;--ink:#001A00;--ink2:#1B5E20;--hf:Montserrat,sans-serif;--bf:Open Sans,sans-serif;}
@@ -89,13 +89,265 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .toast.success{background:#1b5e20;}
 .toast.error{background:#7f1d1d;}
+
+/* TOP BAR & SLIDE DRAWER */
+#top-bar, #player-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 1003;
+}
+.top-left, .top-center, .top-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.top-btn {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: var(--hf);
+  font-size: .75rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: all .2s;
+}
+.top-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+.top-btn.active {
+  background: var(--navy);
+  color: #fff;
+  border-color: var(--navy);
+}
+.top-badge {
+  background: var(--navy);
+  color: #fff;
+  font-family: var(--hf);
+  font-size: .74rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: .04em;
+}
+.top-title {
+  font-family: var(--hf);
+  font-size: .84rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+.top-select {
+  background: #fff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-family: var(--hf);
+  font-size: .75rem;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  outline: none;
+}
+#slide-drawer {
+  position: fixed;
+  top: 48px;
+  right: -380px;
+  width: 350px;
+  max-width: 88vw;
+  bottom: 52px;
+  background: #ffffff;
+  box-shadow: -6px 0 25px rgba(0,0,0,0.15);
+  z-index: 1001;
+  transition: right .3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  border-left: 2px solid #e2e8f0;
+}
+#slide-drawer.open {
+  right: 0;
+}
+.drawer-header {
+  padding: 12px 16px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.drawer-title {
+  font-family: var(--hf);
+  font-size: .82rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+.drawer-close {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: #64748b;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.drawer-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.drawer-item {
+  padding: 7px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: .78rem;
+  color: #334155;
+  transition: all .15s;
+  border: 1px solid transparent;
+}
+.drawer-item:hover {
+  background: #f1f5f9;
+}
+.drawer-item.active {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: var(--navy);
+  color: var(--navy);
+  font-weight: 700;
+}
+.drawer-item-num {
+  font-family: var(--hf);
+  font-size: .72rem;
+  font-weight: 800;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: #e2e8f0;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.drawer-item.active .drawer-item-num {
+  background: var(--navy);
+  color: #fff;
+}
+.drawer-item-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+.card-highlight {
+  outline: 2px solid var(--navy) !important;
+  background: rgba(0,0,0,0.04) !important;
+}
+.slide {
+  padding-top: 48px;
+}
+#progress-bar {
+  top: 48px !important;
+}
+#slides-stage {
+  flex: 1;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+.scaffold-tab-bar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+.scaffold-tab {
+  background: #f1f5f9;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-family: var(--hf);
+  font-size: .74rem;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  transition: all .2s;
+}
+.scaffold-tab.active {
+  background: var(--navy);
+  color: #fff;
+  border-color: var(--navy);
+}
+@media (max-width: 768px) {
+  .top-title { display: none; }
+  .top-btn span { display: none; }
+  .top-btn { padding: 5px 8px; }
+}
+
 </style>
 </head>
 <body>
+
+  <!-- TOP BAR -->
+  <div id="top-bar">
+    <div class="top-left">
+      <button class="top-btn" onclick="exitToPortal()" title="Back to Home"><i class="fas fa-home"></i> <span>Home</span></button>
+      <span class="top-badge">Lessons 8-9</span>
+      <span class="top-title">Describe a Place</span>
+    </div>
+    <div class="top-center">
+      <button class="top-btn" onclick="toggleSlideDrawer()" title="Slide Outline"><i class="fas fa-list-ul"></i> <span>Slides (35)</span></button>
+      <button class="top-btn" id="tts-btn" onclick="toggleReadSlide()" title="Read Aloud"><i class="fas fa-volume-up"></i> <span>Read Aloud</span></button>
+      <button class="top-btn active" id="sound-btn" onclick="toggleSoundFX()" title="Sound Effects"><i class="fas fa-bell"></i></button>
+    </div>
+    <div class="top-right">
+      <select onchange="switchLesson(this.value)" class="top-select" title="Switch Lesson">
+        <option value="spkf-lesson1-interactive.html">Lesson 1: Express Likes & Dislikes</option>
+<option value="spkf-lesson2-interactive.html">Lesson 2: Express Preferences</option>
+<option value="spkf-lesson3-interactive.html">Lesson 3: Express Habits & Routines</option>
+<option value="spkf-lesson4-interactive.html">Lesson 4: Express Past Experiences</option>
+<option value="spkf-lesson5-interactive.html">Lesson 5: Express Changes</option>
+<option value="spkf-lesson67-interactive.html">Lessons 6-7: Describe a Person</option>
+<option value="spkf-lesson89-interactive.html" selected>Lessons 8-9: Describe a Place</option>
+      </select>
+      <button class="top-btn" onclick="toggleFullScreen()" title="Fullscreen"><i class="fas fa-expand"></i></button>
+    </div>
+  </div>
+
+  <!-- SLIDE DRAWER -->
+  <div id="slide-drawer">
+    <div class="drawer-header">
+      <div class="drawer-title"><i class="fas fa-list-ul" style="margin-right:6px;color:var(--navy);"></i> Lesson Slides (35)</div>
+      <button class="drawer-close" onclick="toggleSlideDrawer()">&times;</button>
+    </div>
+    <div class="drawer-list" id="drawer-items">
+    </div>
+  </div>
+
 <div id="progress-bar" style="width:0%"></div>
 
-<!-- SLIDE 1: COVER -->
-<div class="slide" id="slide-1">
+<!-- SLIDE 1 -->
+<div class="slide active" id="slide-1">
   <div style="position:absolute;inset:0;background:linear-gradient(135deg,#1B5E20 0%,#2E7D32 50%,#388E3C 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
     <div class="cover-content">
       <div class="cover-tag"><i class="fas fa-map-marker-alt" style="margin-right:5px"></i>SPK F &middot; Lessons 8&ndash;9 &middot; Part 2</div>
@@ -112,37 +364,178 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
   </div>
 </div>
 
-<!-- SLIDE 2: LESSON AIMS -->
+<!-- SLIDE 2 -->
 <div class="slide" id="slide-2">
-  <div class="s-header"><h1>Lesson Aims</h1><span class="s-badge">Lessons 8&ndash;9</span></div>
+  <div class="s-header"><h1>Warm-Up &amp; Lesson Goal</h1><span class="s-badge amber">Warm-Up</span></div>
   <div class="s-content">
-    <div class="intro-note">In this lesson, you will master the <strong>4-Stage Formula</strong> for describing a place in IELTS Part 2.</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-      <div style="background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 2px 8px rgba(27,94,32,.08);border-top:4px solid var(--navy);">
-        <div style="font-family:var(--hf);font-size:.8rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;"><i class="fas fa-bullseye" style="margin-right:5px"></i>Typical IELTS Part 2 Questions</div>
-        <div style="display:flex;flex-direction:column;gap:5px;font-size:.82rem;">
-          <div style="padding:5px 9px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">Describe a flat or house you would like to own one day.</div>
-          <div style="padding:5px 9px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">Describe a shopping centre or mall you have visited.</div>
-          <div style="padding:5px 9px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">Describe a place where people can do sports.</div>
-          <div style="padding:5px 9px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">Describe a museum you have visited.</div>
-          <div style="padding:5px 9px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">Describe a lake or river you know about or have seen.</div>
-        </div>
+    <div style="background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;border-radius:12px;padding:12px 16px;box-shadow:0 3px 12px rgba(0,0,0,.1);">
+      <div style="font-family:var(--hf);font-size:.72rem;font-weight:800;color:var(--amber);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;"><i class="fas fa-bullseye"></i> Today's Speaking Goal</div>
+      <div style="font-size:.88rem;line-height:1.5;font-weight:600;">Give a vivid 2-minute Part 2 talk about a place you like, describing where it is, what it looks like, what happens there, and how it makes you feel.</div>
+    </div>
+
+    <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,0,0,.06);border-left:4px solid var(--amber);">
+      <div style="font-size:.86rem;color:var(--ink);margin-bottom:9px;font-weight:700;"><i class="fas fa-comments" style="color:var(--amber);margin-right:6px;"></i>Warm-Up: If you could recommend one place for a weekend trip, what kind of place would you pick?</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <button class="mc-opt" style="font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:8px;" onclick="toggleCardHighlight(this);showToast('Great for describing mountains, lakes, and fresh air!','success')"><span>🏞️ A Peaceful Spot in Nature</span><i class="fas fa-check-circle" style="opacity:.45;font-size:.8rem;"></i></button><button class="mc-opt" style="font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:8px;" onclick="toggleCardHighlight(this);showToast('Great for using passive voice [was built / was designed]!','success')"><span>🏛️ A Historic Landmark</span><i class="fas fa-check-circle" style="opacity:.45;font-size:.8rem;"></i></button><button class="mc-opt" style="font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:8px;" onclick="toggleCardHighlight(this);showToast('Plenty to say about beaches, food, and vibrant atmosphere!','success')"><span>🌆 A Lively Coastal City</span><i class="fas fa-check-circle" style="opacity:.45;font-size:.8rem;"></i></button><button class="mc-opt" style="font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:8px;" onclick="toggleCardHighlight(this);showToast('Easy to talk about how you relax and clear your head there!','success')"><span>☕ A Quiet Park or Garden</span><i class="fas fa-check-circle" style="opacity:.45;font-size:.8rem;"></i></button>
       </div>
-      <div style="background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 2px 8px rgba(27,94,32,.08);border-top:4px solid var(--amber);">
-        <div style="font-family:var(--hf);font-size:.8rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;"><i class="fas fa-flask" style="margin-right:5px"></i>4-Stage Formula</div>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:rgba(27,94,32,.06);border-radius:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--hf);font-size:.78rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div><div style="font-size:.84rem;"><strong>Say what it is and where it is</strong><br><span style="color:var(--ink2);font-size:.78rem;">type of place + location prepositions</span></div></div>
-          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:rgba(27,94,32,.06);border-radius:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--hf);font-size:.78rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div><div style="font-size:.84rem;"><strong>Say what it looks like</strong><br><span style="color:var(--ink2);font-size:.78rem;">size, shape, appearance, atmosphere</span></div></div>
-          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:rgba(27,94,32,.06);border-radius:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--hf);font-size:.78rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div><div style="font-size:.84rem;"><strong>Say what its purpose is</strong><br><span style="color:var(--ink2);font-size:.78rem;">passive voice + past habits + popularity</span></div></div>
-          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:rgba(27,94,32,.06);border-radius:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--hf);font-size:.78rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div><div style="font-size:.84rem;"><strong>Say why it is special and how you feel</strong><br><span style="color:var(--ink2);font-size:.78rem;">zero/first conditional + feelings expressions</span></div></div>
+    </div>
+
+    <div>
+      <div style="font-family:var(--hf);font-size:.74rem;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Lesson Outline (Click to jump)</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+        
+        <div onclick="goToSlide(2)" style="background:#fff;border-radius:10px;padding:10px 12px;border-left:4px solid #D97706;box-shadow:0 2px 6px rgba(0,0,0,.05);cursor:pointer;">
+          <div style="font-family:var(--hf);font-size:.78rem;font-weight:800;color:#D97706;">Warm-Up</div>
+          <div style="font-size:.75rem;color:#475569;margin-top:2px;">Pick a favorite destination</div>
+        </div>
+        <div onclick="goToSlide(3)" style="background:#fff;border-radius:10px;padding:10px 12px;border-left:4px solid #0284C7;box-shadow:0 2px 6px rgba(0,0,0,.05);cursor:pointer;">
+          <div style="font-family:var(--hf);font-size:.78rem;font-weight:800;color:#0284C7;">Model Answers</div>
+          <div style="font-size:.75rem;color:#475569;margin-top:2px;">Full Part 2 sample talks</div>
+        </div>
+        <div onclick="goToSlide(8)" style="background:#fff;border-radius:10px;padding:10px 12px;border-left:4px solid #7C3AED;box-shadow:0 2px 6px rgba(0,0,0,.05);cursor:pointer;">
+          <div style="font-family:var(--hf);font-size:.78rem;font-weight:800;color:#7C3AED;">Useful Language</div>
+          <div style="font-size:.75rem;color:#475569;margin-top:2px;">Location, passive voice & conditionals</div>
+        </div>
+        <div onclick="goToSlide(20)" style="background:#fff;border-radius:10px;padding:10px 12px;border-left:4px solid #16A34A;box-shadow:0 2px 6px rgba(0,0,0,.05);cursor:pointer;">
+          <div style="font-family:var(--hf);font-size:.78rem;font-weight:800;color:#16A34A;">Practice & Speaking</div>
+          <div style="font-size:.75rem;color:#475569;margin-top:2px;">Quizzes & 2-minute Cue Card talk</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 3: STAGE 1 - TYPES OF PLACES -->
+<!-- SLIDE 3 -->
 <div class="slide" id="slide-3">
+  <div class="s-header"><h1>Model Answer 1: A Place You Like to Visit</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> Describe a place you like to visit.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid var(--navy);">
+        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 1: What it is &amp; where it is</div>
+        <div style="font-size:.84rem;line-height:1.65;"><span class="hl-s1">I would like to talk about a small cafe near my house,</span> which is <span class="hl-s1">located in the city centre, right next to a quiet park.</span> I discovered this place a few years ago <span class="hl-s1">when I was looking for somewhere peaceful to study.</span></div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid var(--amber);">
+        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 2: What it looks like</div>
+        <div style="font-size:.84rem;line-height:1.65;">The cafe has a <span class="hl-s2">cosy and slightly dim atmosphere,</span> with soft lighting and low background music, which makes it feel very <span class="hl-s2">relaxing.</span> In terms of design, it has a <span class="hl-s2">modern but simple layout,</span> with wooden tables, large glass windows, and neutral colours. The walls are <span class="hl-s2">painted in light tones,</span> so the space feels bright and open.</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid var(--teal);">
+        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 3: Purpose</div>
+        <div style="font-size:.84rem;line-height:1.65;">The cafe <span class="hl-s3">is mainly used for</span> studying and relaxing, and it <span class="hl-s3">is particularly popular with</span> students who need a quiet place to work. When I was in high school, I <span class="hl-s3">used to go</span> there quite regularly, and sometimes I <span class="hl-s3">would just sit</span> there for hours revising or reading.</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid #6A1B9A;">
+        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#4A148C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 4: Why it is special &amp; how you feel</div>
+        <div style="font-size:.84rem;line-height:1.65;">I really <span class="hl-s4">value this place</span> as it <span class="hl-s4">gives me a sense of calm</span> that is quite hard to find in the city. <span class="hl-s4">Whenever I feel overwhelmed,</span> I tend to go there, and it helps me clear my head and focus again. It also <span class="hl-s4">brings back memories</span> of my school days, which makes it even more meaningful to me.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4 -->
+<div class="slide" id="slide-4">
+  <div class="s-header"><h1>Model Answer 2: A Natural Place</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> Describe a natural place you like to visit.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid var(--navy);">
+        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 1</div>
+        <div style="font-size:.84rem;line-height:1.65;"><span class="hl-s1">I would like to talk about a lake called Tuyen Lam Lake,</span> which is <span class="hl-s1">located on the outskirts of Da Lat, surrounded by forests and hills.</span> I first went there when I was in high school, and it quickly became one of my favourite places.</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid var(--amber);">
+        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 2</div>
+        <div style="font-size:.84rem;line-height:1.65;">The lake is <span class="hl-s2">absolutely vast,</span> with a wide stretch of calm water that reflects the sky beautifully. It is <span class="hl-s2">surrounded by dense pine forests and rolling hills,</span> which makes the whole area feel fresh and untouched. What makes it even more interesting is that the place can feel <span class="hl-s2">slightly misty and mysterious,</span> especially early in the morning.</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid var(--teal);">
+        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 3</div>
+        <div style="font-size:.84rem;line-height:1.65;">The lake <span class="hl-s3">is mainly used for</span> tourism and outdoor activities, and it <span class="hl-s3">is especially popular with</span> people who enjoy nature. When I was younger, I <span class="hl-s3">used to go</span> there quite often for picnics, and sometimes we <span class="hl-s3">would rent</span> a boat and explore the area.</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid #6A1B9A;">
+        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#4A148C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 4</div>
+        <div style="font-size:.84rem;line-height:1.65;">I am really <span class="hl-s4">attached to this place</span> as it <span class="hl-s4">allows me to disconnect</span> from everything else. <span class="hl-s4">Whenever I need a break,</span> I go there, and I always feel more <span class="hl-s4">relaxed and refreshed</span> afterwards. It is one of those places that helps me <span class="hl-s4">reset mentally,</span> which is why it means so much to me.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5 -->
+<div class="slide" id="slide-5">
+  <div class="s-header"><h1>Extra Practice: Sample Answers</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Review these sample answers for different types of places. Notice how each follows the 4-Stage Formula.</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);">
+        <div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">Describe a shopping centre you have visited.</div>
+        <div style="background:rgba(27,94,32,.06);border-radius:8px;padding:10px 12px;font-size:.84rem;color:var(--ink2);line-height:1.6;"><span class="hl-s1">I would like to talk about a large shopping mall called Vincom Centre, which is located in the heart of Ho Chi Minh City, right in the city centre.</span> The mall is <span class="hl-s2">absolutely enormous,</span> with multiple floors and hundreds of shops. It is <span class="hl-s2">both modern and luxurious,</span> with marble floors and bright lighting throughout. It <span class="hl-s3">is mainly used for</span> shopping and entertainment, and it <span class="hl-s3">is especially popular with</span> young people and families. I <span class="hl-s3">used to go</span> there every weekend with my friends. I really <span class="hl-s4">love this place</span> because it <span class="hl-s4">gives me the chance to</span> relax and enjoy myself. <span class="hl-s4">Whenever I need a break from studying,</span> I tend to go there with my friends.</div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);">
+        <div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">Describe a historic place in your country.</div>
+        <div style="background:rgba(27,94,32,.06);border-radius:8px;padding:10px 12px;font-size:.84rem;color:var(--ink2);line-height:1.6;"><span class="hl-s1">I would like to talk about the Imperial Citadel of Hue, which is located in the city of Hue, in central Vietnam.</span> The citadel is <span class="hl-s2">vast and awe-inspiring,</span> with ancient walls and traditional Vietnamese architecture. The buildings are <span class="hl-s2">decorated with intricate carvings and painted in red and gold.</span> It <span class="hl-s3">is mainly used for</span> tourism and cultural preservation, and it <span class="hl-s3">is famous for</span> its historical significance. I <span class="hl-s3">used to visit</span> it every year during the Tet holiday. I am really <span class="hl-s4">attached to this place</span> as it <span class="hl-s4">reminds me of</span> my country history and culture. <span class="hl-s4">Whenever I visit,</span> I feel a deep sense of pride.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6 -->
+<div class="slide" id="slide-6">
+  <div class="s-header"><h1>Full Formula: Annotated Example</h1><span class="s-badge">Formula in Action</span></div>
+  <div class="s-content">
+    <div class="intro-note">See how all 4 stages work together. Click each highlighted part to learn more.</div>
+    <div class="model-answer-box" style="font-size:.86rem;">
+      <span class="hl-s1" style="cursor:pointer" onclick="showToast('Stage 1 - Type + Location: I would like to talk about... which is located... — introduces the place clearly','success')">I would like to talk about a small cafe near my house, which is located in the city centre, right next to a quiet park.</span>
+      The cafe has a <span class="hl-s2" style="cursor:pointer" onclick="showToast('Stage 2 - Appearance: cosy and slightly dim atmosphere — describes what it looks like','success')">cosy and slightly dim atmosphere,</span>
+      with soft lighting and low background music. The walls are
+      <span class="hl-s2" style="cursor:pointer" onclick="showToast('Stage 2 - Passive structure: painted in light tones — describes materials/decoration','success')">painted in light tones,</span>
+      so the space feels bright and open.
+      The cafe <span class="hl-s3" style="cursor:pointer" onclick="showToast('Stage 3 - Passive voice: is mainly used for — expresses purpose','success')">is mainly used for</span>
+      studying and relaxing, and it
+      <span class="hl-s3" style="cursor:pointer" onclick="showToast('Stage 3 - Popularity: is particularly popular with — explains who uses it','success')">is particularly popular with</span>
+      students. When I was in high school, I
+      <span class="hl-s3" style="cursor:pointer" onclick="showToast('Stage 3 - Past habit: used to go — describes past habits at the place','success')">used to go</span>
+      there quite regularly.
+      I really <span class="hl-s4" style="cursor:pointer" onclick="showToast('Stage 4 - Feelings: value this place — expresses why it is special','success')">value this place</span>
+      as it
+      <span class="hl-s4" style="cursor:pointer" onclick="showToast('Stage 4 - Feelings: gives me a sense of calm — explains how it makes you feel','success')">gives me a sense of calm.</span>
+      <span class="hl-s4" style="cursor:pointer" onclick="showToast('Stage 4 - Zero conditional: Whenever I feel overwhelmed, I tend to go there — natural habit expression','success')">Whenever I feel overwhelmed, I tend to go there,</span>
+      and it helps me clear my head.
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;">
+      <div style="background:rgba(27,94,32,.08);border-radius:10px;padding:10px;text-align:center;"><div style="font-family:var(--hf);font-size:.7rem;font-weight:700;color:var(--navy);text-transform:uppercase;margin-bottom:3px;">Stage 1</div><div style="font-size:.78rem;color:var(--navy);font-weight:600;">What + Where</div><div style="font-size:.72rem;color:var(--ink2);margin-top:2px;">type + location prepositions</div></div>
+      <div style="background:rgba(255,143,0,.1);border-radius:10px;padding:10px;text-align:center;"><div style="font-family:var(--hf);font-size:.7rem;font-weight:700;color:#7a3800;text-transform:uppercase;margin-bottom:3px;">Stage 2</div><div style="font-size:.78rem;color:#7a3800;font-weight:600;">Appearance</div><div style="font-size:.72rem;color:var(--ink2);margin-top:2px;">size, atmosphere, materials</div></div>
+      <div style="background:rgba(0,131,143,.08);border-radius:10px;padding:10px;text-align:center;"><div style="font-family:var(--hf);font-size:.7rem;font-weight:700;color:var(--teal);text-transform:uppercase;margin-bottom:3px;">Stage 3</div><div style="font-size:.78rem;color:var(--teal);font-weight:600;">Purpose</div><div style="font-size:.72rem;color:var(--ink2);margin-top:2px;">passive + past habits + popularity</div></div>
+      <div style="background:rgba(106,27,154,.08);border-radius:10px;padding:10px;text-align:center;"><div style="font-family:var(--hf);font-size:.7rem;font-weight:700;color:#4A148C;text-transform:uppercase;margin-bottom:3px;">Stage 4</div><div style="font-size:.78rem;color:#4A148C;font-weight:600;">Special + Feelings</div><div style="font-size:.72rem;color:var(--ink2);margin-top:2px;">conditional + feelings expressions</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7 -->
+<div class="slide" id="slide-7">
+  <div class="s-header"><h1>Final Review: Complete Answer</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Review the complete formula with all components. Click each highlighted part to learn more.</div>
+    <div class="model-q"><i class="fas fa-question-circle"></i> Describe a natural place you like to visit.</div>
+    <div class="model-answer-box" style="font-size:.86rem;">
+      <span class="hl-s1" style="cursor:pointer" onclick="showToast('Stage 1 - Type + Location: I would like to talk about... which is located on the outskirts of Da Lat','success')">I would like to talk about a lake called Tuyen Lam Lake, which is located on the outskirts of Da Lat, surrounded by forests and hills.</span>
+      The lake is <span class="hl-s2" style="cursor:pointer" onclick="showToast('Stage 2 - Size adjective: absolutely vast — describes the size of the lake','success')">absolutely vast,</span>
+      with a wide stretch of calm water that reflects the sky beautifully. It is
+      <span class="hl-s2" style="cursor:pointer" onclick="showToast('Stage 2 - Passive: surrounded by dense pine forests — describes the surroundings','success')">surrounded by dense pine forests and rolling hills.</span>
+      The lake <span class="hl-s3" style="cursor:pointer" onclick="showToast('Stage 3 - Passive: is mainly used for — expresses purpose','success')">is mainly used for</span>
+      tourism and outdoor activities, and it
+      <span class="hl-s3" style="cursor:pointer" onclick="showToast('Stage 3 - Popularity: is especially popular with — explains who uses it','success')">is especially popular with</span>
+      people who enjoy nature. When I was younger, I
+      <span class="hl-s3" style="cursor:pointer" onclick="showToast('Stage 3 - Past habit: used to go — describes past habits at the place','success')">used to go</span>
+      there quite often for picnics. I am really
+      <span class="hl-s4" style="cursor:pointer" onclick="showToast('Stage 4 - Feelings: attached to this place — expresses emotional connection','success')">attached to this place</span>
+      as it
+      <span class="hl-s4" style="cursor:pointer" onclick="showToast('Stage 4 - Feelings: allows me to disconnect — explains how it makes you feel','success')">allows me to disconnect</span>
+      from everything else.
+      <span class="hl-s4" style="cursor:pointer" onclick="showToast('Stage 4 - Zero conditional: Whenever I need a break, I go there — natural habit expression','success')">Whenever I need a break, I go there,</span>
+      and I always feel more relaxed and refreshed afterwards.
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8 -->
+<div class="slide" id="slide-8">
   <div class="s-header"><h1>Stage 1: Types of Places</h1><span class="s-badge s1">Stage 1</span></div>
   <div class="s-content">
     <div class="intro-note">Start by saying <strong>what type of place</strong> you are describing. Click any category to see examples.</div>
@@ -159,8 +552,8 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
   </div>
 </div>
 
-<!-- SLIDE 4: STAGE 1 - PREPOSITIONS OF LOCATION -->
-<div class="slide" id="slide-4">
+<!-- SLIDE 9 -->
+<div class="slide" id="slide-9">
   <div class="s-header"><h1>Stage 1: Prepositions of Location</h1><span class="s-badge s1">Stage 1</span></div>
   <div class="s-content">
     <div class="intro-note">Use these prepositions to say <strong>where</strong> the place is. Click any card to see an example.</div>
@@ -177,8 +570,8 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
   </div>
 </div>
 
-<!-- SLIDE 5: STAGE 2 - SIZE AND SHAPE -->
-<div class="slide" id="slide-5">
+<!-- SLIDE 10 -->
+<div class="slide" id="slide-10">
   <div class="s-header"><h1>Stage 2: Expressions of Size &amp; Shape</h1><span class="s-badge s2">Stage 2</span></div>
   <div class="s-content">
     <div class="intro-note">Use these words to describe the <strong>size and shape</strong> of the place. Click any card to see an example.</div>
@@ -225,8 +618,8 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
   </div>
 </div>
 
-<!-- SLIDE 6: STAGE 2 - CHARACTER AND APPEARANCE -->
-<div class="slide" id="slide-6">
+<!-- SLIDE 11 -->
+<div class="slide" id="slide-11">
   <div class="s-header"><h1>Stage 2: Character &amp; Appearance</h1><span class="s-badge s2">Stage 2</span></div>
   <div class="s-content">
     <div class="intro-note">Use these adjectives to describe the <strong>character and appearance</strong> of the place. Click any card to see an example.</div>
@@ -282,8 +675,8 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
   </div>
 </div>
 
-<!-- SLIDE 7: STAGE 2 - LINKING PHRASES -->
-<div class="slide" id="slide-7">
+<!-- SLIDE 12 -->
+<div class="slide" id="slide-12">
   <div class="s-header"><h1>Stage 2: Linking Phrases</h1><span class="s-badge s2">Stage 2</span></div>
   <div class="s-content">
     <div class="intro-note">Use these linking phrases to add extra information about the place. Click any card to see an example.</div>
@@ -298,8 +691,22 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
   </div>
 </div>
 
-<!-- SLIDE 8: STAGE 3 - PASSIVE VOICE -->
-<div class="slide" id="slide-8">
+<!-- SLIDE 13 -->
+<div class="slide" id="slide-13">
+  <div class="s-header"><h1>Linking Phrases: Deep Dive</h1><span class="s-badge teal">Language Focus</span></div>
+  <div class="s-content">
+    <div class="intro-note">Use these linking phrases to add extra information about the place. Click any card to see a full example.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);cursor:pointer;" onclick="showToast('As well as being a place of great natural beauty, it is also a place of great historical significance.','success')"><div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:4px;">as well as + verb-ing ... also ...</div><div style="font-size:.82rem;color:var(--ink2);">Adds a second quality to the first. Both are positive.</div><div style="font-size:.8rem;color:var(--ink);font-style:italic;margin-top:4px;padding:4px 8px;background:rgba(27,94,32,.06);border-radius:6px;"><strong>As well as being</strong> a place of great natural beauty, it is <strong>also</strong> a place of great historical significance.</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);cursor:pointer;" onclick="showToast('Not only is Tuyen Lam Lake beautiful and tranquil, but it is also a great place to do activities such as fishing and hiking.','success')"><div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:4px;">not only ... but also ...</div><div style="font-size:.82rem;color:var(--ink2);">Emphasises two qualities. Very impressive in IELTS.</div><div style="font-size:.8rem;color:var(--ink);font-style:italic;margin-top:4px;padding:4px 8px;background:rgba(27,94,32,.06);border-radius:6px;">Tuyen Lam Lake is <strong>not only</strong> beautiful and tranquil, <strong>but it is also</strong> a great place to do activities.</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);cursor:pointer;" onclick="showToast('This gym is both conveniently located and reasonably priced.','success')"><div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:4px;">both ... and ...</div><div style="font-size:.82rem;color:var(--ink2);">Combines two qualities in a concise way.</div><div style="font-size:.8rem;color:var(--ink);font-style:italic;margin-top:4px;padding:4px 8px;background:rgba(27,94,32,.06);border-radius:6px;">This gym is <strong>both</strong> conveniently located <strong>and</strong> reasonably priced.</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);cursor:pointer;" onclick="showToast('Along with great shops and designer outlets, Parkson Paragon also has a number of handy restaurants.','success')"><div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:4px;">along with ... also ...</div><div class="vocab-example">Adds an extra feature to what was already mentioned.</div><div style="font-size:.8rem;color:var(--ink);font-style:italic;margin-top:4px;padding:4px 8px;background:rgba(27,94,32,.06);border-radius:6px;"><strong>Along with</strong> great shops and designer outlets, Parkson Paragon <strong>also</strong> has a number of handy restaurants.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 14 -->
+<div class="slide" id="slide-14">
   <div class="s-header"><h1>Stage 3: Passive Voice for Purpose</h1><span class="s-badge s3">Stage 3</span></div>
   <div class="s-content">
     <div class="intro-note">Use the <strong>passive voice</strong> to express the purpose or significance of a place.</div>
@@ -336,8 +743,8 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
   </div>
 </div>
 
-<!-- SLIDE 9: STAGE 3 - PAST HABITS -->
-<div class="slide" id="slide-9">
+<!-- SLIDE 15 -->
+<div class="slide" id="slide-15">
   <div class="s-header"><h1>Stage 3: Expressing Past Habits</h1><span class="s-badge s3">Stage 3</span></div>
   <div class="s-content">
     <div class="intro-note">Use these structures to describe <strong>past habits</strong> at the place. Click any card to see an example.</div>
@@ -369,290 +776,8 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
   </div>
 </div>
 
-<!-- SLIDE 10: STAGE 4 - ZERO AND FIRST CONDITIONALS -->
-<div class="slide" id="slide-10">
-  <div class="s-header"><h1>Stage 4: Zero &amp; First Conditionals</h1><span class="s-badge s4">Stage 4</span></div>
-  <div class="s-content">
-    <div class="intro-note">Use conditionals to talk about <strong>habits and preferences</strong> related to the place.</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);">
-        <div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:7px;"><i class="fas fa-infinity" style="margin-right:5px"></i>Zero Conditional (always true)</div>
-        <div style="font-size:.78rem;color:var(--ink2);margin-bottom:6px;font-style:italic;">If/when + present verb, present verb</div>
-        <div style="display:flex;flex-direction:column;gap:4px;font-size:.82rem;">
-          <div style="padding:4px 8px;background:rgba(27,94,32,.06);border-radius:6px;cursor:pointer;" onclick="showToast('If I am hungry, I go to a restaurant.','success')">If I am hungry, I <strong>go</strong> to a restaurant.</div>
-          <div style="padding:4px 8px;background:rgba(27,94,32,.06);border-radius:6px;cursor:pointer;" onclick="showToast('When I need a place to relax and unwind, I immediately think of the Summer Palace.','success')">When I need a place to relax, I immediately <strong>think</strong> of the Summer Palace.</div>
-          <div style="padding:4px 8px;background:rgba(27,94,32,.06);border-radius:6px;cursor:pointer;" onclick="showToast('Whenever I feel overwhelmed, I tend to go there.','success')">Whenever I feel overwhelmed, I <strong>tend to go</strong> there.</div>
-        </div>
-      </div>
-      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);">
-        <div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:#7a3800;margin-bottom:7px;"><i class="fas fa-arrow-right" style="margin-right:5px"></i>First Conditional (future possibility)</div>
-        <div style="font-size:.78rem;color:var(--ink2);margin-bottom:6px;font-style:italic;">if + present verb, will + verb</div>
-        <div style="display:flex;flex-direction:column;gap:4px;font-size:.82rem;">
-          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;cursor:pointer;" onclick="showToast('If I have enough time, I will go shopping.','success')">If I have enough time, I <strong>will go</strong> shopping.</div>
-          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;cursor:pointer;" onclick="showToast('If I am very successful in my career and make loads of money one day, this is the kind of flat I will buy.','success')">If I am very successful in my career, this is the kind of flat I <strong>will buy</strong>.</div>
-          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;cursor:pointer;" onclick="showToast('If I want to have a good time, I just need to go to D22.','success')">If I want to have a good time, I just <strong>need to go</strong> to D22.</div>
-        </div>
-      </div>
-    </div>
-    <div class="tip-box"><i class="fas fa-lightbulb"></i><span><strong>Key Pattern:</strong> "Whenever I [feel/need/want]..., I [go/tend to/immediately]..." — This zero conditional pattern sounds very natural and native-like in IELTS Part 2.</span></div>
-  </div>
-</div>
-
-<!-- SLIDE 11: STAGE 4 - FEELINGS EXPRESSIONS -->
-<div class="slide" id="slide-11">
-  <div class="s-header"><h1>Stage 4: Expressions for How You Feel</h1><span class="s-badge s4">Stage 4</span></div>
-  <div class="s-content">
-    <div class="intro-note">Use these expressions to explain <strong>why the place is special</strong> and how it makes you feel. Click any card to see an example.</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-      <div class="vocab-card" onclick="showToast('I love the Greasy Spoon cafe near my house because the food is so great and such good value!','success')"><div class="vocab-word">I like/love (the place) because...</div><div class="vocab-example">I love the cafe near my house because the food is so great!</div></div>
-      <div class="vocab-card" onclick="showToast('I really value this place as it gives me a sense of calm.','success')"><div class="vocab-word">I value (the place) because...</div><div class="vocab-example">I really value this place as it gives me a sense of calm.</div></div>
-      <div class="vocab-card" onclick="showToast('The Summer Palace is really important to me because it is so tranquil.','success')"><div class="vocab-word">(The place) is important to me because...</div><div class="vocab-example">The Summer Palace is really important to me because it is so tranquil.</div></div>
-      <div class="vocab-card" onclick="showToast('The British Museum always makes me feel inspired to learn more about other countries.','success')"><div class="vocab-word">(The place) makes me feel...</div><div class="vocab-example">The British Museum always makes me feel inspired to learn more.</div></div>
-      <div class="vocab-card" onclick="showToast('The lake brings back memories of my school days, which makes it even more meaningful to me.','success')"><div class="vocab-word">(The place) reminds me of... / brings back memories of...</div><div class="vocab-example">It brings back memories of my school days, which makes it even more meaningful.</div></div>
-      <div class="vocab-card" onclick="showToast('The Legion Field provides me and my friends with a pleasant, green space in which to play sports.','success')"><div class="vocab-word">(The place) provides me with... / gives me... / lets me...</div><div class="vocab-example">The park provides me with a pleasant, green space in which to play sports.</div></div>
-    </div>
-    <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);margin-top:4px;">
-      <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;"><i class="fas fa-star" style="margin-right:4px"></i>Adjectives to Describe Qualities of a Place</div>
-      <div style="display:flex;flex-wrap:wrap;gap:6px;font-size:.78rem;">
-        <span style="background:rgba(27,94,32,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('cosy / comfortable / quiet / peaceful / tranquil — relaxing places','success')">cosy / peaceful / tranquil</span>
-        <span style="background:rgba(27,94,32,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('exciting / enchanting / energising / breathtaking / inspiring / exhilarating','success')">exciting / enchanting / breathtaking</span>
-        <span style="background:rgba(27,94,32,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('delightful / charming / magnificent / pretty / attractive','success')">delightful / charming / magnificent</span>
-        <span style="background:rgba(27,94,32,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('hectic / stressful / chaotic / bustling / frantic','success')">hectic / bustling / frantic</span>
-        <span style="background:rgba(27,94,32,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('fascinating / thrilling / engrossing / educational','success')">fascinating / thrilling / educational</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 12: MODEL ANSWER 1 - CAFE -->
-<div class="slide" id="slide-12">
-  <div class="s-header"><h1>Model Answer 1: A Place You Like to Visit</h1><span class="s-badge green">Sample Q&amp;A</span></div>
-  <div class="s-content">
-    <div class="model-q"><i class="fas fa-question-circle"></i> Describe a place you like to visit.</div>
-    <div style="display:flex;flex-direction:column;gap:8px;">
-      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid var(--navy);">
-        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 1: What it is &amp; where it is</div>
-        <div style="font-size:.84rem;line-height:1.65;"><span class="hl-s1">I would like to talk about a small cafe near my house,</span> which is <span class="hl-s1">located in the city centre, right next to a quiet park.</span> I discovered this place a few years ago <span class="hl-s1">when I was looking for somewhere peaceful to study.</span></div>
-      </div>
-      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid var(--amber);">
-        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 2: What it looks like</div>
-        <div style="font-size:.84rem;line-height:1.65;">The cafe has a <span class="hl-s2">cosy and slightly dim atmosphere,</span> with soft lighting and low background music, which makes it feel very <span class="hl-s2">relaxing.</span> In terms of design, it has a <span class="hl-s2">modern but simple layout,</span> with wooden tables, large glass windows, and neutral colours. The walls are <span class="hl-s2">painted in light tones,</span> so the space feels bright and open.</div>
-      </div>
-      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid var(--teal);">
-        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 3: Purpose</div>
-        <div style="font-size:.84rem;line-height:1.65;">The cafe <span class="hl-s3">is mainly used for</span> studying and relaxing, and it <span class="hl-s3">is particularly popular with</span> students who need a quiet place to work. When I was in high school, I <span class="hl-s3">used to go</span> there quite regularly, and sometimes I <span class="hl-s3">would just sit</span> there for hours revising or reading.</div>
-      </div>
-      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid #6A1B9A;">
-        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#4A148C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 4: Why it is special &amp; how you feel</div>
-        <div style="font-size:.84rem;line-height:1.65;">I really <span class="hl-s4">value this place</span> as it <span class="hl-s4">gives me a sense of calm</span> that is quite hard to find in the city. <span class="hl-s4">Whenever I feel overwhelmed,</span> I tend to go there, and it helps me clear my head and focus again. It also <span class="hl-s4">brings back memories</span> of my school days, which makes it even more meaningful to me.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 13: MODEL ANSWER 2 - LAKE -->
-<div class="slide" id="slide-13">
-  <div class="s-header"><h1>Model Answer 2: A Natural Place</h1><span class="s-badge green">Sample Q&amp;A</span></div>
-  <div class="s-content">
-    <div class="model-q"><i class="fas fa-question-circle"></i> Describe a natural place you like to visit.</div>
-    <div style="display:flex;flex-direction:column;gap:8px;">
-      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid var(--navy);">
-        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 1</div>
-        <div style="font-size:.84rem;line-height:1.65;"><span class="hl-s1">I would like to talk about a lake called Tuyen Lam Lake,</span> which is <span class="hl-s1">located on the outskirts of Da Lat, surrounded by forests and hills.</span> I first went there when I was in high school, and it quickly became one of my favourite places.</div>
-      </div>
-      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid var(--amber);">
-        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 2</div>
-        <div style="font-size:.84rem;line-height:1.65;">The lake is <span class="hl-s2">absolutely vast,</span> with a wide stretch of calm water that reflects the sky beautifully. It is <span class="hl-s2">surrounded by dense pine forests and rolling hills,</span> which makes the whole area feel fresh and untouched. What makes it even more interesting is that the place can feel <span class="hl-s2">slightly misty and mysterious,</span> especially early in the morning.</div>
-      </div>
-      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid var(--teal);">
-        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 3</div>
-        <div style="font-size:.84rem;line-height:1.65;">The lake <span class="hl-s3">is mainly used for</span> tourism and outdoor activities, and it <span class="hl-s3">is especially popular with</span> people who enjoy nature. When I was younger, I <span class="hl-s3">used to go</span> there quite often for picnics, and sometimes we <span class="hl-s3">would rent</span> a boat and explore the area.</div>
-      </div>
-      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid #6A1B9A;">
-        <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#4A148C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;">Stage 4</div>
-        <div style="font-size:.84rem;line-height:1.65;">I am really <span class="hl-s4">attached to this place</span> as it <span class="hl-s4">allows me to disconnect</span> from everything else. <span class="hl-s4">Whenever I need a break,</span> I go there, and I always feel more <span class="hl-s4">relaxed and refreshed</span> afterwards. It is one of those places that helps me <span class="hl-s4">reset mentally,</span> which is why it means so much to me.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 14: ANNOTATED MODEL ANSWER -->
-<div class="slide" id="slide-14">
-  <div class="s-header"><h1>Full Formula: Annotated Example</h1><span class="s-badge">Formula in Action</span></div>
-  <div class="s-content">
-    <div class="intro-note">See how all 4 stages work together. Click each highlighted part to learn more.</div>
-    <div class="model-answer-box" style="font-size:.86rem;">
-      <span class="hl-s1" style="cursor:pointer" onclick="showToast('Stage 1 - Type + Location: I would like to talk about... which is located... — introduces the place clearly','success')">I would like to talk about a small cafe near my house, which is located in the city centre, right next to a quiet park.</span>
-      The cafe has a <span class="hl-s2" style="cursor:pointer" onclick="showToast('Stage 2 - Appearance: cosy and slightly dim atmosphere — describes what it looks like','success')">cosy and slightly dim atmosphere,</span>
-      with soft lighting and low background music. The walls are
-      <span class="hl-s2" style="cursor:pointer" onclick="showToast('Stage 2 - Passive structure: painted in light tones — describes materials/decoration','success')">painted in light tones,</span>
-      so the space feels bright and open.
-      The cafe <span class="hl-s3" style="cursor:pointer" onclick="showToast('Stage 3 - Passive voice: is mainly used for — expresses purpose','success')">is mainly used for</span>
-      studying and relaxing, and it
-      <span class="hl-s3" style="cursor:pointer" onclick="showToast('Stage 3 - Popularity: is particularly popular with — explains who uses it','success')">is particularly popular with</span>
-      students. When I was in high school, I
-      <span class="hl-s3" style="cursor:pointer" onclick="showToast('Stage 3 - Past habit: used to go — describes past habits at the place','success')">used to go</span>
-      there quite regularly.
-      I really <span class="hl-s4" style="cursor:pointer" onclick="showToast('Stage 4 - Feelings: value this place — expresses why it is special','success')">value this place</span>
-      as it
-      <span class="hl-s4" style="cursor:pointer" onclick="showToast('Stage 4 - Feelings: gives me a sense of calm — explains how it makes you feel','success')">gives me a sense of calm.</span>
-      <span class="hl-s4" style="cursor:pointer" onclick="showToast('Stage 4 - Zero conditional: Whenever I feel overwhelmed, I tend to go there — natural habit expression','success')">Whenever I feel overwhelmed, I tend to go there,</span>
-      and it helps me clear my head.
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;">
-      <div style="background:rgba(27,94,32,.08);border-radius:10px;padding:10px;text-align:center;"><div style="font-family:var(--hf);font-size:.7rem;font-weight:700;color:var(--navy);text-transform:uppercase;margin-bottom:3px;">Stage 1</div><div style="font-size:.78rem;color:var(--navy);font-weight:600;">What + Where</div><div style="font-size:.72rem;color:var(--ink2);margin-top:2px;">type + location prepositions</div></div>
-      <div style="background:rgba(255,143,0,.1);border-radius:10px;padding:10px;text-align:center;"><div style="font-family:var(--hf);font-size:.7rem;font-weight:700;color:#7a3800;text-transform:uppercase;margin-bottom:3px;">Stage 2</div><div style="font-size:.78rem;color:#7a3800;font-weight:600;">Appearance</div><div style="font-size:.72rem;color:var(--ink2);margin-top:2px;">size, atmosphere, materials</div></div>
-      <div style="background:rgba(0,131,143,.08);border-radius:10px;padding:10px;text-align:center;"><div style="font-family:var(--hf);font-size:.7rem;font-weight:700;color:var(--teal);text-transform:uppercase;margin-bottom:3px;">Stage 3</div><div style="font-size:.78rem;color:var(--teal);font-weight:600;">Purpose</div><div style="font-size:.72rem;color:var(--ink2);margin-top:2px;">passive + past habits + popularity</div></div>
-      <div style="background:rgba(106,27,154,.08);border-radius:10px;padding:10px;text-align:center;"><div style="font-family:var(--hf);font-size:.7rem;font-weight:700;color:#4A148C;text-transform:uppercase;margin-bottom:3px;">Stage 4</div><div style="font-size:.78rem;color:#4A148C;font-weight:600;">Special + Feelings</div><div style="font-size:.72rem;color:var(--ink2);margin-top:2px;">conditional + feelings expressions</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 15: QUIZ - PREPOSITIONS OF LOCATION -->
-<div class="slide" id="slide-15">
-  <div class="s-header"><h1>Quiz: Prepositions of Location</h1><span class="s-badge amber">Grammar Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Choose the correct preposition of location. Score: <strong id="q1-score">0</strong>/4</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. The Summer Palace is a very famous historic site _____ the northwest of Beijing.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-1"><button class="mc-opt" onclick="checkQ1(this,1,'in')">in</button><button class="mc-opt" onclick="checkQ1(this,1,'in')">at</button><button class="mc-opt" onclick="checkQ1(this,1,'in')">on</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. The flat would be _____ a high floor of a brand-new high-rise apartment block.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-2"><button class="mc-opt" onclick="checkQ1(this,2,'on')">on</button><button class="mc-opt" onclick="checkQ1(this,2,'on')">in</button><button class="mc-opt" onclick="checkQ1(this,2,'on')">at</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Ben Thanh Market is just _____ from Quach Thi Trang Square.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-3"><button class="mc-opt" onclick="checkQ1(this,3,'across')">across</button><button class="mc-opt" onclick="checkQ1(this,3,'across')">in</button><button class="mc-opt" onclick="checkQ1(this,3,'across')">on</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Tuyen Lam Lake is located _____ the outskirts of Da Lat.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-4"><button class="mc-opt" onclick="checkQ1(this,4,'on')">on</button><button class="mc-opt" onclick="checkQ1(this,4,'on')">in</button><button class="mc-opt" onclick="checkQ1(this,4,'on')">at</button></div></div>
-    </div>
-    <div class="btn-row"><button class="reset-btn" onclick="resetQ1()"><i class="fas fa-redo"></i> Reset</button></div>
-  </div>
-</div>
-
-<!-- SLIDE 16: QUIZ - PASSIVE VOICE -->
+<!-- SLIDE 16 -->
 <div class="slide" id="slide-16">
-  <div class="s-header"><h1>Quiz: Passive Voice</h1><span class="s-badge amber">Grammar Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Choose the correct passive voice form. Score: <strong id="q2-score">0</strong>/4</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. The Pyramids of Egypt _____ by unpaid workers.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-1"><button class="mc-opt" onclick="checkQ2(this,1,'were constructed')">were constructed</button><button class="mc-opt" onclick="checkQ2(this,1,'were constructed')">constructed</button><button class="mc-opt" onclick="checkQ2(this,1,'were constructed')">are constructing</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. The cafe _____ mainly for studying and relaxing.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-2"><button class="mc-opt" onclick="checkQ2(this,2,'is used')">is used</button><button class="mc-opt" onclick="checkQ2(this,2,'is used')">uses</button><button class="mc-opt" onclick="checkQ2(this,2,'is used')">used</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. The walls _____ in light tones, so the space feels bright and open.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-3"><button class="mc-opt" onclick="checkQ2(this,3,'are painted')">are painted</button><button class="mc-opt" onclick="checkQ2(this,3,'are painted')">paint</button><button class="mc-opt" onclick="checkQ2(this,3,'are painted')">painted</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. The lake _____ by dense pine forests and rolling hills.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-4"><button class="mc-opt" onclick="checkQ2(this,4,'is surrounded')">is surrounded</button><button class="mc-opt" onclick="checkQ2(this,4,'is surrounded')">surrounds</button><button class="mc-opt" onclick="checkQ2(this,4,'is surrounded')">surrounded</button></div></div>
-    </div>
-    <div class="btn-row"><button class="reset-btn" onclick="resetQ2()"><i class="fas fa-redo"></i> Reset</button></div>
-  </div>
-</div>
-
-<!-- SLIDE 17: QUIZ - PAST HABITS -->
-<div class="slide" id="slide-17">
-  <div class="s-header"><h1>Quiz: Past Habits</h1><span class="s-badge amber">Grammar Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Choose the correct past habit structure. Score: <strong id="q3-score">0</strong>/4</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I _____ spend many hours painting by the river when I was young.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-1"><button class="mc-opt" onclick="checkQ3(this,1,'used to')">used to</button><button class="mc-opt" onclick="checkQ3(this,1,'used to')">use to</button><button class="mc-opt" onclick="checkQ3(this,1,'used to')">would to</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. If I felt stressed, I _____ go to the bar to relax.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-2"><button class="mc-opt" onclick="checkQ3(this,2,'would')">would</button><button class="mc-opt" onclick="checkQ3(this,2,'would')">will</button><button class="mc-opt" onclick="checkQ3(this,2,'would')">used to</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. When I was in high school, I _____ go there quite regularly.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-3"><button class="mc-opt" onclick="checkQ3(this,3,'used to')">used to</button><button class="mc-opt" onclick="checkQ3(this,3,'used to')">use to</button><button class="mc-opt" onclick="checkQ3(this,3,'used to')">would to</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Sometimes we _____ rent a boat and explore the area.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-4"><button class="mc-opt" onclick="checkQ3(this,4,'would')">would</button><button class="mc-opt" onclick="checkQ3(this,4,'would')">will</button><button class="mc-opt" onclick="checkQ3(this,4,'would')">used to</button></div></div>
-    </div>
-    <div class="btn-row"><button class="reset-btn" onclick="resetQ3()"><i class="fas fa-redo"></i> Reset</button></div>
-  </div>
-</div>
-
-<!-- SLIDE 18: SELF-ASSESSMENT CHECKLIST -->
-<div class="slide" id="slide-18">
-  <div class="s-header"><h1>Self-Assessment Checklist</h1><span class="s-badge">Evaluation</span></div>
-  <div class="s-content">
-    <div class="intro-note">Use this checklist to evaluate your own answer after practising. Click each item to mark it.</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 1:</strong> Clearly stated the type of place</div></div>
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 1:</strong> Gave the location using correct prepositions (in, on, near, etc.)</div></div>
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 1:</strong> Explained how you know / discovered the place</div></div>
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 2:</strong> Described atmosphere (cosy, peaceful, lively, etc.)</div></div>
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 2:</strong> Used specific details (materials, colors, layout)</div></div>
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 2:</strong> Added a short story or memory (I remember...)</div></div>
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 2:</strong> Used passive voice (is painted in / is surrounded by)</div></div>
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 3:</strong> Mentioned purpose clearly (is used for...)</div></div>
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 3:</strong> Used past habits (used to / would)</div></div>
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 3:</strong> Included popularity (popular with / famous for)</div></div>
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 4:</strong> Expressed feelings clearly (love, value, attached to)</div></div>
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 4:</strong> Used conditional (Whenever I..., I...)</div></div>
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Overall:</strong> Answer is well-organized (4 clear stages)</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDES 19-35: ADDITIONAL QUIZZES AND REVIEW -->
-<div class="slide" id="slide-19">
-  <div class="s-header"><h1>Quiz: Adjectives of Appearance</h1><span class="s-badge amber">Vocabulary Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Choose the most appropriate adjective for each description. Score: <strong id="q4-score">0</strong>/4</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. The cafe has soft lighting and low background music. It feels very _____ and comfortable.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-1"><button class="mc-opt" onclick="checkQ4(this,1,'cosy')">cosy</button><button class="mc-opt" onclick="checkQ4(this,1,'cosy')">hectic</button><button class="mc-opt" onclick="checkQ4(this,1,'cosy')">run-down</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. The lake is absolutely _____, with a wide stretch of calm water that reflects the sky.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-2"><button class="mc-opt" onclick="checkQ4(this,2,'vast')">vast</button><button class="mc-opt" onclick="checkQ4(this,2,'vast')">cramped</button><button class="mc-opt" onclick="checkQ4(this,2,'vast')">dingy</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. The place can feel slightly _____ and mysterious, especially early in the morning.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-3"><button class="mc-opt" onclick="checkQ4(this,3,'misty')">misty</button><button class="mc-opt" onclick="checkQ4(this,3,'misty')">bustling</button><button class="mc-opt" onclick="checkQ4(this,3,'misty')">upmarket</span></button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. The palace is _____ — it is one of the most impressive buildings I have ever seen.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-4"><button class="mc-opt" onclick="checkQ4(this,4,'majestic')">majestic</button><button class="mc-opt" onclick="checkQ4(this,4,'majestic')">cramped</button><button class="mc-opt" onclick="checkQ4(this,4,'majestic')">run-down</button></div></div>
-    </div>
-    <div class="btn-row"><button class="reset-btn" onclick="resetQ4()"><i class="fas fa-redo"></i> Reset</button></div>
-  </div>
-</div>
-
-<div class="slide" id="slide-20">
-  <div class="s-header"><h1>Vocabulary Reference: All Key Expressions</h1><span class="s-badge">Quick Reference</span></div>
-  <div class="s-content">
-    <div class="intro-note">Review all the key expressions from Lessons 8&ndash;9. Click any card to highlight it.</div>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-top:3px solid var(--navy);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(27,94,32,0.06)'?'#fff':'rgba(27,94,32,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:4px;">Location Prepositions</div><div style="font-size:.76rem;color:var(--ink2);">in | at | on | over/above | next to/beside/by | opposite/across from | between | in front of | outside of | near | far from</div></div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-top:3px solid var(--amber);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(255,143,0,0.06)'?'#fff':'rgba(255,143,0,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#7a3800;margin-bottom:4px;">Size &amp; Shape Adjectives</div><div style="font-size:.76rem;color:var(--ink2);">huge/massive/vast/enormous | tiny/cramped | narrow/wide/broad | tall/towering | winding/endless</div></div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-top:3px solid var(--teal);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(0,131,143,0.06)'?'#fff':'rgba(0,131,143,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--teal);margin-bottom:4px;">Appearance Adjectives</div><div style="font-size:.76rem;color:var(--ink2);">airy/bright/well-lit | dingy/gloomy | appealing/attractive | awe-inspiring/majestic | cosy/peaceful/tranquil | bustling/hectic</div></div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-top:3px solid var(--navy);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(27,94,32,0.06)'?'#fff':'rgba(27,94,32,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:4px;">Passive Voice Phrases</div><div style="font-size:.76rem;color:var(--ink2);">is used for | was built by | is painted in | is surrounded by | is decorated with | is covered with | is popular with | is famous for</div></div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-top:3px solid var(--amber);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(255,143,0,0.06)'?'#fff':'rgba(255,143,0,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#7a3800;margin-bottom:4px;">Past Habits</div><div style="font-size:.76rem;color:var(--ink2);">used to + verb | would + verb | past simple + adverbs of frequency</div></div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-top:3px solid #6A1B9A;cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(106,27,154,0.06)'?'#fff':'rgba(106,27,154,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#4A148C;margin-bottom:4px;">Feelings Expressions</div><div style="font-size:.76rem;color:var(--ink2);">I love/value (the place) because | makes me feel | reminds me of | brings back memories | provides me with | Whenever I..., I...</div></div>
-    </div>
-  </div>
-</div>
-
-<div class="slide" id="slide-21">
-  <div class="s-header"><h1>Quiz: Zero vs First Conditional</h1><span class="s-badge amber">Grammar Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Choose the correct conditional form. Score: <strong id="q5-score">0</strong>/4</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Whenever I feel overwhelmed, I _____ to go there. (zero conditional — always true)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-1"><button class="mc-opt" onclick="checkQ5(this,1,'tend')">tend</button><button class="mc-opt" onclick="checkQ5(this,1,'tend')">will tend</button><button class="mc-opt" onclick="checkQ5(this,1,'tend')">tended</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. If I am very successful in my career, this is the kind of flat I _____ buy. (first conditional)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-2"><button class="mc-opt" onclick="checkQ5(this,2,'will')">will</button><button class="mc-opt" onclick="checkQ5(this,2,'will')">would</button><button class="mc-opt" onclick="checkQ5(this,2,'will')">buy</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. If I need a place to relax and unwind, I immediately _____ of the Summer Palace. (zero conditional)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-3"><button class="mc-opt" onclick="checkQ5(this,3,'think')">think</button><button class="mc-opt" onclick="checkQ5(this,3,'think')">will think</button><button class="mc-opt" onclick="checkQ5(this,3,'think')">thought</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. If I have enough time next weekend, I _____ visit the lake. (first conditional)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-4"><button class="mc-opt" onclick="checkQ5(this,4,'will')">will</button><button class="mc-opt" onclick="checkQ5(this,4,'will')">would</button><button class="mc-opt" onclick="checkQ5(this,4,'will')">visit</button></div></div>
-    </div>
-    <div class="btn-row"><button class="reset-btn" onclick="resetQ5()"><i class="fas fa-redo"></i> Reset</button></div>
-  </div>
-</div>
-
-<div class="slide" id="slide-22">
-  <div class="s-header"><h1>Build Your Own Answer</h1><span class="s-badge green">Speaking Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Use the word bank to build a complete answer for: <strong>"Describe a place where you like to relax."</strong></div>
-    <div style="background:var(--navy);color:#fff;border-radius:10px;padding:12px 18px;font-size:.85rem;margin-bottom:10px;"><strong style="color:var(--amber)">Formula:</strong> Stage 1 (What + Where) &rarr; Stage 2 (Appearance) &rarr; Stage 3 (Purpose + Past Habits) &rarr; Stage 4 (Special + Feelings)</div>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
-      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 1: Location</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(27,94,32,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I would like to talk about a park near my house, which is located in the city centre.','success')">in the city centre</span><span style="background:rgba(27,94,32,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('It is located on the outskirts of the city, surrounded by trees.','success')">on the outskirts</span><span style="background:rgba(27,94,32,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('It is situated next to a quiet river.','success')">next to a quiet river</span></div></div>
-      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 2: Appearance</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(255,143,0,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('It has a peaceful and tranquil atmosphere.','success')">peaceful / tranquil</span><span style="background:rgba(255,143,0,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('The area is surrounded by tall trees and green grass.','success')">surrounded by tall trees</span><span style="background:rgba(255,143,0,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('The paths are painted in light colours.','success')">painted in light colours</span></div></div>
-      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 3: Purpose + Past Habits</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(0,131,143,.1);color:var(--teal);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('It is mainly used for relaxing and exercising.','success')">is mainly used for</span><span style="background:rgba(0,131,143,.1);color:var(--teal);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('It is popular with elderly people and families.','success')">popular with</span><span style="background:rgba(0,131,143,.1);color:var(--teal);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I used to go there every weekend when I was younger.','success')">used to go there</span></div></div>
-      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 4: Feelings</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(106,27,154,.1);color:#4A148C;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I really value this place as it gives me a sense of calm.','success')">gives me a sense of calm</span><span style="background:rgba(106,27,154,.1);color:#4A148C;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('Whenever I feel stressed, I tend to go there.','success')">Whenever I feel stressed</span><span style="background:rgba(106,27,154,.1);color:#4A148C;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('It helps me clear my head and reset mentally.','success')">helps me clear my head</span></div></div>
-    </div>
-    <div style="background:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 3px 10px rgba(27,94,32,.07);margin-top:8px;border-left:4px solid var(--teal);">
-      <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Sample Answer</div>
-      <div style="font-size:.86rem;color:var(--ink);line-height:1.7;"><span class="hl-s1">I would like to talk about a park near my house, which is located in the city centre, right next to a quiet river.</span> The park has a <span class="hl-s2">peaceful and tranquil atmosphere,</span> with tall trees and green grass that make it feel very natural. The paths are <span class="hl-s2">painted in light colours</span> and are well-maintained. It <span class="hl-s3">is mainly used for</span> relaxing and exercising, and it <span class="hl-s3">is popular with</span> elderly people and families. I <span class="hl-s3">used to go</span> there every weekend when I was younger. I really <span class="hl-s4">value this place</span> as it <span class="hl-s4">gives me a sense of calm.</span> <span class="hl-s4">Whenever I feel stressed,</span> I tend to go there, and it always helps me <span class="hl-s4">clear my head.</span></div>
-    </div>
-  </div>
-</div>
-
-<div class="slide" id="slide-23">
-  <div class="s-header"><h1>Quiz: Feelings Expressions</h1><span class="s-badge amber">Vocabulary Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Choose the most natural feelings expression. Score: <strong id="q6-score">0</strong>/4</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I really _____ this place as it gives me a sense of calm that is quite hard to find in the city.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-1"><button class="mc-opt" onclick="checkQ6(this,1,'value')">value</button><button class="mc-opt" onclick="checkQ6(this,1,'value')">hate</button><button class="mc-opt" onclick="checkQ6(this,1,'value')">ignore</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. The British Museum always _____ inspired to learn more about other countries and cultures.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-2"><button class="mc-opt" onclick="checkQ6(this,2,'makes me feel')">makes me feel</button><button class="mc-opt" onclick="checkQ6(this,2,'makes me feel')">gives me</button><button class="mc-opt" onclick="checkQ6(this,2,'makes me feel')">reminds me</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. The lake _____ memories of my school days, which makes it even more meaningful to me.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-3"><button class="mc-opt" onclick="checkQ6(this,3,'brings back')">brings back</button><button class="mc-opt" onclick="checkQ6(this,3,'brings back')">makes me feel</button><button class="mc-opt" onclick="checkQ6(this,3,'brings back')">gives me</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. The park _____ me and my friends with a pleasant, green space in which to play sports.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-4"><button class="mc-opt" onclick="checkQ6(this,4,'provides')">provides</button><button class="mc-opt" onclick="checkQ6(this,4,'provides')">reminds</button><button class="mc-opt" onclick="checkQ6(this,4,'provides')">makes</button></div></div>
-    </div>
-    <div class="btn-row"><button class="reset-btn" onclick="resetQ6()"><i class="fas fa-redo"></i> Reset</button></div>
-  </div>
-</div>
-
-<div class="slide" id="slide-24">
   <div class="s-header"><h1>Grammar Focus: used to vs would</h1><span class="s-badge purple">Grammar</span></div>
   <div class="s-content">
     <div class="intro-note">Both "used to" and "would" describe past habits, but they have different uses.</div>
@@ -682,48 +807,79 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
   </div>
 </div>
 
-<div class="slide" id="slide-25">
-  <div class="s-header"><h1>Quiz: used to or would?</h1><span class="s-badge amber">Grammar Practice</span></div>
+<!-- SLIDE 17 -->
+<div class="slide" id="slide-17">
+  <div class="s-header"><h1>Stage 4: Zero &amp; First Conditionals</h1><span class="s-badge s4">Stage 4</span></div>
   <div class="s-content">
-    <div class="intro-note">Choose "used to" or "would" to complete each sentence. Score: <strong id="q7-score">0</strong>/4</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. The palace _____ be closed to the public, but now it is open for everyone.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-1"><button class="mc-opt" onclick="checkQ7(this,1,'used to')">used to</button><button class="mc-opt" onclick="checkQ7(this,1,'used to')">would</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. When I was a student, I _____ go there all the time and hang out with my friends.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-2"><button class="mc-opt" onclick="checkQ7(this,2,'would')">would</button><button class="mc-opt" onclick="checkQ7(this,2,'would')">used to</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. My family _____ spend every summer camping at Giang Dien Waterfall.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-3"><button class="mc-opt" onclick="checkQ7(this,3,'used to')">used to</button><button class="mc-opt" onclick="checkQ7(this,3,'used to')">would</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. If I needed some fresh air, I _____ walk to the park near my house.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-4"><button class="mc-opt" onclick="checkQ7(this,4,'would')">would</button><button class="mc-opt" onclick="checkQ7(this,4,'would')">used to</button></div></div>
+    <div class="intro-note">Use conditionals to talk about <strong>habits and preferences</strong> related to the place.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);">
+        <div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:7px;"><i class="fas fa-infinity" style="margin-right:5px"></i>Zero Conditional (always true)</div>
+        <div style="font-size:.78rem;color:var(--ink2);margin-bottom:6px;font-style:italic;">If/when + present verb, present verb</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-size:.82rem;">
+          <div style="padding:4px 8px;background:rgba(27,94,32,.06);border-radius:6px;cursor:pointer;" onclick="showToast('If I am hungry, I go to a restaurant.','success')">If I am hungry, I <strong>go</strong> to a restaurant.</div>
+          <div style="padding:4px 8px;background:rgba(27,94,32,.06);border-radius:6px;cursor:pointer;" onclick="showToast('When I need a place to relax and unwind, I immediately think of the Summer Palace.','success')">When I need a place to relax, I immediately <strong>think</strong> of the Summer Palace.</div>
+          <div style="padding:4px 8px;background:rgba(27,94,32,.06);border-radius:6px;cursor:pointer;" onclick="showToast('Whenever I feel overwhelmed, I tend to go there.','success')">Whenever I feel overwhelmed, I <strong>tend to go</strong> there.</div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);">
+        <div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:#7a3800;margin-bottom:7px;"><i class="fas fa-arrow-right" style="margin-right:5px"></i>First Conditional (future possibility)</div>
+        <div style="font-size:.78rem;color:var(--ink2);margin-bottom:6px;font-style:italic;">if + present verb, will + verb</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-size:.82rem;">
+          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;cursor:pointer;" onclick="showToast('If I have enough time, I will go shopping.','success')">If I have enough time, I <strong>will go</strong> shopping.</div>
+          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;cursor:pointer;" onclick="showToast('If I am very successful in my career and make loads of money one day, this is the kind of flat I will buy.','success')">If I am very successful in my career, this is the kind of flat I <strong>will buy</strong>.</div>
+          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;cursor:pointer;" onclick="showToast('If I want to have a good time, I just need to go to D22.','success')">If I want to have a good time, I just <strong>need to go</strong> to D22.</div>
+        </div>
+      </div>
     </div>
-    <div class="btn-row"><button class="reset-btn" onclick="resetQ7()"><i class="fas fa-redo"></i> Reset</button></div>
+    <div class="tip-box"><i class="fas fa-lightbulb"></i><span><strong>Key Pattern:</strong> "Whenever I [feel/need/want]..., I [go/tend to/immediately]..." — This zero conditional pattern sounds very natural and native-like in IELTS Part 2.</span></div>
   </div>
 </div>
 
-<div class="slide" id="slide-26">
-  <div class="s-header"><h1>Linking Phrases: Deep Dive</h1><span class="s-badge teal">Language Focus</span></div>
+<!-- SLIDE 18 -->
+<div class="slide" id="slide-18">
+  <div class="s-header"><h1>Stage 4: Expressions for How You Feel</h1><span class="s-badge s4">Stage 4</span></div>
   <div class="s-content">
-    <div class="intro-note">Use these linking phrases to add extra information about the place. Click any card to see a full example.</div>
-    <div style="display:flex;flex-direction:column;gap:8px;">
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);cursor:pointer;" onclick="showToast('As well as being a place of great natural beauty, it is also a place of great historical significance.','success')"><div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:4px;">as well as + verb-ing ... also ...</div><div style="font-size:.82rem;color:var(--ink2);">Adds a second quality to the first. Both are positive.</div><div style="font-size:.8rem;color:var(--ink);font-style:italic;margin-top:4px;padding:4px 8px;background:rgba(27,94,32,.06);border-radius:6px;"><strong>As well as being</strong> a place of great natural beauty, it is <strong>also</strong> a place of great historical significance.</div></div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);cursor:pointer;" onclick="showToast('Not only is Tuyen Lam Lake beautiful and tranquil, but it is also a great place to do activities such as fishing and hiking.','success')"><div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:4px;">not only ... but also ...</div><div style="font-size:.82rem;color:var(--ink2);">Emphasises two qualities. Very impressive in IELTS.</div><div style="font-size:.8rem;color:var(--ink);font-style:italic;margin-top:4px;padding:4px 8px;background:rgba(27,94,32,.06);border-radius:6px;">Tuyen Lam Lake is <strong>not only</strong> beautiful and tranquil, <strong>but it is also</strong> a great place to do activities.</div></div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);cursor:pointer;" onclick="showToast('This gym is both conveniently located and reasonably priced.','success')"><div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:4px;">both ... and ...</div><div style="font-size:.82rem;color:var(--ink2);">Combines two qualities in a concise way.</div><div style="font-size:.8rem;color:var(--ink);font-style:italic;margin-top:4px;padding:4px 8px;background:rgba(27,94,32,.06);border-radius:6px;">This gym is <strong>both</strong> conveniently located <strong>and</strong> reasonably priced.</div></div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);cursor:pointer;" onclick="showToast('Along with great shops and designer outlets, Parkson Paragon also has a number of handy restaurants.','success')"><div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:4px;">along with ... also ...</div><div class="vocab-example">Adds an extra feature to what was already mentioned.</div><div style="font-size:.8rem;color:var(--ink);font-style:italic;margin-top:4px;padding:4px 8px;background:rgba(27,94,32,.06);border-radius:6px;"><strong>Along with</strong> great shops and designer outlets, Parkson Paragon <strong>also</strong> has a number of handy restaurants.</div></div>
+    <div class="intro-note">Use these expressions to explain <strong>why the place is special</strong> and how it makes you feel. Click any card to see an example.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div class="vocab-card" onclick="showToast('I love the Greasy Spoon cafe near my house because the food is so great and such good value!','success')"><div class="vocab-word">I like/love (the place) because...</div><div class="vocab-example">I love the cafe near my house because the food is so great!</div></div>
+      <div class="vocab-card" onclick="showToast('I really value this place as it gives me a sense of calm.','success')"><div class="vocab-word">I value (the place) because...</div><div class="vocab-example">I really value this place as it gives me a sense of calm.</div></div>
+      <div class="vocab-card" onclick="showToast('The Summer Palace is really important to me because it is so tranquil.','success')"><div class="vocab-word">(The place) is important to me because...</div><div class="vocab-example">The Summer Palace is really important to me because it is so tranquil.</div></div>
+      <div class="vocab-card" onclick="showToast('The British Museum always makes me feel inspired to learn more about other countries.','success')"><div class="vocab-word">(The place) makes me feel...</div><div class="vocab-example">The British Museum always makes me feel inspired to learn more.</div></div>
+      <div class="vocab-card" onclick="showToast('The lake brings back memories of my school days, which makes it even more meaningful to me.','success')"><div class="vocab-word">(The place) reminds me of... / brings back memories of...</div><div class="vocab-example">It brings back memories of my school days, which makes it even more meaningful.</div></div>
+      <div class="vocab-card" onclick="showToast('The Legion Field provides me and my friends with a pleasant, green space in which to play sports.','success')"><div class="vocab-word">(The place) provides me with... / gives me... / lets me...</div><div class="vocab-example">The park provides me with a pleasant, green space in which to play sports.</div></div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);margin-top:4px;">
+      <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;"><i class="fas fa-star" style="margin-right:4px"></i>Adjectives to Describe Qualities of a Place</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;font-size:.78rem;">
+        <span style="background:rgba(27,94,32,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('cosy / comfortable / quiet / peaceful / tranquil — relaxing places','success')">cosy / peaceful / tranquil</span>
+        <span style="background:rgba(27,94,32,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('exciting / enchanting / energising / breathtaking / inspiring / exhilarating','success')">exciting / enchanting / breathtaking</span>
+        <span style="background:rgba(27,94,32,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('delightful / charming / magnificent / pretty / attractive','success')">delightful / charming / magnificent</span>
+        <span style="background:rgba(27,94,32,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('hectic / stressful / chaotic / bustling / frantic','success')">hectic / bustling / frantic</span>
+        <span style="background:rgba(27,94,32,.08);color:var(--navy);padding:3px 9px;border-radius:20px;cursor:pointer;font-weight:600;" onclick="showToast('fascinating / thrilling / engrossing / educational','success')">fascinating / thrilling / educational</span>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="slide" id="slide-27">
-  <div class="s-header"><h1>Quiz: Linking Phrases</h1><span class="s-badge amber">Vocabulary Practice</span></div>
+<!-- SLIDE 19 -->
+<div class="slide" id="slide-19">
+  <div class="s-header"><h1>Vocabulary Reference: All Key Expressions</h1><span class="s-badge">Quick Reference</span></div>
   <div class="s-content">
-    <div class="intro-note">Choose the correct linking phrase. Score: <strong id="q8-score">0</strong>/4</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. _____ being a place of great natural beauty, it is also a place of great historical significance.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-1"><button class="mc-opt" onclick="checkQ8(this,1,'As well as')">As well as</button><button class="mc-opt" onclick="checkQ8(this,1,'As well as')">However</button><button class="mc-opt" onclick="checkQ8(this,1,'As well as')">Although</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Tuyen Lam Lake is _____ beautiful and tranquil, _____ it is also a great place to do activities.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-2"><button class="mc-opt" onclick="checkQ8(this,2,'not only...but also')">not only...but also</button><button class="mc-opt" onclick="checkQ8(this,2,'not only...but also')">both...and</button><button class="mc-opt" onclick="checkQ8(this,2,'not only...but also')">as well as...also</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. This gym is _____ conveniently located _____ reasonably priced.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-3"><button class="mc-opt" onclick="checkQ8(this,3,'both...and')">both...and</button><button class="mc-opt" onclick="checkQ8(this,3,'both...and')">not only...but also</button><button class="mc-opt" onclick="checkQ8(this,3,'both...and')">as well as...also</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. _____ great shops and designer outlets, Parkson Paragon also has a number of handy restaurants.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-4"><button class="mc-opt" onclick="checkQ8(this,4,'Along with')">Along with</button><button class="mc-opt" onclick="checkQ8(this,4,'Along with')">However</button><button class="mc-opt" onclick="checkQ8(this,4,'Along with')">Although</button></div></div>
+    <div class="intro-note">Review all the key expressions from Lessons 8&ndash;9. Click any card to highlight it.</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-top:3px solid var(--navy);cursor:pointer;" onclick="toggleCardHighlight(this)"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:4px;">Location Prepositions</div><div style="font-size:.76rem;color:var(--ink2);">in | at | on | over/above | next to/beside/by | opposite/across from | between | in front of | outside of | near | far from</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-top:3px solid var(--amber);cursor:pointer;" onclick="toggleCardHighlight(this)"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#7a3800;margin-bottom:4px;">Size &amp; Shape Adjectives</div><div style="font-size:.76rem;color:var(--ink2);">huge/massive/vast/enormous | tiny/cramped | narrow/wide/broad | tall/towering | winding/endless</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-top:3px solid var(--teal);cursor:pointer;" onclick="toggleCardHighlight(this)"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--teal);margin-bottom:4px;">Appearance Adjectives</div><div style="font-size:.76rem;color:var(--ink2);">airy/bright/well-lit | dingy/gloomy | appealing/attractive | awe-inspiring/majestic | cosy/peaceful/tranquil | bustling/hectic</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-top:3px solid var(--navy);cursor:pointer;" onclick="toggleCardHighlight(this)"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:4px;">Passive Voice Phrases</div><div style="font-size:.76rem;color:var(--ink2);">is used for | was built by | is painted in | is surrounded by | is decorated with | is covered with | is popular with | is famous for</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-top:3px solid var(--amber);cursor:pointer;" onclick="toggleCardHighlight(this)"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#7a3800;margin-bottom:4px;">Past Habits</div><div style="font-size:.76rem;color:var(--ink2);">used to + verb | would + verb | past simple + adverbs of frequency</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-top:3px solid #6A1B9A;cursor:pointer;" onclick="toggleCardHighlight(this)"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#4A148C;margin-bottom:4px;">Feelings Expressions</div><div style="font-size:.76rem;color:var(--ink2);">I love/value (the place) because | makes me feel | reminds me of | brings back memories | provides me with | Whenever I..., I...</div></div>
     </div>
-    <div class="btn-row"><button class="reset-btn" onclick="resetQ8()"><i class="fas fa-redo"></i> Reset</button></div>
   </div>
 </div>
 
-<div class="slide" id="slide-28">
+<!-- SLIDE 20 -->
+<div class="slide" id="slide-20">
   <div class="s-header"><h1>Formula Summary</h1><span class="s-badge">Formula Reference</span></div>
   <div class="s-content">
     <div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
@@ -748,49 +904,211 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
   </div>
 </div>
 
+<!-- SLIDE 21 -->
+<div class="slide" id="slide-21">
+  <div class="s-header"><h1>Quiz: Prepositions of Location</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct preposition of location. Score: <strong id="q1-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. The Summer Palace is a very famous historic site _____ the northwest of Beijing.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-1"><button class="mc-opt" onclick="checkQ1(this,1,'in')">in</button><button class="mc-opt" onclick="checkQ1(this,1,'in')">at</button><button class="mc-opt" onclick="checkQ1(this,1,'in')">on</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. The flat would be _____ a high floor of a brand-new high-rise apartment block.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-2"><button class="mc-opt" onclick="checkQ1(this,2,'on')">on</button><button class="mc-opt" onclick="checkQ1(this,2,'on')">in</button><button class="mc-opt" onclick="checkQ1(this,2,'on')">at</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Ben Thanh Market is just _____ from Quach Thi Trang Square.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-3"><button class="mc-opt" onclick="checkQ1(this,3,'across')">across</button><button class="mc-opt" onclick="checkQ1(this,3,'across')">in</button><button class="mc-opt" onclick="checkQ1(this,3,'across')">on</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Tuyen Lam Lake is located _____ the outskirts of Da Lat.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-4"><button class="mc-opt" onclick="checkQ1(this,4,'on')">on</button><button class="mc-opt" onclick="checkQ1(this,4,'on')">in</button><button class="mc-opt" onclick="checkQ1(this,4,'on')">at</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ1()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 22 -->
+<div class="slide" id="slide-22">
+  <div class="s-header"><h1>Quiz: Adjectives of Appearance</h1><span class="s-badge amber">Vocabulary Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the most appropriate adjective for each description. Score: <strong id="q4-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. The cafe has soft lighting and low background music. It feels very _____ and comfortable.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-1"><button class="mc-opt" onclick="checkQ4(this,1,'cosy')">cosy</button><button class="mc-opt" onclick="checkQ4(this,1,'cosy')">hectic</button><button class="mc-opt" onclick="checkQ4(this,1,'cosy')">run-down</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. The lake is absolutely _____, with a wide stretch of calm water that reflects the sky.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-2"><button class="mc-opt" onclick="checkQ4(this,2,'vast')">vast</button><button class="mc-opt" onclick="checkQ4(this,2,'vast')">cramped</button><button class="mc-opt" onclick="checkQ4(this,2,'vast')">dingy</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. The place can feel slightly _____ and mysterious, especially early in the morning.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-3"><button class="mc-opt" onclick="checkQ4(this,3,'misty')">misty</button><button class="mc-opt" onclick="checkQ4(this,3,'misty')">bustling</button><button class="mc-opt" onclick="checkQ4(this,3,'misty')">upmarket</span></button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. The palace is _____ — it is one of the most impressive buildings I have ever seen.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-4"><button class="mc-opt" onclick="checkQ4(this,4,'majestic')">majestic</button><button class="mc-opt" onclick="checkQ4(this,4,'majestic')">cramped</button><button class="mc-opt" onclick="checkQ4(this,4,'majestic')">run-down</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ4()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 23 -->
+<div class="slide" id="slide-23">
+  <div class="s-header"><h1>Quiz: Linking Phrases</h1><span class="s-badge amber">Vocabulary Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct linking phrase. Score: <strong id="q8-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. _____ being a place of great natural beauty, it is also a place of great historical significance.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-1"><button class="mc-opt" onclick="checkQ8(this,1,'As well as')">As well as</button><button class="mc-opt" onclick="checkQ8(this,1,'As well as')">However</button><button class="mc-opt" onclick="checkQ8(this,1,'As well as')">Although</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Tuyen Lam Lake is _____ beautiful and tranquil, _____ it is also a great place to do activities.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-2"><button class="mc-opt" onclick="checkQ8(this,2,'not only...but also')">not only...but also</button><button class="mc-opt" onclick="checkQ8(this,2,'not only...but also')">both...and</button><button class="mc-opt" onclick="checkQ8(this,2,'not only...but also')">as well as...also</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. This gym is _____ conveniently located _____ reasonably priced.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-3"><button class="mc-opt" onclick="checkQ8(this,3,'both...and')">both...and</button><button class="mc-opt" onclick="checkQ8(this,3,'both...and')">not only...but also</button><button class="mc-opt" onclick="checkQ8(this,3,'both...and')">as well as...also</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. _____ great shops and designer outlets, Parkson Paragon also has a number of handy restaurants.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-4"><button class="mc-opt" onclick="checkQ8(this,4,'Along with')">Along with</button><button class="mc-opt" onclick="checkQ8(this,4,'Along with')">However</button><button class="mc-opt" onclick="checkQ8(this,4,'Along with')">Although</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ8()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 24 -->
+<div class="slide" id="slide-24">
+  <div class="s-header"><h1>Quiz: Passive Voice</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct passive voice form. Score: <strong id="q2-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. The Pyramids of Egypt _____ by unpaid workers.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-1"><button class="mc-opt" onclick="checkQ2(this,1,'were constructed')">were constructed</button><button class="mc-opt" onclick="checkQ2(this,1,'were constructed')">constructed</button><button class="mc-opt" onclick="checkQ2(this,1,'were constructed')">are constructing</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. The cafe _____ mainly for studying and relaxing.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-2"><button class="mc-opt" onclick="checkQ2(this,2,'is used')">is used</button><button class="mc-opt" onclick="checkQ2(this,2,'is used')">uses</button><button class="mc-opt" onclick="checkQ2(this,2,'is used')">used</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. The walls _____ in light tones, so the space feels bright and open.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-3"><button class="mc-opt" onclick="checkQ2(this,3,'are painted')">are painted</button><button class="mc-opt" onclick="checkQ2(this,3,'are painted')">paint</button><button class="mc-opt" onclick="checkQ2(this,3,'are painted')">painted</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. The lake _____ by dense pine forests and rolling hills.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-4"><button class="mc-opt" onclick="checkQ2(this,4,'is surrounded')">is surrounded</button><button class="mc-opt" onclick="checkQ2(this,4,'is surrounded')">surrounds</button><button class="mc-opt" onclick="checkQ2(this,4,'is surrounded')">surrounded</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ2()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 25 -->
+<div class="slide" id="slide-25">
+  <div class="s-header"><h1>Quiz: Past Habits</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct past habit structure. Score: <strong id="q3-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I _____ spend many hours painting by the river when I was young.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-1"><button class="mc-opt" onclick="checkQ3(this,1,'used to')">used to</button><button class="mc-opt" onclick="checkQ3(this,1,'used to')">use to</button><button class="mc-opt" onclick="checkQ3(this,1,'used to')">would to</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. If I felt stressed, I _____ go to the bar to relax.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-2"><button class="mc-opt" onclick="checkQ3(this,2,'would')">would</button><button class="mc-opt" onclick="checkQ3(this,2,'would')">will</button><button class="mc-opt" onclick="checkQ3(this,2,'would')">used to</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. When I was in high school, I _____ go there quite regularly.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-3"><button class="mc-opt" onclick="checkQ3(this,3,'used to')">used to</button><button class="mc-opt" onclick="checkQ3(this,3,'used to')">use to</button><button class="mc-opt" onclick="checkQ3(this,3,'used to')">would to</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Sometimes we _____ rent a boat and explore the area.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-4"><button class="mc-opt" onclick="checkQ3(this,4,'would')">would</button><button class="mc-opt" onclick="checkQ3(this,4,'would')">will</button><button class="mc-opt" onclick="checkQ3(this,4,'would')">used to</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ3()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 26 -->
+<div class="slide" id="slide-26">
+  <div class="s-header"><h1>Quiz: used to or would?</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose "used to" or "would" to complete each sentence. Score: <strong id="q7-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. The palace _____ be closed to the public, but now it is open for everyone.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-1"><button class="mc-opt" onclick="checkQ7(this,1,'used to')">used to</button><button class="mc-opt" onclick="checkQ7(this,1,'used to')">would</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. When I was a student, I _____ go there all the time and hang out with my friends.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-2"><button class="mc-opt" onclick="checkQ7(this,2,'would')">would</button><button class="mc-opt" onclick="checkQ7(this,2,'would')">used to</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. My family _____ spend every summer camping at Giang Dien Waterfall.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-3"><button class="mc-opt" onclick="checkQ7(this,3,'used to')">used to</button><button class="mc-opt" onclick="checkQ7(this,3,'used to')">would</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. If I needed some fresh air, I _____ walk to the park near my house.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-4"><button class="mc-opt" onclick="checkQ7(this,4,'would')">would</button><button class="mc-opt" onclick="checkQ7(this,4,'would')">used to</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ7()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 27 -->
+<div class="slide" id="slide-27">
+  <div class="s-header"><h1>Quiz: Zero vs First Conditional</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct conditional form. Score: <strong id="q5-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Whenever I feel overwhelmed, I _____ to go there. (zero conditional — always true)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-1"><button class="mc-opt" onclick="checkQ5(this,1,'tend')">tend</button><button class="mc-opt" onclick="checkQ5(this,1,'tend')">will tend</button><button class="mc-opt" onclick="checkQ5(this,1,'tend')">tended</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. If I am very successful in my career, this is the kind of flat I _____ buy. (first conditional)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-2"><button class="mc-opt" onclick="checkQ5(this,2,'will')">will</button><button class="mc-opt" onclick="checkQ5(this,2,'will')">would</button><button class="mc-opt" onclick="checkQ5(this,2,'will')">buy</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. If I need a place to relax and unwind, I immediately _____ of the Summer Palace. (zero conditional)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-3"><button class="mc-opt" onclick="checkQ5(this,3,'think')">think</button><button class="mc-opt" onclick="checkQ5(this,3,'think')">will think</button><button class="mc-opt" onclick="checkQ5(this,3,'think')">thought</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. If I have enough time next weekend, I _____ visit the lake. (first conditional)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-4"><button class="mc-opt" onclick="checkQ5(this,4,'will')">will</button><button class="mc-opt" onclick="checkQ5(this,4,'will')">would</button><button class="mc-opt" onclick="checkQ5(this,4,'will')">visit</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ5()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 28 -->
+<div class="slide" id="slide-28">
+  <div class="s-header"><h1>Quiz: Feelings Expressions</h1><span class="s-badge amber">Vocabulary Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the most natural feelings expression. Score: <strong id="q6-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I really _____ this place as it gives me a sense of calm that is quite hard to find in the city.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-1"><button class="mc-opt" onclick="checkQ6(this,1,'value')">value</button><button class="mc-opt" onclick="checkQ6(this,1,'value')">hate</button><button class="mc-opt" onclick="checkQ6(this,1,'value')">ignore</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. The British Museum always _____ inspired to learn more about other countries and cultures.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-2"><button class="mc-opt" onclick="checkQ6(this,2,'makes me feel')">makes me feel</button><button class="mc-opt" onclick="checkQ6(this,2,'makes me feel')">gives me</button><button class="mc-opt" onclick="checkQ6(this,2,'makes me feel')">reminds me</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. The lake _____ memories of my school days, which makes it even more meaningful to me.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-3"><button class="mc-opt" onclick="checkQ6(this,3,'brings back')">brings back</button><button class="mc-opt" onclick="checkQ6(this,3,'brings back')">makes me feel</button><button class="mc-opt" onclick="checkQ6(this,3,'brings back')">gives me</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. The park _____ me and my friends with a pleasant, green space in which to play sports.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-4"><button class="mc-opt" onclick="checkQ6(this,4,'provides')">provides</button><button class="mc-opt" onclick="checkQ6(this,4,'provides')">reminds</button><button class="mc-opt" onclick="checkQ6(this,4,'provides')">makes</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ6()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 29 -->
 <div class="slide" id="slide-29">
-  <div class="s-header"><h1>Lesson Summary</h1><span class="s-badge">Key Takeaways</span></div>
+  <div class="s-header"><h1>Quiz: Mixed Practice</h1><span class="s-badge amber">Grammar Practice</span></div>
   <div class="s-content">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(27,94,32,.08);border-top:4px solid var(--navy);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-map-marker-alt"></i> Stage 1 Key Language</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(27,94,32,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">in / at / on / next to / between</span><span style="background:rgba(27,94,32,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">which is located...</span><span style="background:rgba(27,94,32,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">surrounded by</span></div></div>
-      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(27,94,32,.08);border-top:4px solid var(--amber);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:#7a3800;margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-eye"></i> Stage 2 Key Language</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">cosy / vast / majestic / airy</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">is painted in / is made of</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">not only...but also</span></div></div>
-      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(27,94,32,.08);border-top:4px solid var(--teal);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:var(--teal);margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-cog"></i> Stage 3 Key Language</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(0,131,143,.08);color:var(--teal);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">is used for / is popular with</span><span style="background:rgba(0,131,143,.08);color:var(--teal);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">used to + verb</span><span style="background:rgba(0,131,143,.08);color:var(--teal);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">would + verb</span></div></div>
-      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(27,94,32,.08);border-top:4px solid #6A1B9A;"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:#4A148C;margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-heart"></i> Stage 4 Key Language</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(106,27,154,.08);color:#4A148C;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">I value / makes me feel</span><span style="background:rgba(106,27,154,.08);color:#4A148C;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">brings back memories</span><span style="background:rgba(106,27,154,.08);color:#4A148C;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">Whenever I..., I...</span></div></div>
+    <div class="intro-note">Choose the correct option. Score: <strong id="q9-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Which sentence correctly uses the passive voice?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q9-1"><button class="mc-opt" onclick="checkQ9(this,1,'The cafe is mainly used for studying.')">The cafe is mainly used for studying.</button><button class="mc-opt" onclick="checkQ9(this,1,'The cafe is mainly used for studying.')">The cafe mainly uses for studying.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Which sentence correctly uses "used to"?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q9-2"><button class="mc-opt" onclick="checkQ9(this,2,'I used to go there every weekend.')">I used to go there every weekend.</button><button class="mc-opt" onclick="checkQ9(this,2,'I used to go there every weekend.')">I use to go there every weekend.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Which is the correct zero conditional?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q9-3"><button class="mc-opt" onclick="checkQ9(this,3,'Whenever I feel stressed, I go there.')">Whenever I feel stressed, I go there.</button><button class="mc-opt" onclick="checkQ9(this,3,'Whenever I feel stressed, I go there.')">Whenever I feel stressed, I will go there.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Which preposition is correct? "The flat is located _____ the fifth floor."</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q9-4"><button class="mc-opt" onclick="checkQ9(this,4,'on')">on</button><button class="mc-opt" onclick="checkQ9(this,4,'on')">in</button><button class="mc-opt" onclick="checkQ9(this,4,'on')">at</button></div></div>
     </div>
-    <div style="background:linear-gradient(135deg,var(--navy),var(--green));color:#fff;border-radius:14px;padding:18px 24px;text-align:center;margin-top:8px;">
-      <div style="font-family:var(--hf);font-size:1.1rem;font-weight:800;margin-bottom:6px;">&#127881; Lessons 8&ndash;9 Complete!</div>
-      <div style="font-size:.88rem;opacity:.85;">You have mastered the 4-Stage Formula for describing a place. Keep practising with the practice question!</div>
-    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ9()"><i class="fas fa-redo"></i> Reset</button></div>
   </div>
 </div>
 
+<!-- SLIDE 30 -->
 <div class="slide" id="slide-30">
-  <div class="s-header"><h1>Final Review: Complete Answer</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-header"><h1>Build Your Own Answer</h1><span class="s-badge green">Speaking Practice</span></div>
   <div class="s-content">
-    <div class="intro-note">Review the complete formula with all components. Click each highlighted part to learn more.</div>
-    <div class="model-q"><i class="fas fa-question-circle"></i> Describe a natural place you like to visit.</div>
-    <div class="model-answer-box" style="font-size:.86rem;">
-      <span class="hl-s1" style="cursor:pointer" onclick="showToast('Stage 1 - Type + Location: I would like to talk about... which is located on the outskirts of Da Lat','success')">I would like to talk about a lake called Tuyen Lam Lake, which is located on the outskirts of Da Lat, surrounded by forests and hills.</span>
-      The lake is <span class="hl-s2" style="cursor:pointer" onclick="showToast('Stage 2 - Size adjective: absolutely vast — describes the size of the lake','success')">absolutely vast,</span>
-      with a wide stretch of calm water that reflects the sky beautifully. It is
-      <span class="hl-s2" style="cursor:pointer" onclick="showToast('Stage 2 - Passive: surrounded by dense pine forests — describes the surroundings','success')">surrounded by dense pine forests and rolling hills.</span>
-      The lake <span class="hl-s3" style="cursor:pointer" onclick="showToast('Stage 3 - Passive: is mainly used for — expresses purpose','success')">is mainly used for</span>
-      tourism and outdoor activities, and it
-      <span class="hl-s3" style="cursor:pointer" onclick="showToast('Stage 3 - Popularity: is especially popular with — explains who uses it','success')">is especially popular with</span>
-      people who enjoy nature. When I was younger, I
-      <span class="hl-s3" style="cursor:pointer" onclick="showToast('Stage 3 - Past habit: used to go — describes past habits at the place','success')">used to go</span>
-      there quite often for picnics. I am really
-      <span class="hl-s4" style="cursor:pointer" onclick="showToast('Stage 4 - Feelings: attached to this place — expresses emotional connection','success')">attached to this place</span>
-      as it
-      <span class="hl-s4" style="cursor:pointer" onclick="showToast('Stage 4 - Feelings: allows me to disconnect — explains how it makes you feel','success')">allows me to disconnect</span>
-      from everything else.
-      <span class="hl-s4" style="cursor:pointer" onclick="showToast('Stage 4 - Zero conditional: Whenever I need a break, I go there — natural habit expression','success')">Whenever I need a break, I go there,</span>
-      and I always feel more relaxed and refreshed afterwards.
+    <div class="intro-note">Use the word bank to build a complete answer for: <strong>"Describe a place where you like to relax."</strong></div>
+
+    <div style="background:#fff;border-radius:12px;padding:12px 16px;box-shadow:0 3px 10px rgba(0,0,0,.07);border-top:3px solid var(--navy);">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px;">
+        <div style="font-family:var(--hf);font-size:.76rem;font-weight:800;color:var(--navy);text-transform:uppercase;"><i class="fas fa-microphone"></i> Try Speaking in 3 Steps</div>
+        <div class="scaffold-tab-bar">
+          <button class="scaffold-tab active" onclick="switchScaffoldLevel(this, 1)">1. Full Example</button>
+          <button class="scaffold-tab" onclick="switchScaffoldLevel(this, 2)">2. Sentence Starters</button>
+          <button class="scaffold-tab" onclick="switchScaffoldLevel(this, 3)">3. Key Words</button>
+        </div>
+      </div>
+      <div class="scaffold-level-box" data-level="1" style="font-size:.85rem;line-height:1.65;color:var(--ink);padding:8px 12px;background:var(--bg);border-radius:8px;"><strong>Full Example:</strong> I'd like to talk about a <u>peaceful botanical garden</u> <u>located in the heart of</u> my city. It is <u>spacious and surrounded by</u> tall trees. It <u>was built</u> decades ago for locals to relax. <u>Whenever I go there, I feel</u> completely refreshed.</div>
+      <div class="scaffold-level-box" data-level="2" style="display:none;font-size:.85rem;line-height:1.65;color:var(--ink);padding:8px 12px;background:var(--bg);border-radius:8px;"><strong>Sentence Starters:</strong> 1. I'd like to describe [...], located in [...]. 2. It is [...] and surrounded by [...]. 3. It was built to [...], and I used to [...]. 4. Whenever I visit, I feel [...].</div>
+      <div class="scaffold-level-box" data-level="3" style="display:none;font-size:.85rem;line-height:1.65;color:var(--ink);padding:8px 12px;background:var(--bg);border-radius:8px;"><strong>1-Minute Notes:</strong> <em>1. Hoan Kiem Lake [city center] &rarr; 2. spacious, scenic, old trees &rarr; 3. preserved cultural landmark / used to walk there &rarr; 4. gives me a sense of peace</em></div>
+    </div>
+    <div style="background:var(--navy);color:#fff;border-radius:10px;padding:12px 18px;font-size:.85rem;margin-bottom:10px;"><strong style="color:var(--amber)">Formula:</strong> Stage 1 (What + Where) &rarr; Stage 2 (Appearance) &rarr; Stage 3 (Purpose + Past Habits) &rarr; Stage 4 (Special + Feelings)</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 1: Location</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(27,94,32,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I would like to talk about a park near my house, which is located in the city centre.','success')">in the city centre</span><span style="background:rgba(27,94,32,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('It is located on the outskirts of the city, surrounded by trees.','success')">on the outskirts</span><span style="background:rgba(27,94,32,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('It is situated next to a quiet river.','success')">next to a quiet river</span></div></div>
+      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 2: Appearance</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(255,143,0,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('It has a peaceful and tranquil atmosphere.','success')">peaceful / tranquil</span><span style="background:rgba(255,143,0,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('The area is surrounded by tall trees and green grass.','success')">surrounded by tall trees</span><span style="background:rgba(255,143,0,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('The paths are painted in light colours.','success')">painted in light colours</span></div></div>
+      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 3: Purpose + Past Habits</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(0,131,143,.1);color:var(--teal);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('It is mainly used for relaxing and exercising.','success')">is mainly used for</span><span style="background:rgba(0,131,143,.1);color:var(--teal);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('It is popular with elderly people and families.','success')">popular with</span><span style="background:rgba(0,131,143,.1);color:var(--teal);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I used to go there every weekend when I was younger.','success')">used to go there</span></div></div>
+      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 4: Feelings</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(106,27,154,.1);color:#4A148C;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I really value this place as it gives me a sense of calm.','success')">gives me a sense of calm</span><span style="background:rgba(106,27,154,.1);color:#4A148C;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('Whenever I feel stressed, I tend to go there.','success')">Whenever I feel stressed</span><span style="background:rgba(106,27,154,.1);color:#4A148C;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('It helps me clear my head and reset mentally.','success')">helps me clear my head</span></div></div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 3px 10px rgba(27,94,32,.07);margin-top:8px;border-left:4px solid var(--teal);">
+      <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Sample Answer</div>
+      <div style="font-size:.86rem;color:var(--ink);line-height:1.7;"><span class="hl-s1">I would like to talk about a park near my house, which is located in the city centre, right next to a quiet river.</span> The park has a <span class="hl-s2">peaceful and tranquil atmosphere,</span> with tall trees and green grass that make it feel very natural. The paths are <span class="hl-s2">painted in light colours</span> and are well-maintained. It <span class="hl-s3">is mainly used for</span> relaxing and exercising, and it <span class="hl-s3">is popular with</span> elderly people and families. I <span class="hl-s3">used to go</span> there every weekend when I was younger. I really <span class="hl-s4">value this place</span> as it <span class="hl-s4">gives me a sense of calm.</span> <span class="hl-s4">Whenever I feel stressed,</span> I tend to go there, and it always helps me <span class="hl-s4">clear my head.</span></div>
     </div>
   </div>
 </div>
 
+<!-- SLIDE 31 -->
 <div class="slide" id="slide-31">
+  <div class="s-header"><h1>Practice Question: Describe a Place</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    
+    <div style="background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;border-radius:12px;padding:12px 16px;box-shadow:0 3px 12px rgba(0,0,0,.12);">
+      <div style="font-family:var(--hf);font-size:.76rem;font-weight:800;color:var(--amber);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;"><i class="fas fa-users"></i> Pair Activity: Pitch a Weekend Destination</div>
+      <div style="font-size:.84rem;line-height:1.5;">Take 1 minute to prepare notes, then speak for <strong>90–120 seconds</strong> to recommend a place to visit. Your partner will listen, ask one follow-up question, and <strong>decide which destination sounds best for a class trip</strong>.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+        <div style="background:rgba(255,255,255,.12);padding:7px 10px;border-radius:8px;font-size:.78rem;"><strong>🗣️ Speaker:</strong> Give your answer with a clear reason and a personal example.</div>
+        <div style="background:rgba(255,255,255,.12);padding:7px 10px;border-radius:8px;font-size:.78rem;"><strong>👂 Partner:</strong> Listen, react naturally, and ask one follow-up question.</div>
+      </div>
+    </div>
+    <div class="model-q"><i class="fas fa-question-circle"></i> DESCRIBE A PLACE WHERE YOU LIKE TO RELAX.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid var(--navy);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 1: What it is &amp; where it is</div>
+        <div style="font-size:.82rem;color:var(--ink2);">Type of place (natural place / cafe / park / etc.) &nbsp;|&nbsp; Location (use prepositions: in, on, near, next to, etc.) &nbsp;|&nbsp; How you found it / first time you went there</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid var(--amber);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 2: What it looks like (3 ideas + mini-stories)</div>
+        <div style="font-size:.82rem;color:var(--ink2);">Idea 1: Atmosphere (cosy / peaceful / lively) &nbsp;|&nbsp; Idea 2: Design / appearance &nbsp;|&nbsp; Idea 3: Size / structure</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid var(--teal);">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 3: Purpose</div>
+        <div style="font-size:.82rem;color:var(--ink2);">What the place is used for (passive: is used for...) &nbsp;|&nbsp; Who goes there (popular with...) &nbsp;|&nbsp; Past habits (used to / would)</div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid #6A1B9A;">
+        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:#4A148C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 4: Why it is special &amp; how you feel</div>
+        <div style="font-size:.82rem;color:var(--ink2);">Why you like/love/value it &nbsp;|&nbsp; How it makes you feel &nbsp;|&nbsp; Conditional (Whenever I..., I...)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 32 -->
+<div class="slide" id="slide-32">
   <div class="s-header"><h1>IELTS Part 2 Tips</h1><span class="s-badge purple">IELTS Tips</span></div>
   <div class="s-content">
     <div class="intro-note">Follow these tips to maximise your score in IELTS Speaking Part 2 place descriptions.</div>
@@ -825,64 +1143,31 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
   </div>
 </div>
 
-<div class="slide" id="slide-32">
-  <div class="s-header"><h1>Quiz: Mixed Practice</h1><span class="s-badge amber">Grammar Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Choose the correct option. Score: <strong id="q9-score">0</strong>/4</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Which sentence correctly uses the passive voice?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q9-1"><button class="mc-opt" onclick="checkQ9(this,1,'The cafe is mainly used for studying.')">The cafe is mainly used for studying.</button><button class="mc-opt" onclick="checkQ9(this,1,'The cafe is mainly used for studying.')">The cafe mainly uses for studying.</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Which sentence correctly uses "used to"?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q9-2"><button class="mc-opt" onclick="checkQ9(this,2,'I used to go there every weekend.')">I used to go there every weekend.</button><button class="mc-opt" onclick="checkQ9(this,2,'I used to go there every weekend.')">I use to go there every weekend.</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Which is the correct zero conditional?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q9-3"><button class="mc-opt" onclick="checkQ9(this,3,'Whenever I feel stressed, I go there.')">Whenever I feel stressed, I go there.</button><button class="mc-opt" onclick="checkQ9(this,3,'Whenever I feel stressed, I go there.')">Whenever I feel stressed, I will go there.</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Which preposition is correct? "The flat is located _____ the fifth floor."</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q9-4"><button class="mc-opt" onclick="checkQ9(this,4,'on')">on</button><button class="mc-opt" onclick="checkQ9(this,4,'on')">in</button><button class="mc-opt" onclick="checkQ9(this,4,'on')">at</button></div></div>
-    </div>
-    <div class="btn-row"><button class="reset-btn" onclick="resetQ9()"><i class="fas fa-redo"></i> Reset</button></div>
-  </div>
-</div>
-
+<!-- SLIDE 33 -->
 <div class="slide" id="slide-33">
-  <div class="s-header"><h1>Practice Question: Describe a Place</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-header"><h1>Self-Assessment Checklist</h1><span class="s-badge">Evaluation</span></div>
   <div class="s-content">
-    <div class="intro-note">Use the 4-Stage Formula to answer this IELTS Part 2 question. You have 1 minute to prepare, then speak for 1-2 minutes.</div>
-    <div class="model-q"><i class="fas fa-question-circle"></i> DESCRIBE A PLACE WHERE YOU LIKE TO RELAX.</div>
-    <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid var(--navy);">
-        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 1: What it is &amp; where it is</div>
-        <div style="font-size:.82rem;color:var(--ink2);">Type of place (natural place / cafe / park / etc.) &nbsp;|&nbsp; Location (use prepositions: in, on, near, next to, etc.) &nbsp;|&nbsp; How you found it / first time you went there</div>
-      </div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid var(--amber);">
-        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 2: What it looks like (3 ideas + mini-stories)</div>
-        <div style="font-size:.82rem;color:var(--ink2);">Idea 1: Atmosphere (cosy / peaceful / lively) &nbsp;|&nbsp; Idea 2: Design / appearance &nbsp;|&nbsp; Idea 3: Size / structure</div>
-      </div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid var(--teal);">
-        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 3: Purpose</div>
-        <div style="font-size:.82rem;color:var(--ink2);">What the place is used for (passive: is used for...) &nbsp;|&nbsp; Who goes there (popular with...) &nbsp;|&nbsp; Past habits (used to / would)</div>
-      </div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(27,94,32,.07);border-left:4px solid #6A1B9A;">
-        <div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:#4A148C;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Stage 4: Why it is special &amp; how you feel</div>
-        <div style="font-size:.82rem;color:var(--ink2);">Why you like/love/value it &nbsp;|&nbsp; How it makes you feel &nbsp;|&nbsp; Conditional (Whenever I..., I...)</div>
-      </div>
+    <div class="intro-note">Use this checklist to evaluate your own answer after practising. Click each item to mark it.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 1:</strong> Clearly stated the type of place</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 1:</strong> Gave the location using correct prepositions (in, on, near, etc.)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 1:</strong> Explained how you know / discovered the place</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 2:</strong> Described atmosphere (cosy, peaceful, lively, etc.)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 2:</strong> Used specific details (materials, colors, layout)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 2:</strong> Added a short story or memory (I remember...)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 2:</strong> Used passive voice (is painted in / is surrounded by)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 3:</strong> Mentioned purpose clearly (is used for...)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 3:</strong> Used past habits (used to / would)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 3:</strong> Included popularity (popular with / famous for)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 4:</strong> Expressed feelings clearly (love, value, attached to)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Stage 4:</strong> Used conditional (Whenever I..., I...)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>Overall:</strong> Answer is well-organized (4 clear stages)</div></div>
     </div>
   </div>
 </div>
 
+<!-- SLIDE 34 -->
 <div class="slide" id="slide-34">
-  <div class="s-header"><h1>Extra Practice: Sample Answers</h1><span class="s-badge green">Speaking Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Review these sample answers for different types of places. Notice how each follows the 4-Stage Formula.</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);">
-        <div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">Describe a shopping centre you have visited.</div>
-        <div style="background:rgba(27,94,32,.06);border-radius:8px;padding:10px 12px;font-size:.84rem;color:var(--ink2);line-height:1.6;"><span class="hl-s1">I would like to talk about a large shopping mall called Vincom Centre, which is located in the heart of Ho Chi Minh City, right in the city centre.</span> The mall is <span class="hl-s2">absolutely enormous,</span> with multiple floors and hundreds of shops. It is <span class="hl-s2">both modern and luxurious,</span> with marble floors and bright lighting throughout. It <span class="hl-s3">is mainly used for</span> shopping and entertainment, and it <span class="hl-s3">is especially popular with</span> young people and families. I <span class="hl-s3">used to go</span> there every weekend with my friends. I really <span class="hl-s4">love this place</span> because it <span class="hl-s4">gives me the chance to</span> relax and enjoy myself. <span class="hl-s4">Whenever I need a break from studying,</span> I tend to go there with my friends.</div>
-      </div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(27,94,32,.07);">
-        <div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">Describe a historic place in your country.</div>
-        <div style="background:rgba(27,94,32,.06);border-radius:8px;padding:10px 12px;font-size:.84rem;color:var(--ink2);line-height:1.6;"><span class="hl-s1">I would like to talk about the Imperial Citadel of Hue, which is located in the city of Hue, in central Vietnam.</span> The citadel is <span class="hl-s2">vast and awe-inspiring,</span> with ancient walls and traditional Vietnamese architecture. The buildings are <span class="hl-s2">decorated with intricate carvings and painted in red and gold.</span> It <span class="hl-s3">is mainly used for</span> tourism and cultural preservation, and it <span class="hl-s3">is famous for</span> its historical significance. I <span class="hl-s3">used to visit</span> it every year during the Tet holiday. I am really <span class="hl-s4">attached to this place</span> as it <span class="hl-s4">reminds me of</span> my country history and culture. <span class="hl-s4">Whenever I visit,</span> I feel a deep sense of pride.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="slide" id="slide-35">
   <div class="s-header"><h1>Lessons 8&ndash;9: Complete Review Quiz</h1><span class="s-badge green">Final Review</span></div>
   <div class="s-content">
     <div class="intro-note">Test yourself on all the key points from Lessons 8&ndash;9. Score: <strong id="qfinal-score">0</strong>/5</div>
@@ -897,7 +1182,24 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
   </div>
 </div>
 
-  <div id="navbar">
+<!-- SLIDE 35 -->
+<div class="slide" id="slide-35">
+  <div class="s-header"><h1>Lesson Summary</h1><span class="s-badge">Key Takeaways</span></div>
+  <div class="s-content">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(27,94,32,.08);border-top:4px solid var(--navy);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-map-marker-alt"></i> Stage 1 Key Language</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(27,94,32,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">in / at / on / next to / between</span><span style="background:rgba(27,94,32,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">which is located...</span><span style="background:rgba(27,94,32,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">surrounded by</span></div></div>
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(27,94,32,.08);border-top:4px solid var(--amber);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:#7a3800;margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-eye"></i> Stage 2 Key Language</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">cosy / vast / majestic / airy</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">is painted in / is made of</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">not only...but also</span></div></div>
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(27,94,32,.08);border-top:4px solid var(--teal);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:var(--teal);margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-cog"></i> Stage 3 Key Language</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(0,131,143,.08);color:var(--teal);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">is used for / is popular with</span><span style="background:rgba(0,131,143,.08);color:var(--teal);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">used to + verb</span><span style="background:rgba(0,131,143,.08);color:var(--teal);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">would + verb</span></div></div>
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(27,94,32,.08);border-top:4px solid #6A1B9A;"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:#4A148C;margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-heart"></i> Stage 4 Key Language</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(106,27,154,.08);color:#4A148C;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">I value / makes me feel</span><span style="background:rgba(106,27,154,.08);color:#4A148C;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">brings back memories</span><span style="background:rgba(106,27,154,.08);color:#4A148C;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">Whenever I..., I...</span></div></div>
+    </div>
+    <div style="background:linear-gradient(135deg,var(--navy),var(--green));color:#fff;border-radius:14px;padding:18px 24px;text-align:center;margin-top:8px;">
+      <div style="font-family:var(--hf);font-size:1.1rem;font-weight:800;margin-bottom:6px;">&#127881; Lessons 8&ndash;9 Complete!</div>
+      <div style="font-size:.88rem;opacity:.85;">You have mastered the 4-Stage Formula for describing a place. Keep practising with the practice question!</div>
+    </div>
+  </div>
+</div>
+
+<div id="navbar">
     <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i> Prev</button>
     <div id="nav-dots"></div>
     <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next <i class="fas fa-chevron-right"></i></button>
@@ -934,6 +1236,13 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
       document.getElementById("next-btn").disabled = currentSlide === totalSlides;
       var pb = document.getElementById("progress-bar");
       if (pb) pb.style.width = ((currentSlide / totalSlides) * 100) + "%";
+      buildDrawer();
+      try {
+        localStorage.setItem("spkf_" + "lesson89_slide", currentSlide);
+        if (window.parent && window.parent !== window && typeof window.parent.onSlideChanged === "function") {
+          window.parent.onSlideChanged("lesson89", currentSlide, totalSlides);
+        }
+      } catch(e) {}
     }
 
     function changeSlide(dir) {
@@ -949,7 +1258,7 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
     function showToast(msg, type) {
       var t = document.getElementById("toast");
       t.textContent = msg;
-      t.className = "toast show " + (type || "");
+      t.className = "toast show " + (type || ""); if (type === "success") playSuccessChime();
       clearTimeout(t._timer);
       t._timer = setTimeout(function(){ t.className = "toast"; }, 3200);
     }
@@ -978,7 +1287,7 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
           score = 0; done = {};
           var el = document.getElementById(scoreId);
           if (el) el.textContent = "0";
-          document.querySelectorAll("#" + slideId + " .mc-opt").forEach(function(b) { b.classList.remove("correct","wrong"); b.disabled = false; });
+          (document.getElementById(scoreId) && document.getElementById(scoreId).closest(".slide") ? document.getElementById(scoreId).closest(".slide") : document).querySelectorAll(".mc-opt").forEach(function(b) { b.classList.remove("correct","wrong"); b.disabled = false; });
         }
       };
     }
@@ -1017,6 +1326,148 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
 
     buildDots();
     goToSlide(1);
+  
+    // ===== CLASSROOM CONTROLS =====
+    var slideTitles = [{"num": 1, "title": "Cover: Describe a Place"}, {"num": 2, "title": "Warm-Up &amp; Lesson Goal"}, {"num": 3, "title": "Model Answer 1: A Place You Like to Visit"}, {"num": 4, "title": "Model Answer 2: A Natural Place"}, {"num": 5, "title": "Extra Practice: Sample Answers"}, {"num": 6, "title": "Full Formula: Annotated Example"}, {"num": 7, "title": "Final Review: Complete Answer"}, {"num": 8, "title": "Stage 1: Types of Places"}, {"num": 9, "title": "Stage 1: Prepositions of Location"}, {"num": 10, "title": "Stage 2: Expressions of Size &amp; Shape"}, {"num": 11, "title": "Stage 2: Character &amp; Appearance"}, {"num": 12, "title": "Stage 2: Linking Phrases"}, {"num": 13, "title": "Linking Phrases: Deep Dive"}, {"num": 14, "title": "Stage 3: Passive Voice for Purpose"}, {"num": 15, "title": "Stage 3: Expressing Past Habits"}, {"num": 16, "title": "Grammar Focus: used to vs would"}, {"num": 17, "title": "Stage 4: Zero &amp; First Conditionals"}, {"num": 18, "title": "Stage 4: Expressions for How You Feel"}, {"num": 19, "title": "Vocabulary Reference: All Key Expressions"}, {"num": 20, "title": "Formula Summary"}, {"num": 21, "title": "Quiz: Prepositions of Location"}, {"num": 22, "title": "Quiz: Adjectives of Appearance"}, {"num": 23, "title": "Quiz: Linking Phrases"}, {"num": 24, "title": "Quiz: Passive Voice"}, {"num": 25, "title": "Quiz: Past Habits"}, {"num": 26, "title": "Quiz: used to or would?"}, {"num": 27, "title": "Quiz: Zero vs First Conditional"}, {"num": 28, "title": "Quiz: Feelings Expressions"}, {"num": 29, "title": "Quiz: Mixed Practice"}, {"num": 30, "title": "Build Your Own Answer"}, {"num": 31, "title": "Practice Question: Describe a Place"}, {"num": 32, "title": "IELTS Part 2 Tips"}, {"num": 33, "title": "Self-Assessment Checklist"}, {"num": 34, "title": "Lessons 8&ndash;9: Complete Review Quiz"}, {"num": 35, "title": "Lesson Summary"}];
+    var soundEnabled = true;
+    var ttsSpeaking = false;
+
+    function switchScaffoldLevel(btn, level) {
+      var slideEl = btn.closest(".slide") || document;
+      slideEl.querySelectorAll(".scaffold-tab").forEach(function(t) { t.classList.remove("active"); });
+      btn.classList.add("active");
+      slideEl.querySelectorAll(".scaffold-level-box").forEach(function(box) {
+        box.style.display = (parseInt(box.getAttribute("data-level"), 10) === level) ? "block" : "none";
+      });
+    }
+
+    function buildDrawer() {
+      var container = document.getElementById("drawer-items");
+      if (!container) return;
+      container.innerHTML = "";
+      slideTitles.forEach(function(item) {
+        var div = document.createElement("div");
+        div.className = "drawer-item" + (item.num === currentSlide ? " active" : "");
+        div.onclick = function() { goToSlide(item.num); toggleSlideDrawer(); };
+        div.innerHTML = '<span class="drawer-item-num">' + item.num + '</span><span class="drawer-item-title">' + item.title + '</span>';
+        container.appendChild(div);
+      });
+    }
+
+    function toggleSlideDrawer() {
+      var drawer = document.getElementById("slide-drawer");
+      if (drawer) drawer.classList.toggle("open");
+    }
+
+    function toggleCardHighlight(el) {
+      el.classList.toggle("card-highlight");
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(function(){});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    function toggleSoundFX() {
+      soundEnabled = !soundEnabled;
+      var btn = document.getElementById("sound-btn");
+      if (btn) {
+        btn.innerHTML = soundEnabled ? '<i class="fas fa-bell"></i>' : '<i class="fas fa-bell-slash"></i>';
+        btn.classList.toggle("active", soundEnabled);
+      }
+      showToast(soundEnabled ? "Sound on" : "Sound muted", "success");
+    }
+
+    function playSuccessChime() {
+      if (!soundEnabled) return;
+      try {
+        var ctx = new (window.AudioContext || window.webkitAudioContext)();
+        var osc1 = ctx.createOscillator();
+        var osc2 = ctx.createOscillator();
+        var gain = ctx.createGain();
+        osc1.type = "sine"; osc1.frequency.setValueAtTime(523.25, ctx.currentTime);
+        osc2.type = "sine"; osc2.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.12, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+        osc1.connect(gain); osc2.connect(gain); gain.connect(ctx.destination);
+        osc1.start(ctx.currentTime); osc1.stop(ctx.currentTime + 0.15);
+        osc2.start(ctx.currentTime + 0.1); osc2.stop(ctx.currentTime + 0.35);
+      } catch(e) {}
+    }
+
+    function toggleReadSlide() {
+      if (!('speechSynthesis' in window)) {
+        showToast("Speech synthesis is not supported in this browser", "error");
+        return;
+      }
+      if (ttsSpeaking) {
+        window.speechSynthesis.cancel();
+        ttsSpeaking = false;
+        var btn = document.getElementById("tts-btn");
+        if (btn) btn.innerHTML = '<i class="fas fa-volume-up"></i> <span>Read Aloud</span>';
+        return;
+      }
+      var currentEl = document.getElementById("slide-" + currentSlide);
+      if (!currentEl) return;
+      var textToRead = "";
+      var q = currentEl.querySelector(".model-q");
+      var ans = currentEl.querySelector(".model-answer-box");
+      if (q || ans) {
+        textToRead = (q ? q.innerText + ". " : "") + (ans ? ans.innerText : "");
+      } else {
+        var textNodes = currentEl.querySelectorAll(".s-content, .intro-note, .cover-p");
+        textNodes.forEach(function(n) { textToRead += n.innerText + " "; });
+      }
+      textToRead = textToRead.replace(/\s+/g, " ").trim();
+      if (!textToRead) {
+        showToast("No text to read on this slide", "error");
+        return;
+      }
+      var utterance = new SpeechSynthesisUtterance(textToRead.slice(0, 500));
+      utterance.lang = "en-US";
+      utterance.rate = 0.95;
+      utterance.onend = function() {
+        ttsSpeaking = false;
+        var btn = document.getElementById("tts-btn");
+        if (btn) btn.innerHTML = '<i class="fas fa-volume-up"></i> <span>Read Aloud</span>';
+      };
+      utterance.onerror = function() {
+        ttsSpeaking = false;
+        var btn = document.getElementById("tts-btn");
+        if (btn) btn.innerHTML = '<i class="fas fa-volume-up"></i> <span>Read Aloud</span>';
+      };
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(utterance);
+      ttsSpeaking = true;
+      var btn = document.getElementById("tts-btn");
+      if (btn) btn.innerHTML = '<i class="fas fa-stop"></i> <span>Stop Audio</span>';
+      showToast("Reading slide aloud...", "success");
+    }
+
+    function exitToPortal() {
+      try {
+        if (window.parent && window.parent !== window && typeof window.parent.closePlayer === "function") {
+          window.parent.closePlayer();
+          return;
+        }
+      } catch(e) {}
+      window.location.href = "index.html";
+    }
+
+    function switchLesson(url) {
+      try {
+        if (window.parent && window.parent !== window && typeof window.parent.openLessonByFilename === "function") {
+          window.parent.openLessonByFilename(url);
+          return;
+        }
+      } catch(e) {}
+      window.location.href = url;
+    }
+
+    buildDrawer();
   </script>
 </body>
 </html>

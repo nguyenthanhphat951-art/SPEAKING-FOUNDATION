@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SPK F Lesson 3: Express Habits and Routines | Interactive Classroom</title>
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
-<link href="/fonts/Montserrat/index.css" rel="stylesheet">
-<link href="/fonts/Open Sans/index.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{--navy:#004D40;--blue:#00695C;--green:#00897B;--amber:#FF8F00;--red:#B71C1C;--teal:#00ACC1;--bg:#E0F2F1;--bg2:#B2DFDB;--ink:#001A16;--ink2:#00695C;--hf:Montserrat,sans-serif;--bf:Open Sans,sans-serif;}
@@ -86,13 +86,265 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .toast.success{background:#1b5e20;}
 .toast.error{background:#7f1d1d;}
+
+/* TOP BAR & SLIDE DRAWER */
+#top-bar, #player-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 1003;
+}
+.top-left, .top-center, .top-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.top-btn {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: var(--hf);
+  font-size: .75rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: all .2s;
+}
+.top-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+.top-btn.active {
+  background: var(--navy);
+  color: #fff;
+  border-color: var(--navy);
+}
+.top-badge {
+  background: var(--navy);
+  color: #fff;
+  font-family: var(--hf);
+  font-size: .74rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: .04em;
+}
+.top-title {
+  font-family: var(--hf);
+  font-size: .84rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+.top-select {
+  background: #fff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-family: var(--hf);
+  font-size: .75rem;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  outline: none;
+}
+#slide-drawer {
+  position: fixed;
+  top: 48px;
+  right: -380px;
+  width: 350px;
+  max-width: 88vw;
+  bottom: 52px;
+  background: #ffffff;
+  box-shadow: -6px 0 25px rgba(0,0,0,0.15);
+  z-index: 1001;
+  transition: right .3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  border-left: 2px solid #e2e8f0;
+}
+#slide-drawer.open {
+  right: 0;
+}
+.drawer-header {
+  padding: 12px 16px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.drawer-title {
+  font-family: var(--hf);
+  font-size: .82rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+.drawer-close {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: #64748b;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.drawer-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.drawer-item {
+  padding: 7px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: .78rem;
+  color: #334155;
+  transition: all .15s;
+  border: 1px solid transparent;
+}
+.drawer-item:hover {
+  background: #f1f5f9;
+}
+.drawer-item.active {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: var(--navy);
+  color: var(--navy);
+  font-weight: 700;
+}
+.drawer-item-num {
+  font-family: var(--hf);
+  font-size: .72rem;
+  font-weight: 800;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: #e2e8f0;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.drawer-item.active .drawer-item-num {
+  background: var(--navy);
+  color: #fff;
+}
+.drawer-item-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+.card-highlight {
+  outline: 2px solid var(--navy) !important;
+  background: rgba(0,0,0,0.04) !important;
+}
+.slide {
+  padding-top: 48px;
+}
+#progress-bar {
+  top: 48px !important;
+}
+#slides-stage {
+  flex: 1;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+.scaffold-tab-bar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+.scaffold-tab {
+  background: #f1f5f9;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-family: var(--hf);
+  font-size: .74rem;
+  font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  transition: all .2s;
+}
+.scaffold-tab.active {
+  background: var(--navy);
+  color: #fff;
+  border-color: var(--navy);
+}
+@media (max-width: 768px) {
+  .top-title { display: none; }
+  .top-btn span { display: none; }
+  .top-btn { padding: 5px 8px; }
+}
+
 </style>
 </head>
 <body>
+
+  <!-- TOP BAR -->
+  <div id="top-bar">
+    <div class="top-left">
+      <button class="top-btn" onclick="exitToPortal()" title="Back to Home"><i class="fas fa-home"></i> <span>Home</span></button>
+      <span class="top-badge">Lesson 3</span>
+      <span class="top-title">Express Habits & Routines</span>
+    </div>
+    <div class="top-center">
+      <button class="top-btn" onclick="toggleSlideDrawer()" title="Slide Outline"><i class="fas fa-list-ul"></i> <span>Slides (35)</span></button>
+      <button class="top-btn" id="tts-btn" onclick="toggleReadSlide()" title="Read Aloud"><i class="fas fa-volume-up"></i> <span>Read Aloud</span></button>
+      <button class="top-btn active" id="sound-btn" onclick="toggleSoundFX()" title="Sound Effects"><i class="fas fa-bell"></i></button>
+    </div>
+    <div class="top-right">
+      <select onchange="switchLesson(this.value)" class="top-select" title="Switch Lesson">
+        <option value="spkf-lesson1-interactive.html">Lesson 1: Express Likes & Dislikes</option>
+<option value="spkf-lesson2-interactive.html">Lesson 2: Express Preferences</option>
+<option value="spkf-lesson3-interactive.html" selected>Lesson 3: Express Habits & Routines</option>
+<option value="spkf-lesson4-interactive.html">Lesson 4: Express Past Experiences</option>
+<option value="spkf-lesson5-interactive.html">Lesson 5: Express Changes</option>
+<option value="spkf-lesson67-interactive.html">Lessons 6-7: Describe a Person</option>
+<option value="spkf-lesson89-interactive.html">Lessons 8-9: Describe a Place</option>
+      </select>
+      <button class="top-btn" onclick="toggleFullScreen()" title="Fullscreen"><i class="fas fa-expand"></i></button>
+    </div>
+  </div>
+
+  <!-- SLIDE DRAWER -->
+  <div id="slide-drawer">
+    <div class="drawer-header">
+      <div class="drawer-title"><i class="fas fa-list-ul" style="margin-right:6px;color:var(--navy);"></i> Lesson Slides (35)</div>
+      <button class="drawer-close" onclick="toggleSlideDrawer()">&times;</button>
+    </div>
+    <div class="drawer-list" id="drawer-items">
+    </div>
+  </div>
+
 <div id="progress-bar" style="width:0%"></div>
 
-<!-- SLIDE 1: COVER -->
-<div class="slide" id="slide-1">
+<!-- SLIDE 1 -->
+<div class="slide active" id="slide-1">
   <div style="position:absolute;inset:0;background:linear-gradient(135deg,#004D40 0%,#00695C 50%,#00897B 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
     <div class="cover-content">
       <div class="cover-tag"><i class="fas fa-clock" style="margin-right:5px"></i>SPK F &middot; Lesson 3 &middot; Part 1</div>
@@ -109,33 +361,163 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
   </div>
 </div>
 
-<!-- SLIDE 2: LESSON AIMS -->
+<!-- SLIDE 2 -->
 <div class="slide" id="slide-2">
-  <div class="s-header"><h1>Lesson Aims</h1><span class="s-badge">Lesson 3</span></div>
+  <div class="s-header"><h1>Warm-Up &amp; Lesson Goal</h1><span class="s-badge amber">Warm-Up</span></div>
   <div class="s-content">
-    <div class="intro-note">In this lesson, you will master how to answer questions related to your <strong>habits and routines</strong>.</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-      <div style="background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 2px 8px rgba(0,77,64,.08);border-top:4px solid var(--navy);">
-        <div style="font-family:var(--hf);font-size:.8rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;"><i class="fas fa-bullseye" style="margin-right:5px"></i>Target Question Types</div>
-        <div style="display:flex;flex-direction:column;gap:6px;">
-          <div style="font-size:.84rem;padding:6px 10px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">How often do you read books?</div>
-          <div style="font-size:.84rem;padding:6px 10px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">How often do visitors come to your home?</div>
-          <div style="font-size:.84rem;padding:6px 10px;background:var(--bg);border-radius:7px;border-left:3px solid var(--navy);">How often do you go out to dinner with friends?</div>
-        </div>
+    <div style="background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;border-radius:12px;padding:12px 16px;box-shadow:0 3px 12px rgba(0,0,0,.1);">
+      <div style="font-family:var(--hf);font-size:.72rem;font-weight:800;color:var(--amber);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;"><i class="fas fa-bullseye"></i> Today's Speaking Goal</div>
+      <div style="font-size:.88rem;line-height:1.5;font-weight:600;">Describe how often you do everyday activities using frequency adverbs and idioms, and find routines you have in common with a partner.</div>
+    </div>
+
+    <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,0,0,.06);border-left:4px solid var(--amber);">
+      <div style="font-size:.86rem;color:var(--ink);margin-bottom:9px;font-weight:700;"><i class="fas fa-comments" style="color:var(--amber);margin-right:6px;"></i>Warm-Up: Which of these habits sounds most like your typical week?</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <button class="mc-opt" style="font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:8px;" onclick="toggleCardHighlight(this);showToast('Nice! Regular exercise keeps your energy up all week.','success')"><span>🏃 Exercising Almost Every Day</span><i class="fas fa-check-circle" style="opacity:.45;font-size:.8rem;"></i></button><button class="mc-opt" style="font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:8px;" onclick="toggleCardHighlight(this);showToast('Reading from time to time is a great way to relax before bed.','success')"><span>📚 Reading a Book Now and Then</span><i class="fas fa-check-circle" style="opacity:.45;font-size:.8rem;"></i></button><button class="mc-opt" style="font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:8px;" onclick="toggleCardHighlight(this);showToast('Many people only go for big blockbusters!','success')"><span>🍿 Going to the Cinema Once in a Blue Moon</span><i class="fas fa-check-circle" style="opacity:.45;font-size:.8rem;"></i></button><button class="mc-opt" style="font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:8px;" onclick="toggleCardHighlight(this);showToast('Very common — it\'s easy to lose track of time online!','success')"><span>📱 Checking Social Media All Day</span><i class="fas fa-check-circle" style="opacity:.45;font-size:.8rem;"></i></button>
       </div>
-      <div style="background:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 2px 8px rgba(0,77,64,.08);border-top:4px solid var(--amber);">
-        <div style="font-family:var(--hf);font-size:.8rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;"><i class="fas fa-flask" style="margin-right:5px"></i>Answer Order</div>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:rgba(0,77,64,.06);border-radius:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--hf);font-size:.78rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div><div style="font-size:.84rem;"><strong>Say how frequently you do the activity</strong><br><span style="color:var(--ink2);font-size:.78rem;">always, usually, often, sometimes, rarely, never...</span></div></div>
-          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:rgba(0,77,64,.06);border-radius:8px;"><div style="width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--hf);font-size:.78rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div><div style="font-size:.84rem;"><strong>Explain why you do it that frequently</strong><br><span style="color:var(--ink2);font-size:.78rem;">because / since / as + reason</span></div></div>
+    </div>
+
+    <div>
+      <div style="font-family:var(--hf);font-size:.74rem;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Lesson Outline (Click to jump)</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+        
+        <div onclick="goToSlide(2)" style="background:#fff;border-radius:10px;padding:10px 12px;border-left:4px solid #D97706;box-shadow:0 2px 6px rgba(0,0,0,.05);cursor:pointer;">
+          <div style="font-family:var(--hf);font-size:.78rem;font-weight:800;color:#D97706;">Warm-Up</div>
+          <div style="font-size:.75rem;color:#475569;margin-top:2px;">Check your daily habits</div>
+        </div>
+        <div onclick="goToSlide(3)" style="background:#fff;border-radius:10px;padding:10px 12px;border-left:4px solid #0284C7;box-shadow:0 2px 6px rgba(0,0,0,.05);cursor:pointer;">
+          <div style="font-family:var(--hf);font-size:.78rem;font-weight:800;color:#0284C7;">Model Answers</div>
+          <div style="font-size:.75rem;color:#475569;margin-top:2px;">Read & listen to sample responses</div>
+        </div>
+        <div onclick="goToSlide(10)" style="background:#fff;border-radius:10px;padding:10px 12px;border-left:4px solid #7C3AED;box-shadow:0 2px 6px rgba(0,0,0,.05);cursor:pointer;">
+          <div style="font-family:var(--hf);font-size:.78rem;font-weight:800;color:#7C3AED;">Useful Language</div>
+          <div style="font-size:.75rem;color:#475569;margin-top:2px;">Frequency adverbs & idioms</div>
+        </div>
+        <div onclick="goToSlide(18)" style="background:#fff;border-radius:10px;padding:10px 12px;border-left:4px solid #16A34A;box-shadow:0 2px 6px rgba(0,0,0,.05);cursor:pointer;">
+          <div style="font-family:var(--hf);font-size:.78rem;font-weight:800;color:#16A34A;">Practice & Speaking</div>
+          <div style="font-size:.75rem;color:#475569;margin-top:2px;">Quizzes, drills & pair speaking</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 3: ADVERBS OF FREQUENCY - POSITION RULES -->
+<!-- SLIDE 3 -->
 <div class="slide" id="slide-3">
+  <div class="s-header"><h1>Model Answer 1: How often do you socialise?</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> How often do you socialise with friends?</div>
+    <div class="model-answer-box">I <span class="hl-freq">used to</span> go out to dinner with my friends all the time, but I am in my last year of university now and I am really busy. I <span class="hl-freq">do not often</span> have the chance to take a break and spend time with my friends. <span class="hl-coll">Once in a while,</span> I will have someone over for coffee, or I will go to a friend house and hang out. I hope I will have more time to socialise after I graduate!</div>
+    <div class="lang-tags">
+      <div class="lang-tag"><i class="fas fa-clock"></i> Frequency: used to / do not often / once in a while</div>
+      <div class="lang-tag"><i class="fas fa-link"></i> Reason: busy with university</div>
+      <div class="lang-tag"><i class="fas fa-star"></i> Extension: I hope I will have more time...</div>
+    </div>
+    <div style="background:rgba(0,77,64,.06);border-radius:10px;padding:12px 14px;margin-top:4px;"><div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Answer Structure</div><div style="font-size:.84rem;color:var(--ink);line-height:1.6;"><strong>Frequency</strong> + <strong>Reason</strong> + <strong>Extension/Detail</strong></div></div>
+  </div>
+</div>
+
+<!-- SLIDE 4 -->
+<div class="slide" id="slide-4">
+  <div class="s-header"><h1>Model Answer 2: How often do you read books?</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> How often do you read books?</div>
+    <div class="model-answer-box">To be honest, I am <span class="hl-freq">always</span> reading books. I <span class="hl-freq">usually</span> read novels, but <span class="hl-freq">sometimes</span> I mix it up slightly and read books about history or nature. I prefer reading novels <span class="hl-reason">because</span> they are a great way to relax and escape from daily life, but I also enjoy history and nature books <span class="hl-reason">because</span> they help me learn more about the world we live in. <span class="hl-coll">From time to time</span> I might read some poetry, but I have to be in the right mood.</div>
+    <div class="lang-tags">
+      <div class="lang-tag"><i class="fas fa-clock"></i> Frequency: always, usually, sometimes, from time to time</div>
+      <div class="lang-tag"><i class="fas fa-link"></i> Reason: because they are a great way to relax</div>
+      <div class="lang-tag"><i class="fas fa-star"></i> Extension: I have to be in the right mood</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5 -->
+<div class="slide" id="slide-5">
+  <div class="s-header"><h1>Model Answer 3: How often do you go out with friends?</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> How often do you go out with friends?</div>
+    <div class="model-answer-box">I <span class="hl-freq">often</span> go out with my friends, mainly <span class="hl-reason">because</span> it is a good way to unwind and catch up. We <span class="hl-freq">usually</span> go to a cafe at the weekend, and it is a chance for us to talk about what has been going on in our lives.</div>
+    <div class="lang-tags">
+      <div class="lang-tag"><i class="fas fa-clock"></i> Frequency: often, usually</div>
+      <div class="lang-tag"><i class="fas fa-link"></i> Reason: unwind / catch up</div>
+      <div class="lang-tag"><i class="fas fa-star"></i> Extension: talk about what has been going on</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6 -->
+<div class="slide" id="slide-6">
+  <div class="s-header"><h1>Model Answer 4: How often do you exercise?</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> How often do you exercise?</div>
+    <div class="model-answer-box">I <span class="hl-freq">always</span> exercise in the morning <span class="hl-reason">because</span> it helps me stay healthy and feel more energetic. I <span class="hl-freq">usually</span> go jogging in the park, and it really helps me start the day feeling more positive and focused.</div>
+    <div class="lang-tags">
+      <div class="lang-tag"><i class="fas fa-clock"></i> Frequency: always, usually</div>
+      <div class="lang-tag"><i class="fas fa-link"></i> Reason: stay healthy / feel more energetic</div>
+      <div class="lang-tag"><i class="fas fa-star"></i> Extension: start the day feeling more positive and focused</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7 -->
+<div class="slide" id="slide-7">
+  <div class="s-header"><h1>Model Answer 5: How often do you watch TV?</h1><span class="s-badge green">Sample Q&amp;A</span></div>
+  <div class="s-content">
+    <div class="model-q"><i class="fas fa-question-circle"></i> How often do you watch TV?</div>
+    <div class="model-answer-box">I <span class="hl-freq">hardly ever</span> watch TV <span class="hl-reason">because</span> I am usually busy with my studies. I tend to spend my free time reading or doing homework instead, especially when I have exams coming up.</div>
+    <div class="lang-tags">
+      <div class="lang-tag"><i class="fas fa-clock"></i> Infrequency: hardly ever</div>
+      <div class="lang-tag"><i class="fas fa-link"></i> Reason: busy with studies</div>
+      <div class="lang-tag"><i class="fas fa-star"></i> Extension: I tend to... / especially when...</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8 -->
+<div class="slide" id="slide-8">
+  <div class="s-header"><h1>Full Formula: Annotated Example</h1><span class="s-badge">Formula in Action</span></div>
+  <div class="s-content">
+    <div class="intro-note">See how all the components work together. Click each highlighted part to learn more.</div>
+    <div class="model-q"><i class="fas fa-question-circle"></i> How often do you read books?</div>
+    <div class="model-answer-box" style="font-size:.88rem;">
+      To be honest, I am <span class="hl-freq" style="cursor:pointer" onclick="showToast('Step 1 - Frequency adverb: always — 100% frequency, placed before the verb','success')">always</span> reading books. I <span class="hl-freq" style="cursor:pointer" onclick="showToast('Step 1 - Frequency adverb: usually — about 80%, can go before verb or at start','success')">usually</span> read novels, but <span class="hl-freq" style="cursor:pointer" onclick="showToast('Step 1 - Frequency adverb: sometimes — about 40%, flexible position','success')">sometimes</span> I mix it up slightly and read books about history or nature. I prefer reading novels <span class="hl-reason" style="cursor:pointer" onclick="showToast('Step 2 - Reason: because + explanation — explains WHY you read that frequently','success')">because</span> they are a great way to relax and escape from daily life, but I also enjoy history books <span class="hl-reason" style="cursor:pointer" onclick="showToast('Step 2 - Reason: because + explanation — second reason for variety','success')">because</span> they help me learn more about the world. <span class="hl-coll" style="cursor:pointer" onclick="showToast('Colloquial expression: From time to time = occasionally — sounds native!','success')">From time to time</span> I might read some poetry, but I have to be in the right mood.
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px;">
+      <div style="background:rgba(0,77,64,.08);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 1</div><div style="font-size:.82rem;color:var(--navy);font-weight:600;">Frequency</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">always, usually, sometimes, from time to time</div></div>
+      <div style="background:rgba(255,143,0,.1);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 2</div><div style="font-size:.82rem;color:#7a3800;font-weight:600;">Reason</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">because they are a great way to relax</div></div>
+      <div style="background:rgba(0,172,193,.1);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#006064;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Extension</div><div style="font-size:.82rem;color:#006064;font-weight:600;">Extra Detail</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">I have to be in the right mood</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9 -->
+<div class="slide" id="slide-9">
+  <div class="s-header"><h1>Final Review: Complete Answer</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Review the complete formula with all components. Click each highlighted part to learn more.</div>
+    <div class="model-q"><i class="fas fa-question-circle"></i> Question: How often do you go out with friends?</div>
+    <div class="model-answer-box" style="font-size:.88rem;">
+      I <span class="hl-freq" style="cursor:pointer" onclick="showToast('Step 1 - Frequency: often — about 60%, placed before the verb','success')">often</span>
+      go out with my friends, mainly
+      <span class="hl-reason" style="cursor:pointer" onclick="showToast('Step 2 - Reason linker: because — connects the frequency to the reason','success')">because</span>
+      it is a good way to
+      <span class="hl-reason" style="cursor:pointer" onclick="showToast('Step 2 - Reason: unwind and catch up — explains WHY you go out that often','success')">unwind and catch up.</span>
+      We
+      <span class="hl-freq" style="cursor:pointer" onclick="showToast('Step 1 - Second frequency: usually — adds more detail about the routine','success')">usually</span>
+      go to a cafe at the weekend, and it is
+      <span class="hl-ext" style="cursor:pointer" onclick="showToast('Extension: a chance for us to — explains the social benefit','success')">a chance for us to</span>
+      talk about what has been going on in our lives.
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px;">
+      <div style="background:rgba(0,77,64,.08);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 1</div><div style="font-size:.82rem;color:var(--navy);font-weight:600;">Frequency</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">often + usually</div></div>
+      <div style="background:rgba(255,143,0,.1);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 2</div><div style="font-size:.82rem;color:#7a3800;font-weight:600;">Reason</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">because it is a good way to unwind</div></div>
+      <div style="background:rgba(0,172,193,.1);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#006064;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Extension</div><div style="font-size:.82rem;color:#006064;font-weight:600;">Extra Detail</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">a chance for us to talk about our lives</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10 -->
+<div class="slide" id="slide-10">
   <div class="s-header"><h1>Step 1: Adverbs of Frequency (Position Rules)</h1><span class="s-badge">Language Step 1</span></div>
   <div class="s-content">
     <div class="intro-note">The position of adverbs of frequency depends on the adverb. Click any card to see an example.</div>
@@ -171,8 +553,44 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
   </div>
 </div>
 
-<!-- SLIDE 4: FREQUENCY SCALE -->
-<div class="slide" id="slide-4">
+<!-- SLIDE 11 -->
+<div class="slide" id="slide-11">
+  <div class="s-header"><h1>Grammar Focus: Adverb Position Rules</h1><span class="s-badge purple">Grammar</span></div>
+  <div class="s-content">
+    <div class="intro-note">Master the exact position rules for each adverb of frequency.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);">
+        <div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:6px;"><i class="fas fa-lock" style="margin-right:5px;color:#c62828"></i>FIXED position — before the verb ONLY</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-size:.82rem;">
+          <div style="padding:4px 8px;background:rgba(0,77,64,.06);border-radius:6px;">I <strong>always</strong> read. &nbsp;&nbsp; I <strong>never</strong> read. &nbsp;&nbsp; I <strong>rarely</strong> read. &nbsp;&nbsp; I <strong>seldom</strong> read.</div>
+          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;text-decoration:line-through;color:#c62828;font-style:italic;"><strong>Always</strong> I read. &nbsp;&nbsp; I read <strong>always</strong>. &nbsp;&nbsp; (WRONG)</div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);">
+        <div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:var(--amber);margin-bottom:6px;"><i class="fas fa-unlock" style="margin-right:5px;color:var(--amber)"></i>TWO positions — before verb OR end of sentence</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-size:.82rem;">
+          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;">I <strong>often</strong> listen to music. &nbsp;&nbsp; I listen to music <strong>often</strong>.</div>
+          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;">I <strong>frequently</strong> go to bars. &nbsp;&nbsp; I go to bars <strong>frequently</strong>.</div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);">
+        <div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:var(--teal);margin-bottom:6px;"><i class="fas fa-unlock-alt" style="margin-right:5px;color:var(--teal)"></i>THREE positions — beginning, before verb, OR end</div>
+        <div style="display:flex;flex-direction:column;gap:4px;font-size:.82rem;">
+          <div style="padding:4px 8px;background:rgba(0,172,193,.06);border-radius:6px;"><strong>Usually</strong> I play football. &nbsp;&nbsp; I <strong>usually</strong> play football. &nbsp;&nbsp; I play football <strong>usually</strong>.</div>
+          <div style="padding:4px 8px;background:rgba(0,172,193,.06);border-radius:6px;"><strong>Sometimes</strong> I go out. &nbsp;&nbsp; I <strong>sometimes</strong> go out. &nbsp;&nbsp; I go out <strong>sometimes</strong>.</div>
+          <div style="padding:4px 8px;background:rgba(0,172,193,.06);border-radius:6px;"><strong>Occasionally</strong> Lee reads. &nbsp;&nbsp; Lee <strong>occasionally</strong> reads. &nbsp;&nbsp; Lee reads <strong>occasionally</strong>.</div>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);">
+        <div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:var(--red);margin-bottom:6px;"><i class="fas fa-lock" style="margin-right:5px;color:var(--red)"></i>FIXED position — end of sentence ONLY</div>
+        <div style="padding:4px 8px;background:rgba(183,28,28,.06);border-radius:6px;font-size:.82rem;">I listen to my MP3 <strong>all the time</strong>. &nbsp;&nbsp; (NOT: I all the time listen...)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 12 -->
+<div class="slide" id="slide-12">
   <div class="s-header"><h1>Adverbs of Frequency: Scale</h1><span class="s-badge">Language Step 1</span></div>
   <div class="s-content">
     <div class="intro-note">Use this scale to choose the right adverb. Click any adverb to see an example sentence.</div>
@@ -212,8 +630,8 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
   </div>
 </div>
 
-<!-- SLIDE 5: COLLOQUIAL EXPRESSIONS -->
-<div class="slide" id="slide-5">
+<!-- SLIDE 13 -->
+<div class="slide" id="slide-13">
   <div class="s-header"><h1>Step 2: Colloquial Expressions of Infrequency</h1><span class="s-badge">Language Step 2</span></div>
   <div class="s-content">
     <div class="intro-note">Use these native-speaker expressions to sound more natural. They replace <em>never, seldom, rarely</em> and <em>sometimes</em>. Click any card to see the example.</div>
@@ -247,141 +665,21 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
   </div>
 </div>
 
-<!-- SLIDE 6: MODEL ANSWER 1 - SOCIALISE -->
-<div class="slide" id="slide-6">
-  <div class="s-header"><h1>Model Answer 1: How often do you socialise?</h1><span class="s-badge green">Sample Q&amp;A</span></div>
-  <div class="s-content">
-    <div class="model-q"><i class="fas fa-question-circle"></i> How often do you socialise with friends?</div>
-    <div class="model-answer-box">I <span class="hl-freq">used to</span> go out to dinner with my friends all the time, but I am in my last year of university now and I am really busy. I <span class="hl-freq">do not often</span> have the chance to take a break and spend time with my friends. <span class="hl-coll">Once in a while,</span> I will have someone over for coffee, or I will go to a friend house and hang out. I hope I will have more time to socialise after I graduate!</div>
-    <div class="lang-tags">
-      <div class="lang-tag"><i class="fas fa-clock"></i> Frequency: used to / do not often / once in a while</div>
-      <div class="lang-tag"><i class="fas fa-link"></i> Reason: busy with university</div>
-      <div class="lang-tag"><i class="fas fa-star"></i> Extension: I hope I will have more time...</div>
-    </div>
-    <div style="background:rgba(0,77,64,.06);border-radius:10px;padding:12px 14px;margin-top:4px;"><div style="font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Answer Structure</div><div style="font-size:.84rem;color:var(--ink);line-height:1.6;"><strong>Frequency</strong> + <strong>Reason</strong> + <strong>Extension/Detail</strong></div></div>
-  </div>
-</div>
-
-<!-- SLIDE 7: MODEL ANSWER 2 - READ BOOKS -->
-<div class="slide" id="slide-7">
-  <div class="s-header"><h1>Model Answer 2: How often do you read books?</h1><span class="s-badge green">Sample Q&amp;A</span></div>
-  <div class="s-content">
-    <div class="model-q"><i class="fas fa-question-circle"></i> How often do you read books?</div>
-    <div class="model-answer-box">To be honest, I am <span class="hl-freq">always</span> reading books. I <span class="hl-freq">usually</span> read novels, but <span class="hl-freq">sometimes</span> I mix it up slightly and read books about history or nature. I prefer reading novels <span class="hl-reason">because</span> they are a great way to relax and escape from daily life, but I also enjoy history and nature books <span class="hl-reason">because</span> they help me learn more about the world we live in. <span class="hl-coll">From time to time</span> I might read some poetry, but I have to be in the right mood.</div>
-    <div class="lang-tags">
-      <div class="lang-tag"><i class="fas fa-clock"></i> Frequency: always, usually, sometimes, from time to time</div>
-      <div class="lang-tag"><i class="fas fa-link"></i> Reason: because they are a great way to relax</div>
-      <div class="lang-tag"><i class="fas fa-star"></i> Extension: I have to be in the right mood</div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 8: MODEL ANSWER 3 - GO OUT WITH FRIENDS -->
-<div class="slide" id="slide-8">
-  <div class="s-header"><h1>Model Answer 3: How often do you go out with friends?</h1><span class="s-badge green">Sample Q&amp;A</span></div>
-  <div class="s-content">
-    <div class="model-q"><i class="fas fa-question-circle"></i> How often do you go out with friends?</div>
-    <div class="model-answer-box">I <span class="hl-freq">often</span> go out with my friends, mainly <span class="hl-reason">because</span> it is a good way to unwind and catch up. We <span class="hl-freq">usually</span> go to a cafe at the weekend, and it is a chance for us to talk about what has been going on in our lives.</div>
-    <div class="lang-tags">
-      <div class="lang-tag"><i class="fas fa-clock"></i> Frequency: often, usually</div>
-      <div class="lang-tag"><i class="fas fa-link"></i> Reason: unwind / catch up</div>
-      <div class="lang-tag"><i class="fas fa-star"></i> Extension: talk about what has been going on</div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 9: MODEL ANSWER 4 - EXERCISE -->
-<div class="slide" id="slide-9">
-  <div class="s-header"><h1>Model Answer 4: How often do you exercise?</h1><span class="s-badge green">Sample Q&amp;A</span></div>
-  <div class="s-content">
-    <div class="model-q"><i class="fas fa-question-circle"></i> How often do you exercise?</div>
-    <div class="model-answer-box">I <span class="hl-freq">always</span> exercise in the morning <span class="hl-reason">because</span> it helps me stay healthy and feel more energetic. I <span class="hl-freq">usually</span> go jogging in the park, and it really helps me start the day feeling more positive and focused.</div>
-    <div class="lang-tags">
-      <div class="lang-tag"><i class="fas fa-clock"></i> Frequency: always, usually</div>
-      <div class="lang-tag"><i class="fas fa-link"></i> Reason: stay healthy / feel more energetic</div>
-      <div class="lang-tag"><i class="fas fa-star"></i> Extension: start the day feeling more positive and focused</div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 10: MODEL ANSWER 5 - WATCH TV -->
-<div class="slide" id="slide-10">
-  <div class="s-header"><h1>Model Answer 5: How often do you watch TV?</h1><span class="s-badge green">Sample Q&amp;A</span></div>
-  <div class="s-content">
-    <div class="model-q"><i class="fas fa-question-circle"></i> How often do you watch TV?</div>
-    <div class="model-answer-box">I <span class="hl-freq">hardly ever</span> watch TV <span class="hl-reason">because</span> I am usually busy with my studies. I tend to spend my free time reading or doing homework instead, especially when I have exams coming up.</div>
-    <div class="lang-tags">
-      <div class="lang-tag"><i class="fas fa-clock"></i> Infrequency: hardly ever</div>
-      <div class="lang-tag"><i class="fas fa-link"></i> Reason: busy with studies</div>
-      <div class="lang-tag"><i class="fas fa-star"></i> Extension: I tend to... / especially when...</div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 11: ANNOTATED MODEL ANSWER -->
-<div class="slide" id="slide-11">
-  <div class="s-header"><h1>Full Formula: Annotated Example</h1><span class="s-badge">Formula in Action</span></div>
-  <div class="s-content">
-    <div class="intro-note">See how all the components work together. Click each highlighted part to learn more.</div>
-    <div class="model-q"><i class="fas fa-question-circle"></i> How often do you read books?</div>
-    <div class="model-answer-box" style="font-size:.88rem;">
-      To be honest, I am <span class="hl-freq" style="cursor:pointer" onclick="showToast('Step 1 - Frequency adverb: always — 100% frequency, placed before the verb','success')">always</span> reading books. I <span class="hl-freq" style="cursor:pointer" onclick="showToast('Step 1 - Frequency adverb: usually — about 80%, can go before verb or at start','success')">usually</span> read novels, but <span class="hl-freq" style="cursor:pointer" onclick="showToast('Step 1 - Frequency adverb: sometimes — about 40%, flexible position','success')">sometimes</span> I mix it up slightly and read books about history or nature. I prefer reading novels <span class="hl-reason" style="cursor:pointer" onclick="showToast('Step 2 - Reason: because + explanation — explains WHY you read that frequently','success')">because</span> they are a great way to relax and escape from daily life, but I also enjoy history books <span class="hl-reason" style="cursor:pointer" onclick="showToast('Step 2 - Reason: because + explanation — second reason for variety','success')">because</span> they help me learn more about the world. <span class="hl-coll" style="cursor:pointer" onclick="showToast('Colloquial expression: From time to time = occasionally — sounds native!','success')">From time to time</span> I might read some poetry, but I have to be in the right mood.
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px;">
-      <div style="background:rgba(0,77,64,.08);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 1</div><div style="font-size:.82rem;color:var(--navy);font-weight:600;">Frequency</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">always, usually, sometimes, from time to time</div></div>
-      <div style="background:rgba(255,143,0,.1);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 2</div><div style="font-size:.82rem;color:#7a3800;font-weight:600;">Reason</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">because they are a great way to relax</div></div>
-      <div style="background:rgba(0,172,193,.1);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#006064;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Extension</div><div style="font-size:.82rem;color:#006064;font-weight:600;">Extra Detail</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">I have to be in the right mood</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 12: QUIZ - ADVERB POSITIONS -->
-<div class="slide" id="slide-12">
-  <div class="s-header"><h1>Quiz: Adverb Positions</h1><span class="s-badge amber">Grammar Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Choose the sentence with the correct adverb position. Score: <strong id="q1-score">0</strong>/4</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Which sentence is correct? (always)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-1"><button class="mc-opt" onclick="checkQ1(this,1,'I always read the Sunday papers.')">I always read the Sunday papers.</button><button class="mc-opt" onclick="checkQ1(this,1,'I always read the Sunday papers.')">Always I read the Sunday papers.</button><button class="mc-opt" onclick="checkQ1(this,1,'I always read the Sunday papers.')">I read always the Sunday papers.</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Which sentence is correct? (often)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-2"><button class="mc-opt" onclick="checkQ1(this,2,'I often listen to music.')">I often listen to music.</button><button class="mc-opt" onclick="checkQ1(this,2,'I often listen to music.')">Often I listen to music.</button><button class="mc-opt" onclick="checkQ1(this,2,'I often listen to music.')">I listen often to music.</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Which sentence is correct? (usually)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-3"><button class="mc-opt" onclick="checkQ1(this,3,'Usually I play football on Sunday.')">Usually I play football on Sunday.</button><button class="mc-opt" onclick="checkQ1(this,3,'Usually I play football on Sunday.')">I play usually football on Sunday.</button><button class="mc-opt" onclick="checkQ1(this,3,'Usually I play football on Sunday.')">I play football usually on Sunday.</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Which sentence is correct? (never)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-4"><button class="mc-opt" onclick="checkQ1(this,4,'I never read the Sunday papers.')">I never read the Sunday papers.</button><button class="mc-opt" onclick="checkQ1(this,4,'I never read the Sunday papers.')">Never I read the Sunday papers.</button><button class="mc-opt" onclick="checkQ1(this,4,'I never read the Sunday papers.')">I read never the Sunday papers.</button></div></div>
-    </div>
-    <div class="btn-row"><button class="reset-btn" onclick="resetQ1()"><i class="fas fa-redo"></i> Reset</button></div>
-  </div>
-</div>
-
-<!-- SLIDE 13: QUIZ - COLLOQUIAL EXPRESSIONS -->
-<div class="slide" id="slide-13">
-  <div class="s-header"><h1>Quiz: Colloquial Expressions</h1><span class="s-badge amber">Vocabulary Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Choose the correct colloquial expression. Score: <strong id="q2-score">0</strong>/4</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I drink alcohol _____ (= rarely). It is not something I do very often.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-1"><button class="mc-opt" onclick="checkQ2(this,1,'once in a blue moon')">once in a blue moon</button><button class="mc-opt" onclick="checkQ2(this,1,'once in a blue moon')">all the time</button><button class="mc-opt" onclick="checkQ2(this,1,'once in a blue moon')">from time to time</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. I have friends over _____ (= occasionally). Maybe once or twice a month.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-2"><button class="mc-opt" onclick="checkQ2(this,2,'from time to time')">from time to time</button><button class="mc-opt" onclick="checkQ2(this,2,'from time to time')">once in a blue moon</button><button class="mc-opt" onclick="checkQ2(this,2,'from time to time')">hardly ever</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. I _____ play video games (= almost never). I just do not have the time.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-3"><button class="mc-opt" onclick="checkQ2(this,3,'hardly ever')">hardly ever</button><button class="mc-opt" onclick="checkQ2(this,3,'hardly ever')">all the time</button><button class="mc-opt" onclick="checkQ2(this,3,'hardly ever')">every once in a while</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. I play football on Sunday morning _____ (= sometimes). Not every week, but fairly regularly.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-4"><button class="mc-opt" onclick="checkQ2(this,4,'every once in a while')">every once in a while</button><button class="mc-opt" onclick="checkQ2(this,4,'every once in a while')">once in a blue moon</button><button class="mc-opt" onclick="checkQ2(this,4,'every once in a while')">hardly ever</button></div></div>
-    </div>
-    <div class="btn-row"><button class="reset-btn" onclick="resetQ2()"><i class="fas fa-redo"></i> Reset</button></div>
-  </div>
-</div>
-
-<!-- SLIDE 14: GAP FILL EXERCISE -->
+<!-- SLIDE 14 -->
 <div class="slide" id="slide-14">
-  <div class="s-header"><h1>Gap Fill: Complete the Answers</h1><span class="s-badge amber">Exercise</span></div>
+  <div class="s-header"><h1>Extension Phrases: Deep Dive</h1><span class="s-badge teal">Language Focus</span></div>
   <div class="s-content">
-    <div class="intro-note">Fill in the blanks with the correct adverb or expression. Press Enter or click Check to verify.</div>
-    <div style="display:flex;flex-direction:column;gap:9px;">
-      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">1. I <input class="gap-input" id="gf-1" placeholder="___" style="width:120px" onkeydown="if(event.key==='Enter')checkGF(1,['always','usually'])"> exercise in the morning because it helps me stay healthy.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(1,['always','usually'])"><i class="fas fa-check"></i> Check</button></div>
-      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">2. I <input class="gap-input" id="gf-2" placeholder="___" style="width:120px" onkeydown="if(event.key==='Enter')checkGF(2,['hardly ever','rarely','never'])"> watch TV because I am usually busy with my studies.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(2,['hardly ever','rarely','never'])"><i class="fas fa-check"></i> Check</button></div>
-      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">3. I have friends over <input class="gap-input" id="gf-3" placeholder="___" style="width:160px" onkeydown="if(event.key==='Enter')checkGF(3,['from time to time','every once in a while','occasionally','sometimes'])"> because my family likes to stay in touch.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(3,['from time to time','every once in a while','occasionally','sometimes'])"><i class="fas fa-check"></i> Check</button></div>
-      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">4. I <input class="gap-input" id="gf-4" placeholder="___" style="width:100px" onkeydown="if(event.key==='Enter')checkGF(4,['often','usually','frequently'])"> go out with my friends, mainly because it is a good way to unwind.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(4,['often','usually','frequently'])"><i class="fas fa-check"></i> Check</button></div>
-      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">5. I drink alcohol <input class="gap-input" id="gf-5" placeholder="___" style="width:180px" onkeydown="if(event.key==='Enter')checkGF(5,['once in a blue moon','rarely','hardly ever'])">. I prefer soft drinks.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(5,['once in a blue moon','rarely','hardly ever'])"><i class="fas fa-check"></i> Check</button></div>
+    <div class="intro-note">Use these extension phrases to add extra detail and sound more natural. Click any card to see a full example.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);cursor:pointer;" onclick="showToast('I tend to read for a while before going to bed, which also helps me sleep better.','success')"><div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:4px;">I tend to...</div><div style="font-size:.82rem;color:var(--ink2);">Used to describe a habit or pattern. More natural than "I usually".</div><div style="font-size:.8rem;color:var(--ink);font-style:italic;margin-top:4px;padding:4px 8px;background:rgba(0,77,64,.06);border-radius:6px;">I <strong>tend to</strong> read for a while before going to bed, which also helps me sleep better.</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);cursor:pointer;" onclick="showToast('I hardly ever watch TV, especially when I have exams coming up.','success')"><div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:4px;">especially when...</div><div style="font-size:.82rem;color:var(--ink2);">Adds a specific condition or situation that makes the habit more or less frequent.</div><div style="font-size:.8rem;color:var(--ink);font-style:italic;margin-top:4px;padding:4px 8px;background:rgba(0,77,64,.06);border-radius:6px;">I hardly ever watch TV, <strong>especially when</strong> I have exams coming up.</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);cursor:pointer;" onclick="showToast('I hope I will have more time to socialise after I graduate!','success')"><div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:4px;">I hope I will...</div><div style="font-size:.82rem;color:var(--ink2);">Adds a future aspiration — shows you can talk about future plans too.</div><div style="font-size:.8rem;color:var(--ink);font-style:italic;margin-top:4px;padding:4px 8px;background:rgba(0,77,64,.06);border-radius:6px;"><strong>I hope I will</strong> have more time to socialise after I graduate!</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);cursor:pointer;" onclick="showToast('We usually go to a cafe at the weekend, and it is a chance for us to talk about what has been going on in our lives.','success')"><div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:4px;">It is a chance for me/us to...</div><div style="font-size:.82rem;color:var(--ink2);">Explains the social or personal benefit of the activity.</div><div style="font-size:.8rem;color:var(--ink);font-style:italic;margin-top:4px;padding:4px 8px;background:rgba(0,77,64,.06);border-radius:6px;">We usually go to a cafe, and <strong>it is a chance for us to</strong> talk about what has been going on in our lives.</div></div>
     </div>
-    <div class="btn-row"><button class="check-btn amber" onclick="showGFAnswers()"><i class="fas fa-eye"></i> Show Answers</button><button class="reset-btn" onclick="resetGF()"><i class="fas fa-redo"></i> Reset</button></div>
   </div>
 </div>
 
-<!-- SLIDE 15: COMMON MISTAKES -->
+<!-- SLIDE 15 -->
 <div class="slide" id="slide-15">
   <div class="s-header"><h1>Common Mistakes to Avoid</h1><span class="s-badge red">Error Correction</span></div>
   <div class="s-content">
@@ -409,213 +707,24 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
   </div>
 </div>
 
-<!-- SLIDE 16: PRACTICE QUESTIONS -->
+<!-- SLIDE 16 -->
 <div class="slide" id="slide-16">
-  <div class="s-header"><h1>Practice Questions</h1><span class="s-badge green">Speaking Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Use the 2-step formula (Frequency + Reason) to answer these questions. Add an extension for extra marks!</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>1.</strong> How often do you use your phone?</div>
-      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>2.</strong> How often do you read the news?</div>
-      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>3.</strong> How often do you help your parents?</div>
-      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>4.</strong> How often do you go shopping?</div>
-      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>5.</strong> How often do you watch movies?</div>
-      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>6.</strong> How often do you play sports?</div>
-      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>7.</strong> How often do you eat out?</div>
-      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>8.</strong> How often do you listen to music?</div>
-      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>9.</strong> How often do you visit your relatives?</div>
-      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>10.</strong> How often do you study English at home?</div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 17: SELF-ASSESSMENT CHECKLIST -->
-<div class="slide" id="slide-17">
-  <div class="s-header"><h1>Self-Assessment Checklist</h1><span class="s-badge">Evaluation</span></div>
-  <div class="s-content">
-    <div class="intro-note">Use this checklist to evaluate your own answer after practising. Click each item to mark it.</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>1. Frequency given:</strong> Uses an adverb (always, usually, often, etc.)</div></div>
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>2. Correct position:</strong> Adverb placed correctly (before verb / end / beginning)</div></div>
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>3. Clear answer:</strong> Directly answers "How often..."</div></div>
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>4. Reason given:</strong> Explains why (because / since / as)</div></div>
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>5. Idea development:</strong> Gives a clear idea (relax, health, social, study)</div></div>
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>6. Example included:</strong> Uses for example / for instance</div></div>
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>7. Variety:</strong> Uses different adverbs or colloquial expressions</div></div>
-      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>8. Clarity and fluency:</strong> Easy to understand, logical flow</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 18: QUIZ - FREQUENCY SCALE -->
-<div class="slide" id="slide-18">
-  <div class="s-header"><h1>Quiz: Frequency Scale</h1><span class="s-badge amber">Vocabulary Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Choose the correct adverb for each context. Score: <strong id="q3-score">0</strong>/4</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I _____ exercise in the morning. I do it every single day without fail.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-1"><button class="mc-opt" onclick="checkQ3(this,1,'always')">always</button><button class="mc-opt" onclick="checkQ3(this,1,'always')">sometimes</button><button class="mc-opt" onclick="checkQ3(this,1,'always')">rarely</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. I _____ watch horror movies. I find them too scary and I avoid them.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-2"><button class="mc-opt" onclick="checkQ3(this,2,'never')">never</button><button class="mc-opt" onclick="checkQ3(this,2,'never')">always</button><button class="mc-opt" onclick="checkQ3(this,2,'never')">usually</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. I _____ go to the cinema. Maybe once or twice a month when there is a good film.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-3"><button class="mc-opt" onclick="checkQ3(this,3,'sometimes')">sometimes</button><button class="mc-opt" onclick="checkQ3(this,3,'sometimes')">always</button><button class="mc-opt" onclick="checkQ3(this,3,'sometimes')">never</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. I _____ read books in the evening. It is part of my daily routine before bed.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-4"><button class="mc-opt" onclick="checkQ3(this,4,'usually')">usually</button><button class="mc-opt" onclick="checkQ3(this,4,'usually')">rarely</button><button class="mc-opt" onclick="checkQ3(this,4,'usually')">occasionally</button></div></div>
-    </div>
-    <div class="btn-row"><button class="reset-btn" onclick="resetQ3()"><i class="fas fa-redo"></i> Reset</button></div>
-  </div>
-</div>
-
-<!-- SLIDE 19: BUILD YOUR OWN ANSWER -->
-<div class="slide" id="slide-19">
-  <div class="s-header"><h1>Build Your Own Answer</h1><span class="s-badge green">Speaking Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Use the word bank to build a complete answer for: <strong>"How often do you listen to music?"</strong></div>
-    <div style="background:var(--navy);color:#fff;border-radius:10px;padding:12px 18px;font-size:.85rem;margin-bottom:10px;"><strong style="color:var(--amber)">Formula:</strong> Frequency Adverb + Reason (because/since) + Extension/Detail</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
-      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Frequency Adverbs</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(0,77,64,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I always listen to music — 100% frequency','success')">always</span><span style="background:rgba(0,77,64,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I usually listen to music — about 80%','success')">usually</span><span style="background:rgba(0,77,64,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I often listen to music — about 60%','success')">often</span><span style="background:rgba(0,77,64,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I sometimes listen to music — about 40%','success')">sometimes</span></div></div>
-      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Reasons</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(255,143,0,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('because it helps me relax after a long day','success')">helps me relax</span><span style="background:rgba(255,143,0,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('because it helps me focus while studying','success')">helps me focus</span><span style="background:rgba(255,143,0,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('because it is a great way to unwind','success')">great way to unwind</span></div></div>
-      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Extensions</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(0,172,193,.1);color:#006064;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I tend to listen to pop music, but from time to time I mix it up with jazz.','success')">I tend to...</span><span style="background:rgba(0,172,193,.1);color:#006064;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('especially when I am commuting or doing housework','success')">especially when...</span></div></div>
-    </div>
-    <div style="background:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 3px 10px rgba(0,77,64,.07);margin-top:8px;border-left:4px solid var(--teal);">
-      <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Sample Answer</div>
-      <div style="font-size:.86rem;color:var(--ink);line-height:1.7;"><span class="hl-freq">I always</span> listen to music <span class="hl-reason">because</span> it <span class="hl-reason">helps me relax</span> after a long day at school. I <span class="hl-freq">usually</span> listen to pop music, but <span class="hl-coll">from time to time</span> I mix it up with jazz or classical music. I <span class="hl-ext">tend to</span> listen to music while commuting, <span class="hl-ext">especially when</span> I am on the bus or walking to class.</div>
-    </div>
-  </div>
-</div>
-
-<!-- SLIDE 20: VOCABULARY REFERENCE -->
-<div class="slide" id="slide-20">
   <div class="s-header"><h1>Vocabulary Reference: All Key Expressions</h1><span class="s-badge">Quick Reference</span></div>
   <div class="s-content">
     <div class="intro-note">Review all the key expressions from Lesson 3. Click any card to highlight it.</div>
     <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-top:3px solid var(--navy);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(0,77,64,0.06)'?'#fff':'rgba(0,77,64,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:4px;">High Frequency (before verb only)</div><div style="font-size:.76rem;color:var(--ink2);">always | never | rarely | seldom</div></div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-top:3px solid var(--green);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(0,137,123,0.06)'?'#fff':'rgba(0,137,123,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--green);margin-bottom:4px;">Medium Frequency (flexible position)</div><div style="font-size:.76rem;color:var(--ink2);">usually | often | frequently | sometimes | occasionally</div></div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-top:3px solid var(--amber);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(255,143,0,0.06)'?'#fff':'rgba(255,143,0,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#7a3800;margin-bottom:4px;">Colloquial Expressions</div><div style="font-size:.76rem;color:var(--ink2);">every once in a while (=sometimes) | from time to time (=occasionally) | once in a blue moon (=rarely) | hardly ever (=almost never) | all the time (=always)</div></div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-top:3px solid var(--teal);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(0,172,193,0.06)'?'#fff':'rgba(0,172,193,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--teal);margin-bottom:4px;">Extension Phrases</div><div style="font-size:.76rem;color:var(--ink2);">I tend to... | especially when... | I hope to... | It is a chance for me to... | I have to be in the right mood</div></div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-top:3px solid var(--navy);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(0,77,64,0.06)'?'#fff':'rgba(0,77,64,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:4px;">Reason Linkers</div><div style="font-size:.76rem;color:var(--ink2);">because | since | as | mainly because | especially because</div></div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-top:3px solid var(--amber);cursor:pointer;" onclick="this.style.background=this.style.background==='rgba(255,143,0,0.06)'?'#fff':'rgba(255,143,0,0.06)'"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#7a3800;margin-bottom:4px;">End of Sentence Only</div><div style="font-size:.76rem;color:var(--ink2);">all the time (ONLY at end: "I listen to music all the time.")</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-top:3px solid var(--navy);cursor:pointer;" onclick="toggleCardHighlight(this)"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:4px;">High Frequency (before verb only)</div><div style="font-size:.76rem;color:var(--ink2);">always | never | rarely | seldom</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-top:3px solid var(--green);cursor:pointer;" onclick="toggleCardHighlight(this)"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--green);margin-bottom:4px;">Medium Frequency (flexible position)</div><div style="font-size:.76rem;color:var(--ink2);">usually | often | frequently | sometimes | occasionally</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-top:3px solid var(--amber);cursor:pointer;" onclick="toggleCardHighlight(this)"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#7a3800;margin-bottom:4px;">Colloquial Expressions</div><div style="font-size:.76rem;color:var(--ink2);">every once in a while (=sometimes) | from time to time (=occasionally) | once in a blue moon (=rarely) | hardly ever (=almost never) | all the time (=always)</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-top:3px solid var(--teal);cursor:pointer;" onclick="toggleCardHighlight(this)"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--teal);margin-bottom:4px;">Extension Phrases</div><div style="font-size:.76rem;color:var(--ink2);">I tend to... | especially when... | I hope to... | It is a chance for me to... | I have to be in the right mood</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-top:3px solid var(--navy);cursor:pointer;" onclick="toggleCardHighlight(this)"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:4px;">Reason Linkers</div><div style="font-size:.76rem;color:var(--ink2);">because | since | as | mainly because | especially because</div></div>
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-top:3px solid var(--amber);cursor:pointer;" onclick="toggleCardHighlight(this)"><div style="font-family:var(--hf);font-size:.85rem;font-weight:700;color:#7a3800;margin-bottom:4px;">End of Sentence Only</div><div style="font-size:.76rem;color:var(--ink2);">all the time (ONLY at end: "I listen to music all the time.")</div></div>
     </div>
   </div>
 </div>
 
-<!-- SLIDES 21-35: ADDITIONAL QUIZZES AND REVIEW -->
-<div class="slide" id="slide-21">
-  <div class="s-header"><h1>Quiz: Choose the Right Expression</h1><span class="s-badge amber">Vocabulary Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Choose the most natural expression for each context. Score: <strong id="q4-score">0</strong>/4</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I listen to music _____ — it is on in the background all day long.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-1"><button class="mc-opt" onclick="checkQ4(this,1,'all the time')">all the time</button><button class="mc-opt" onclick="checkQ4(this,1,'all the time')">once in a blue moon</button><button class="mc-opt" onclick="checkQ4(this,1,'all the time')">hardly ever</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. I go camping _____ — maybe once every two or three years.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-2"><button class="mc-opt" onclick="checkQ4(this,2,'once in a blue moon')">once in a blue moon</button><button class="mc-opt" onclick="checkQ4(this,2,'once in a blue moon')">all the time</button><button class="mc-opt" onclick="checkQ4(this,2,'once in a blue moon')">usually</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. I _____ check my phone — I am always looking at it throughout the day.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-3"><button class="mc-opt" onclick="checkQ4(this,3,'constantly')">constantly</button><button class="mc-opt" onclick="checkQ4(this,3,'constantly')">rarely</button><button class="mc-opt" onclick="checkQ4(this,3,'constantly')">once in a blue moon</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. I _____ eat fast food — I prefer home-cooked meals and try to avoid it.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-4"><button class="mc-opt" onclick="checkQ4(this,4,'rarely')">rarely</button><button class="mc-opt" onclick="checkQ4(this,4,'rarely')">always</button><button class="mc-opt" onclick="checkQ4(this,4,'rarely')">frequently</button></div></div>
-    </div>
-    <div class="btn-row"><button class="reset-btn" onclick="resetQ4()"><i class="fas fa-redo"></i> Reset</button></div>
-  </div>
-</div>
-
-<div class="slide" id="slide-22">
-  <div class="s-header"><h1>Grammar Focus: Adverb Position Rules</h1><span class="s-badge purple">Grammar</span></div>
-  <div class="s-content">
-    <div class="intro-note">Master the exact position rules for each adverb of frequency.</div>
-    <div style="display:flex;flex-direction:column;gap:8px;">
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);">
-        <div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:6px;"><i class="fas fa-lock" style="margin-right:5px;color:#c62828"></i>FIXED position — before the verb ONLY</div>
-        <div style="display:flex;flex-direction:column;gap:4px;font-size:.82rem;">
-          <div style="padding:4px 8px;background:rgba(0,77,64,.06);border-radius:6px;">I <strong>always</strong> read. &nbsp;&nbsp; I <strong>never</strong> read. &nbsp;&nbsp; I <strong>rarely</strong> read. &nbsp;&nbsp; I <strong>seldom</strong> read.</div>
-          <div style="padding:4px 8px;background:rgba(198,40,40,.06);border-radius:6px;text-decoration:line-through;color:#c62828;font-style:italic;"><strong>Always</strong> I read. &nbsp;&nbsp; I read <strong>always</strong>. &nbsp;&nbsp; (WRONG)</div>
-        </div>
-      </div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);">
-        <div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:var(--amber);margin-bottom:6px;"><i class="fas fa-unlock" style="margin-right:5px;color:var(--amber)"></i>TWO positions — before verb OR end of sentence</div>
-        <div style="display:flex;flex-direction:column;gap:4px;font-size:.82rem;">
-          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;">I <strong>often</strong> listen to music. &nbsp;&nbsp; I listen to music <strong>often</strong>.</div>
-          <div style="padding:4px 8px;background:rgba(255,143,0,.06);border-radius:6px;">I <strong>frequently</strong> go to bars. &nbsp;&nbsp; I go to bars <strong>frequently</strong>.</div>
-        </div>
-      </div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);">
-        <div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:var(--teal);margin-bottom:6px;"><i class="fas fa-unlock-alt" style="margin-right:5px;color:var(--teal)"></i>THREE positions — beginning, before verb, OR end</div>
-        <div style="display:flex;flex-direction:column;gap:4px;font-size:.82rem;">
-          <div style="padding:4px 8px;background:rgba(0,172,193,.06);border-radius:6px;"><strong>Usually</strong> I play football. &nbsp;&nbsp; I <strong>usually</strong> play football. &nbsp;&nbsp; I play football <strong>usually</strong>.</div>
-          <div style="padding:4px 8px;background:rgba(0,172,193,.06);border-radius:6px;"><strong>Sometimes</strong> I go out. &nbsp;&nbsp; I <strong>sometimes</strong> go out. &nbsp;&nbsp; I go out <strong>sometimes</strong>.</div>
-          <div style="padding:4px 8px;background:rgba(0,172,193,.06);border-radius:6px;"><strong>Occasionally</strong> Lee reads. &nbsp;&nbsp; Lee <strong>occasionally</strong> reads. &nbsp;&nbsp; Lee reads <strong>occasionally</strong>.</div>
-        </div>
-      </div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);">
-        <div style="font-family:var(--hf);font-size:.82rem;font-weight:700;color:var(--red);margin-bottom:6px;"><i class="fas fa-lock" style="margin-right:5px;color:var(--red)"></i>FIXED position — end of sentence ONLY</div>
-        <div style="padding:4px 8px;background:rgba(183,28,28,.06);border-radius:6px;font-size:.82rem;">I listen to my MP3 <strong>all the time</strong>. &nbsp;&nbsp; (NOT: I all the time listen...)</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="slide" id="slide-23">
-  <div class="s-header"><h1>Quiz: Adverb Position (Advanced)</h1><span class="s-badge amber">Grammar Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Choose the sentence with the correct adverb position. Score: <strong id="q5-score">0</strong>/4</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Which is correct? (all the time)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-1"><button class="mc-opt" onclick="checkQ5(this,1,'I listen to my MP3 all the time.')">I listen to my MP3 all the time.</button><button class="mc-opt" onclick="checkQ5(this,1,'I listen to my MP3 all the time.')">All the time I listen to my MP3.</button><button class="mc-opt" onclick="checkQ5(this,1,'I listen to my MP3 all the time.')">I all the time listen to my MP3.</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Which is correct? (occasionally)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-2"><button class="mc-opt" onclick="checkQ5(this,2,'Occasionally Lee reads a newspaper.')">Occasionally Lee reads a newspaper.</button><button class="mc-opt" onclick="checkQ5(this,2,'Occasionally Lee reads a newspaper.')">Lee reads occasionally a newspaper.</button><button class="mc-opt" onclick="checkQ5(this,2,'Occasionally Lee reads a newspaper.')">Lee reads a occasionally newspaper.</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Which is correct? (rarely)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-3"><button class="mc-opt" onclick="checkQ5(this,3,'Jonathan rarely goes to fast food restaurants.')">Jonathan rarely goes to fast food restaurants.</button><button class="mc-opt" onclick="checkQ5(this,3,'Jonathan rarely goes to fast food restaurants.')">Rarely Jonathan goes to fast food restaurants.</button><button class="mc-opt" onclick="checkQ5(this,3,'Jonathan rarely goes to fast food restaurants.')">Jonathan goes rarely to fast food restaurants.</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Which is correct? (frequently)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-4"><button class="mc-opt" onclick="checkQ5(this,4,'I go to bars with my friends frequently.')">I go to bars with my friends frequently.</button><button class="mc-opt" onclick="checkQ5(this,4,'I go to bars with my friends frequently.')">Frequently I go to bars with my friends.</button><button class="mc-opt" onclick="checkQ5(this,4,'I go to bars with my friends frequently.')">Both A and B are correct.</button></div></div>
-    </div>
-    <div class="btn-row"><button class="reset-btn" onclick="resetQ5()"><i class="fas fa-redo"></i> Reset</button></div>
-  </div>
-</div>
-
-<div class="slide" id="slide-24">
-  <div class="s-header"><h1>Quiz: Formal vs Colloquial</h1><span class="s-badge amber">Vocabulary Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Match the formal adverb with its colloquial equivalent. Score: <strong id="q6-score">0</strong>/4</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. "rarely" in colloquial English is...</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-1"><button class="mc-opt" onclick="checkQ6(this,1,'once in a blue moon')">once in a blue moon</button><button class="mc-opt" onclick="checkQ6(this,1,'once in a blue moon')">from time to time</button><button class="mc-opt" onclick="checkQ6(this,1,'once in a blue moon')">every once in a while</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. "occasionally" in colloquial English is...</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-2"><button class="mc-opt" onclick="checkQ6(this,2,'from time to time')">from time to time</button><button class="mc-opt" onclick="checkQ6(this,2,'from time to time')">once in a blue moon</button><button class="mc-opt" onclick="checkQ6(this,2,'from time to time')">hardly ever</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. "almost never" in colloquial English is...</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-3"><button class="mc-opt" onclick="checkQ6(this,3,'hardly ever')">hardly ever</button><button class="mc-opt" onclick="checkQ6(this,3,'hardly ever')">from time to time</button><button class="mc-opt" onclick="checkQ6(this,3,'hardly ever')">every once in a while</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. "sometimes" in colloquial English is...</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-4"><button class="mc-opt" onclick="checkQ6(this,4,'every once in a while')">every once in a while</button><button class="mc-opt" onclick="checkQ6(this,4,'every once in a while')">once in a blue moon</button><button class="mc-opt" onclick="checkQ6(this,4,'every once in a while')">hardly ever</button></div></div>
-    </div>
-    <div class="btn-row"><button class="reset-btn" onclick="resetQ6()"><i class="fas fa-redo"></i> Reset</button></div>
-  </div>
-</div>
-
-<div class="slide" id="slide-25">
-  <div class="s-header"><h1>Quiz: Complete the Answer</h1><span class="s-badge amber">Grammar Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Choose the correct word or phrase to complete each answer. Score: <strong id="q7-score">0</strong>/4</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I _____ exercise in the morning because it helps me stay healthy and feel more energetic.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-1"><button class="mc-opt" onclick="checkQ7(this,1,'always')">always</button><button class="mc-opt" onclick="checkQ7(this,1,'always')">never</button><button class="mc-opt" onclick="checkQ7(this,1,'always')">once in a blue moon</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. I _____ watch TV because I am usually busy with my studies.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-2"><button class="mc-opt" onclick="checkQ7(this,2,'hardly ever')">hardly ever</button><button class="mc-opt" onclick="checkQ7(this,2,'hardly ever')">always</button><button class="mc-opt" onclick="checkQ7(this,2,'hardly ever')">frequently</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. I _____ go out with my friends, mainly because it is a good way to unwind and catch up.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-3"><button class="mc-opt" onclick="checkQ7(this,3,'often')">often</button><button class="mc-opt" onclick="checkQ7(this,3,'often')">never</button><button class="mc-opt" onclick="checkQ7(this,3,'often')">once in a blue moon</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Visitors come to my home _____ because my family likes to stay in touch with relatives.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-4"><button class="mc-opt" onclick="checkQ7(this,4,'from time to time')">from time to time</button><button class="mc-opt" onclick="checkQ7(this,4,'from time to time')">all the time</button><button class="mc-opt" onclick="checkQ7(this,4,'from time to time')">never</button></div></div>
-    </div>
-    <div class="btn-row"><button class="reset-btn" onclick="resetQ7()"><i class="fas fa-redo"></i> Reset</button></div>
-  </div>
-</div>
-
-<div class="slide" id="slide-26">
-  <div class="s-header"><h1>Extension Phrases: Deep Dive</h1><span class="s-badge teal">Language Focus</span></div>
-  <div class="s-content">
-    <div class="intro-note">Use these extension phrases to add extra detail and sound more natural. Click any card to see a full example.</div>
-    <div style="display:flex;flex-direction:column;gap:8px;">
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);cursor:pointer;" onclick="showToast('I tend to read for a while before going to bed, which also helps me sleep better.','success')"><div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:4px;">I tend to...</div><div style="font-size:.82rem;color:var(--ink2);">Used to describe a habit or pattern. More natural than "I usually".</div><div style="font-size:.8rem;color:var(--ink);font-style:italic;margin-top:4px;padding:4px 8px;background:rgba(0,77,64,.06);border-radius:6px;">I <strong>tend to</strong> read for a while before going to bed, which also helps me sleep better.</div></div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);cursor:pointer;" onclick="showToast('I hardly ever watch TV, especially when I have exams coming up.','success')"><div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:4px;">especially when...</div><div style="font-size:.82rem;color:var(--ink2);">Adds a specific condition or situation that makes the habit more or less frequent.</div><div style="font-size:.8rem;color:var(--ink);font-style:italic;margin-top:4px;padding:4px 8px;background:rgba(0,77,64,.06);border-radius:6px;">I hardly ever watch TV, <strong>especially when</strong> I have exams coming up.</div></div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);cursor:pointer;" onclick="showToast('I hope I will have more time to socialise after I graduate!','success')"><div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:4px;">I hope I will...</div><div style="font-size:.82rem;color:var(--ink2);">Adds a future aspiration — shows you can talk about future plans too.</div><div style="font-size:.8rem;color:var(--ink);font-style:italic;margin-top:4px;padding:4px 8px;background:rgba(0,77,64,.06);border-radius:6px;"><strong>I hope I will</strong> have more time to socialise after I graduate!</div></div>
-      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);cursor:pointer;" onclick="showToast('We usually go to a cafe at the weekend, and it is a chance for us to talk about what has been going on in our lives.','success')"><div style="font-family:var(--hf);font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:4px;">It is a chance for me/us to...</div><div style="font-size:.82rem;color:var(--ink2);">Explains the social or personal benefit of the activity.</div><div style="font-size:.8rem;color:var(--ink);font-style:italic;margin-top:4px;padding:4px 8px;background:rgba(0,77,64,.06);border-radius:6px;">We usually go to a cafe, and <strong>it is a chance for us to</strong> talk about what has been going on in our lives.</div></div>
-    </div>
-  </div>
-</div>
-
-<div class="slide" id="slide-27">
-  <div class="s-header"><h1>Quiz: Extension Phrases</h1><span class="s-badge amber">Vocabulary Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Choose the most natural extension phrase. Score: <strong id="q8-score">0</strong>/4</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I usually read books in the evening. I _____ read for a while before going to bed.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-1"><button class="mc-opt" onclick="checkQ8(this,1,'tend to')">tend to</button><button class="mc-opt" onclick="checkQ8(this,1,'tend to')">hope to</button><button class="mc-opt" onclick="checkQ8(this,1,'tend to')">used to</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. I hardly ever watch TV, _____ when I have exams coming up.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-2"><button class="mc-opt" onclick="checkQ8(this,2,'especially')">especially</button><button class="mc-opt" onclick="checkQ8(this,2,'especially')">usually</button><button class="mc-opt" onclick="checkQ8(this,2,'especially')">always</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. I do not often socialise now, but I _____ have more time after I graduate.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-3"><button class="mc-opt" onclick="checkQ8(this,3,'hope I will')">hope I will</button><button class="mc-opt" onclick="checkQ8(this,3,'hope I will')">tend to</button><button class="mc-opt" onclick="checkQ8(this,3,'hope I will')">used to</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. We usually go to a cafe at the weekend, and it is _____ talk about what has been going on.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-4"><button class="mc-opt" onclick="checkQ8(this,4,'a chance for us to')">a chance for us to</button><button class="mc-opt" onclick="checkQ8(this,4,'a chance for us to')">a reason for us</button><button class="mc-opt" onclick="checkQ8(this,4,'a chance for us to')">a way for us</button></div></div>
-    </div>
-    <div class="btn-row"><button class="reset-btn" onclick="resetQ8()"><i class="fas fa-redo"></i> Reset</button></div>
-  </div>
-</div>
-
-<div class="slide" id="slide-28">
+<!-- SLIDE 17 -->
+<div class="slide" id="slide-17">
   <div class="s-header"><h1>Formula Summary</h1><span class="s-badge">Formula Reference</span></div>
   <div class="s-content">
     <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
@@ -637,48 +746,267 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
   </div>
 </div>
 
+<!-- SLIDE 18 -->
+<div class="slide" id="slide-18">
+  <div class="s-header"><h1>Quiz: Adverb Positions</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the sentence with the correct adverb position. Score: <strong id="q1-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Which sentence is correct? (always)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-1"><button class="mc-opt" onclick="checkQ1(this,1,'I always read the Sunday papers.')">I always read the Sunday papers.</button><button class="mc-opt" onclick="checkQ1(this,1,'I always read the Sunday papers.')">Always I read the Sunday papers.</button><button class="mc-opt" onclick="checkQ1(this,1,'I always read the Sunday papers.')">I read always the Sunday papers.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Which sentence is correct? (often)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-2"><button class="mc-opt" onclick="checkQ1(this,2,'I often listen to music.')">I often listen to music.</button><button class="mc-opt" onclick="checkQ1(this,2,'I often listen to music.')">Often I listen to music.</button><button class="mc-opt" onclick="checkQ1(this,2,'I often listen to music.')">I listen often to music.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Which sentence is correct? (usually)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-3"><button class="mc-opt" onclick="checkQ1(this,3,'Usually I play football on Sunday.')">Usually I play football on Sunday.</button><button class="mc-opt" onclick="checkQ1(this,3,'Usually I play football on Sunday.')">I play usually football on Sunday.</button><button class="mc-opt" onclick="checkQ1(this,3,'Usually I play football on Sunday.')">I play football usually on Sunday.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Which sentence is correct? (never)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q1-4"><button class="mc-opt" onclick="checkQ1(this,4,'I never read the Sunday papers.')">I never read the Sunday papers.</button><button class="mc-opt" onclick="checkQ1(this,4,'I never read the Sunday papers.')">Never I read the Sunday papers.</button><button class="mc-opt" onclick="checkQ1(this,4,'I never read the Sunday papers.')">I read never the Sunday papers.</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ1()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 19 -->
+<div class="slide" id="slide-19">
+  <div class="s-header"><h1>Quiz: Adverb Position (Advanced)</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the sentence with the correct adverb position. Score: <strong id="q5-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Which is correct? (all the time)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-1"><button class="mc-opt" onclick="checkQ5(this,1,'I listen to my MP3 all the time.')">I listen to my MP3 all the time.</button><button class="mc-opt" onclick="checkQ5(this,1,'I listen to my MP3 all the time.')">All the time I listen to my MP3.</button><button class="mc-opt" onclick="checkQ5(this,1,'I listen to my MP3 all the time.')">I all the time listen to my MP3.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. Which is correct? (occasionally)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-2"><button class="mc-opt" onclick="checkQ5(this,2,'Occasionally Lee reads a newspaper.')">Occasionally Lee reads a newspaper.</button><button class="mc-opt" onclick="checkQ5(this,2,'Occasionally Lee reads a newspaper.')">Lee reads occasionally a newspaper.</button><button class="mc-opt" onclick="checkQ5(this,2,'Occasionally Lee reads a newspaper.')">Lee reads a occasionally newspaper.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Which is correct? (rarely)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-3"><button class="mc-opt" onclick="checkQ5(this,3,'Jonathan rarely goes to fast food restaurants.')">Jonathan rarely goes to fast food restaurants.</button><button class="mc-opt" onclick="checkQ5(this,3,'Jonathan rarely goes to fast food restaurants.')">Rarely Jonathan goes to fast food restaurants.</button><button class="mc-opt" onclick="checkQ5(this,3,'Jonathan rarely goes to fast food restaurants.')">Jonathan goes rarely to fast food restaurants.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Which is correct? (frequently)</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q5-4"><button class="mc-opt" onclick="checkQ5(this,4,'I go to bars with my friends frequently.')">I go to bars with my friends frequently.</button><button class="mc-opt" onclick="checkQ5(this,4,'I go to bars with my friends frequently.')">Frequently I go to bars with my friends.</button><button class="mc-opt" onclick="checkQ5(this,4,'I go to bars with my friends frequently.')">Both A and B are correct.</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ5()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 20 -->
+<div class="slide" id="slide-20">
+  <div class="s-header"><h1>Quiz: Frequency Scale</h1><span class="s-badge amber">Vocabulary Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct adverb for each context. Score: <strong id="q3-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I _____ exercise in the morning. I do it every single day without fail.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-1"><button class="mc-opt" onclick="checkQ3(this,1,'always')">always</button><button class="mc-opt" onclick="checkQ3(this,1,'always')">sometimes</button><button class="mc-opt" onclick="checkQ3(this,1,'always')">rarely</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. I _____ watch horror movies. I find them too scary and I avoid them.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-2"><button class="mc-opt" onclick="checkQ3(this,2,'never')">never</button><button class="mc-opt" onclick="checkQ3(this,2,'never')">always</button><button class="mc-opt" onclick="checkQ3(this,2,'never')">usually</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. I _____ go to the cinema. Maybe once or twice a month when there is a good film.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-3"><button class="mc-opt" onclick="checkQ3(this,3,'sometimes')">sometimes</button><button class="mc-opt" onclick="checkQ3(this,3,'sometimes')">always</button><button class="mc-opt" onclick="checkQ3(this,3,'sometimes')">never</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. I _____ read books in the evening. It is part of my daily routine before bed.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q3-4"><button class="mc-opt" onclick="checkQ3(this,4,'usually')">usually</button><button class="mc-opt" onclick="checkQ3(this,4,'usually')">rarely</button><button class="mc-opt" onclick="checkQ3(this,4,'usually')">occasionally</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ3()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 21 -->
+<div class="slide" id="slide-21">
+  <div class="s-header"><h1>Quiz: Colloquial Expressions</h1><span class="s-badge amber">Vocabulary Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct colloquial expression. Score: <strong id="q2-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I drink alcohol _____ (= rarely). It is not something I do very often.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-1"><button class="mc-opt" onclick="checkQ2(this,1,'once in a blue moon')">once in a blue moon</button><button class="mc-opt" onclick="checkQ2(this,1,'once in a blue moon')">all the time</button><button class="mc-opt" onclick="checkQ2(this,1,'once in a blue moon')">from time to time</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. I have friends over _____ (= occasionally). Maybe once or twice a month.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-2"><button class="mc-opt" onclick="checkQ2(this,2,'from time to time')">from time to time</button><button class="mc-opt" onclick="checkQ2(this,2,'from time to time')">once in a blue moon</button><button class="mc-opt" onclick="checkQ2(this,2,'from time to time')">hardly ever</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. I _____ play video games (= almost never). I just do not have the time.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-3"><button class="mc-opt" onclick="checkQ2(this,3,'hardly ever')">hardly ever</button><button class="mc-opt" onclick="checkQ2(this,3,'hardly ever')">all the time</button><button class="mc-opt" onclick="checkQ2(this,3,'hardly ever')">every once in a while</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. I play football on Sunday morning _____ (= sometimes). Not every week, but fairly regularly.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q2-4"><button class="mc-opt" onclick="checkQ2(this,4,'every once in a while')">every once in a while</button><button class="mc-opt" onclick="checkQ2(this,4,'every once in a while')">once in a blue moon</button><button class="mc-opt" onclick="checkQ2(this,4,'every once in a while')">hardly ever</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ2()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 22 -->
+<div class="slide" id="slide-22">
+  <div class="s-header"><h1>Quiz: Choose the Right Expression</h1><span class="s-badge amber">Vocabulary Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the most natural expression for each context. Score: <strong id="q4-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I listen to music _____ — it is on in the background all day long.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-1"><button class="mc-opt" onclick="checkQ4(this,1,'all the time')">all the time</button><button class="mc-opt" onclick="checkQ4(this,1,'all the time')">once in a blue moon</button><button class="mc-opt" onclick="checkQ4(this,1,'all the time')">hardly ever</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. I go camping _____ — maybe once every two or three years.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-2"><button class="mc-opt" onclick="checkQ4(this,2,'once in a blue moon')">once in a blue moon</button><button class="mc-opt" onclick="checkQ4(this,2,'once in a blue moon')">all the time</button><button class="mc-opt" onclick="checkQ4(this,2,'once in a blue moon')">usually</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. I _____ check my phone — I am always looking at it throughout the day.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-3"><button class="mc-opt" onclick="checkQ4(this,3,'constantly')">constantly</button><button class="mc-opt" onclick="checkQ4(this,3,'constantly')">rarely</button><button class="mc-opt" onclick="checkQ4(this,3,'constantly')">once in a blue moon</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. I _____ eat fast food — I prefer home-cooked meals and try to avoid it.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q4-4"><button class="mc-opt" onclick="checkQ4(this,4,'rarely')">rarely</button><button class="mc-opt" onclick="checkQ4(this,4,'rarely')">always</button><button class="mc-opt" onclick="checkQ4(this,4,'rarely')">frequently</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ4()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 23 -->
+<div class="slide" id="slide-23">
+  <div class="s-header"><h1>Quiz: Formal vs Colloquial</h1><span class="s-badge amber">Vocabulary Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Match the formal adverb with its colloquial equivalent. Score: <strong id="q6-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. "rarely" in colloquial English is...</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-1"><button class="mc-opt" onclick="checkQ6(this,1,'once in a blue moon')">once in a blue moon</button><button class="mc-opt" onclick="checkQ6(this,1,'once in a blue moon')">from time to time</button><button class="mc-opt" onclick="checkQ6(this,1,'once in a blue moon')">every once in a while</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. "occasionally" in colloquial English is...</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-2"><button class="mc-opt" onclick="checkQ6(this,2,'from time to time')">from time to time</button><button class="mc-opt" onclick="checkQ6(this,2,'from time to time')">once in a blue moon</button><button class="mc-opt" onclick="checkQ6(this,2,'from time to time')">hardly ever</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. "almost never" in colloquial English is...</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-3"><button class="mc-opt" onclick="checkQ6(this,3,'hardly ever')">hardly ever</button><button class="mc-opt" onclick="checkQ6(this,3,'hardly ever')">from time to time</button><button class="mc-opt" onclick="checkQ6(this,3,'hardly ever')">every once in a while</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. "sometimes" in colloquial English is...</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q6-4"><button class="mc-opt" onclick="checkQ6(this,4,'every once in a while')">every once in a while</button><button class="mc-opt" onclick="checkQ6(this,4,'every once in a while')">once in a blue moon</button><button class="mc-opt" onclick="checkQ6(this,4,'every once in a while')">hardly ever</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ6()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 24 -->
+<div class="slide" id="slide-24">
+  <div class="s-header"><h1>Quiz: Extension Phrases</h1><span class="s-badge amber">Vocabulary Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the most natural extension phrase. Score: <strong id="q8-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I usually read books in the evening. I _____ read for a while before going to bed.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-1"><button class="mc-opt" onclick="checkQ8(this,1,'tend to')">tend to</button><button class="mc-opt" onclick="checkQ8(this,1,'tend to')">hope to</button><button class="mc-opt" onclick="checkQ8(this,1,'tend to')">used to</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. I hardly ever watch TV, _____ when I have exams coming up.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-2"><button class="mc-opt" onclick="checkQ8(this,2,'especially')">especially</button><button class="mc-opt" onclick="checkQ8(this,2,'especially')">usually</button><button class="mc-opt" onclick="checkQ8(this,2,'especially')">always</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. I do not often socialise now, but I _____ have more time after I graduate.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-3"><button class="mc-opt" onclick="checkQ8(this,3,'hope I will')">hope I will</button><button class="mc-opt" onclick="checkQ8(this,3,'hope I will')">tend to</button><button class="mc-opt" onclick="checkQ8(this,3,'hope I will')">used to</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. We usually go to a cafe at the weekend, and it is _____ talk about what has been going on.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q8-4"><button class="mc-opt" onclick="checkQ8(this,4,'a chance for us to')">a chance for us to</button><button class="mc-opt" onclick="checkQ8(this,4,'a chance for us to')">a reason for us</button><button class="mc-opt" onclick="checkQ8(this,4,'a chance for us to')">a way for us</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ8()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 25 -->
+<div class="slide" id="slide-25">
+  <div class="s-header"><h1>Quiz: Complete the Answer</h1><span class="s-badge amber">Grammar Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Choose the correct word or phrase to complete each answer. Score: <strong id="q7-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. I _____ exercise in the morning because it helps me stay healthy and feel more energetic.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-1"><button class="mc-opt" onclick="checkQ7(this,1,'always')">always</button><button class="mc-opt" onclick="checkQ7(this,1,'always')">never</button><button class="mc-opt" onclick="checkQ7(this,1,'always')">once in a blue moon</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. I _____ watch TV because I am usually busy with my studies.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-2"><button class="mc-opt" onclick="checkQ7(this,2,'hardly ever')">hardly ever</button><button class="mc-opt" onclick="checkQ7(this,2,'hardly ever')">always</button><button class="mc-opt" onclick="checkQ7(this,2,'hardly ever')">frequently</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. I _____ go out with my friends, mainly because it is a good way to unwind and catch up.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-3"><button class="mc-opt" onclick="checkQ7(this,3,'often')">often</button><button class="mc-opt" onclick="checkQ7(this,3,'often')">never</button><button class="mc-opt" onclick="checkQ7(this,3,'often')">once in a blue moon</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Visitors come to my home _____ because my family likes to stay in touch with relatives.</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q7-4"><button class="mc-opt" onclick="checkQ7(this,4,'from time to time')">from time to time</button><button class="mc-opt" onclick="checkQ7(this,4,'from time to time')">all the time</button><button class="mc-opt" onclick="checkQ7(this,4,'from time to time')">never</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ7()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 26 -->
+<div class="slide" id="slide-26">
+  <div class="s-header"><h1>Mixed Quiz: All Topics</h1><span class="s-badge amber">Final Practice</span></div>
+  <div class="s-content">
+    <div class="intro-note">Test yourself on all the key points from Lesson 3. Score: <strong id="q9-score">0</strong>/4</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Which adverb can ONLY go before the verb?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q9-1"><button class="mc-opt" onclick="checkQ9(this,1,'always')">always</button><button class="mc-opt" onclick="checkQ9(this,1,'always')">sometimes</button><button class="mc-opt" onclick="checkQ9(this,1,'always')">occasionally</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. "once in a blue moon" means...</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q9-2"><button class="mc-opt" onclick="checkQ9(this,2,'rarely')">rarely</button><button class="mc-opt" onclick="checkQ9(this,2,'rarely')">sometimes</button><button class="mc-opt" onclick="checkQ9(this,2,'rarely')">always</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Which sentence is correct?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q9-3"><button class="mc-opt" onclick="checkQ9(this,3,'I always exercise in the morning.')">I always exercise in the morning.</button><button class="mc-opt" onclick="checkQ9(this,3,'I always exercise in the morning.')">Always I exercise in the morning.</button><button class="mc-opt" onclick="checkQ9(this,3,'I always exercise in the morning.')">I exercise always in the morning.</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Which adverb can ONLY go at the END of a sentence?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q9-4"><button class="mc-opt" onclick="checkQ9(this,4,'all the time')">all the time</button><button class="mc-opt" onclick="checkQ9(this,4,'all the time')">usually</button><button class="mc-opt" onclick="checkQ9(this,4,'all the time')">often</button></div></div>
+    </div>
+    <div class="btn-row"><button class="reset-btn" onclick="resetQ9()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 27 -->
+<div class="slide" id="slide-27">
+  <div class="s-header"><h1>Gap Fill: Complete the Answers</h1><span class="s-badge amber">Exercise</span></div>
+  <div class="s-content">
+    <div class="intro-note">Fill in the blanks with the correct adverb or expression. Press Enter or click Check to verify.</div>
+    <div style="display:flex;flex-direction:column;gap:9px;">
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">1. I <input class="gap-input" id="gf-1" placeholder="___" style="width:120px" onkeydown="if(event.key==='Enter')checkGF(1,['always','usually'])"> exercise in the morning because it helps me stay healthy.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(1,['always','usually'])"><i class="fas fa-check"></i> Check</button></div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">2. I <input class="gap-input" id="gf-2" placeholder="___" style="width:120px" onkeydown="if(event.key==='Enter')checkGF(2,['hardly ever','rarely','never'])"> watch TV because I am usually busy with my studies.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(2,['hardly ever','rarely','never'])"><i class="fas fa-check"></i> Check</button></div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">3. I have friends over <input class="gap-input" id="gf-3" placeholder="___" style="width:160px" onkeydown="if(event.key==='Enter')checkGF(3,['from time to time','every once in a while','occasionally','sometimes'])"> because my family likes to stay in touch.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(3,['from time to time','every once in a while','occasionally','sometimes'])"><i class="fas fa-check"></i> Check</button></div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">4. I <input class="gap-input" id="gf-4" placeholder="___" style="width:100px" onkeydown="if(event.key==='Enter')checkGF(4,['often','usually','frequently'])"> go out with my friends, mainly because it is a good way to unwind.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(4,['often','usually','frequently'])"><i class="fas fa-check"></i> Check</button></div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;">5. I drink alcohol <input class="gap-input" id="gf-5" placeholder="___" style="width:180px" onkeydown="if(event.key==='Enter')checkGF(5,['once in a blue moon','rarely','hardly ever'])">. I prefer soft drinks.</div><button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkGF(5,['once in a blue moon','rarely','hardly ever'])"><i class="fas fa-check"></i> Check</button></div>
+    </div>
+    <div class="btn-row"><button class="check-btn amber" onclick="showGFAnswers()"><i class="fas fa-eye"></i> Show Answers</button><button class="reset-btn" onclick="resetGF()"><i class="fas fa-redo"></i> Reset</button></div>
+  </div>
+</div>
+
+<!-- SLIDE 28 -->
+<div class="slide" id="slide-28">
+  <div class="s-header"><h1>Extra Practice: Sentence Correction</h1><span class="s-badge red">Error Correction</span></div>
+  <div class="s-content">
+    <div class="intro-note">Find and correct the mistake in each sentence. Click Check to verify your answer.</div>
+    <div style="display:flex;flex-direction:column;gap:9px;">
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);">
+        <div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;"><span style="color:#c62828;font-weight:600;">Wrong:</span> "Always I go to the gym in the morning."<br>Correct: I <input class="gap-input" id="ec-1" placeholder="___" style="width:80px" onkeydown="if(event.key==='Enter')checkEC(1,['always'])"> go to the gym in the morning.</div>
+        <button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkEC(1,['always'])"><i class="fas fa-check"></i> Check</button>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);">
+        <div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;"><span style="color:#c62828;font-weight:600;">Wrong:</span> "I listen to my MP3 all the time always."<br>Correct: I listen to my MP3 <input class="gap-input" id="ec-2" placeholder="___" style="width:120px" onkeydown="if(event.key==='Enter')checkEC(2,['all the time'])">.</div>
+        <button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkEC(2,['all the time'])"><i class="fas fa-check"></i> Check</button>
+      </div>
+      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);">
+        <div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;"><span style="color:#c62828;font-weight:600;">Wrong:</span> "I go rarely to fast food restaurants."<br>Correct: I <input class="gap-input" id="ec-3" placeholder="___" style="width:80px" onkeydown="if(event.key==='Enter')checkEC(3,['rarely'])"> go to fast food restaurants.</div>
+        <button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkEC(3,['rarely'])"><i class="fas fa-check"></i> Check</button>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="check-btn amber" onclick="showECAnswers()"><i class="fas fa-eye"></i> Show Answers</button>
+      <button class="reset-btn" onclick="resetEC()"><i class="fas fa-redo"></i> Reset</button>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 29 -->
 <div class="slide" id="slide-29">
-  <div class="s-header"><h1>Lesson Summary</h1><span class="s-badge">Key Takeaways</span></div>
+  <div class="s-header"><h1>Build Your Own Answer</h1><span class="s-badge green">Speaking Practice</span></div>
   <div class="s-content">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(0,77,64,.08);border-top:4px solid var(--navy);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-clock"></i> Adverbs of Frequency</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(0,77,64,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">always</span><span style="background:rgba(0,77,64,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">usually</span><span style="background:rgba(0,77,64,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">often</span><span style="background:rgba(0,77,64,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">sometimes</span><span style="background:rgba(0,77,64,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">occasionally</span><span style="background:rgba(0,77,64,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">rarely</span><span style="background:rgba(0,77,64,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">never</span></div></div>
-      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(0,77,64,.08);border-top:4px solid var(--amber);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:#7a3800;margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-comment"></i> Colloquial Expressions</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">every once in a while</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">from time to time</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">once in a blue moon</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">hardly ever</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">all the time</span></div></div>
-      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(0,77,64,.08);border-top:4px solid var(--teal);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:var(--teal);margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-map-pin"></i> Position Rules</h3><div style="font-size:.84rem;color:var(--ink2);line-height:1.5;">always/never/rarely: before verb ONLY<br>often/frequently: before verb or end<br>usually/sometimes/occasionally: flexible (3 positions)<br>all the time: end ONLY</div></div>
-      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(0,77,64,.08);border-top:4px solid #2e7d32;"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:#2e7d32;margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-plus-circle"></i> Extension Phrases</h3><div style="font-size:.84rem;color:var(--ink2);line-height:1.5;">I tend to... / especially when... / I hope I will... / It is a chance for me to... / I have to be in the right mood</div></div>
+    <div class="intro-note">Use the word bank to build a complete answer for: <strong>"How often do you listen to music?"</strong></div>
+
+    <div style="background:#fff;border-radius:12px;padding:12px 16px;box-shadow:0 3px 10px rgba(0,0,0,.07);border-top:3px solid var(--navy);">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px;">
+        <div style="font-family:var(--hf);font-size:.76rem;font-weight:800;color:var(--navy);text-transform:uppercase;"><i class="fas fa-microphone"></i> Try Speaking in 3 Steps</div>
+        <div class="scaffold-tab-bar">
+          <button class="scaffold-tab active" onclick="switchScaffoldLevel(this, 1)">1. Full Example</button>
+          <button class="scaffold-tab" onclick="switchScaffoldLevel(this, 2)">2. Sentence Starters</button>
+          <button class="scaffold-tab" onclick="switchScaffoldLevel(this, 3)">3. Key Words</button>
+        </div>
+      </div>
+      <div class="scaffold-level-box" data-level="1" style="font-size:.85rem;line-height:1.65;color:var(--ink);padding:8px 12px;background:var(--bg);border-radius:8px;"><strong>Full Example:</strong> Well, I <u>usually</u> go jogging three times a week <u>because</u> it helps me stay in shape. <u>However</u>, during exam weeks, I <u>only exercise once in a blue moon</u> <u>as</u> I'm really busy with schoolwork.</div>
+      <div class="scaffold-level-box" data-level="2" style="display:none;font-size:.85rem;line-height:1.65;color:var(--ink);padding:8px 12px;background:var(--bg);border-radius:8px;"><strong>Sentence Starters:</strong> Well, I usually / often [...] because [...]. However, when I'm busy, I only do it once in a while / once in a blue moon because [...].</div>
+      <div class="scaffold-level-box" data-level="3" style="display:none;font-size:.85rem;line-height:1.65;color:var(--ink);padding:8px 12px;background:var(--bg);border-radius:8px;"><strong>Key Words Only:</strong> <em>usually / 3 times a week &rarr; keep fit &rarr; However, during exams &rarr; once in a blue moon</em></div>
     </div>
-    <div style="background:linear-gradient(135deg,var(--navy),var(--green));color:#fff;border-radius:14px;padding:18px 24px;text-align:center;margin-top:8px;">
-      <div style="font-family:var(--hf);font-size:1.1rem;font-weight:800;margin-bottom:6px;">&#127881; Lesson 3 Complete!</div>
-      <div style="font-size:.88rem;opacity:.85;">You have mastered the formula for expressing habits and routines. Keep practising with the 10 practice questions!</div>
+    <div style="background:var(--navy);color:#fff;border-radius:10px;padding:12px 18px;font-size:.85rem;margin-bottom:10px;"><strong style="color:var(--amber)">Formula:</strong> Frequency Adverb + Reason (because/since) + Extension/Detail</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Frequency Adverbs</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(0,77,64,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I always listen to music — 100% frequency','success')">always</span><span style="background:rgba(0,77,64,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I usually listen to music — about 80%','success')">usually</span><span style="background:rgba(0,77,64,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I often listen to music — about 60%','success')">often</span><span style="background:rgba(0,77,64,.1);color:var(--navy);font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I sometimes listen to music — about 40%','success')">sometimes</span></div></div>
+      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Reasons</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(255,143,0,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('because it helps me relax after a long day','success')">helps me relax</span><span style="background:rgba(255,143,0,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('because it helps me focus while studying','success')">helps me focus</span><span style="background:rgba(255,143,0,.1);color:#7a3800;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('because it is a great way to unwind','success')">great way to unwind</span></div></div>
+      <div><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Extensions</div><div style="display:flex;flex-wrap:wrap;gap:6px;"><span style="background:rgba(0,172,193,.1);color:#006064;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('I tend to listen to pop music, but from time to time I mix it up with jazz.','success')">I tend to...</span><span style="background:rgba(0,172,193,.1);color:#006064;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;" onclick="showToast('especially when I am commuting or doing housework','success')">especially when...</span></div></div>
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 3px 10px rgba(0,77,64,.07);margin-top:8px;border-left:4px solid var(--teal);">
+      <div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">Sample Answer</div>
+      <div style="font-size:.86rem;color:var(--ink);line-height:1.7;"><span class="hl-freq">I always</span> listen to music <span class="hl-reason">because</span> it <span class="hl-reason">helps me relax</span> after a long day at school. I <span class="hl-freq">usually</span> listen to pop music, but <span class="hl-coll">from time to time</span> I mix it up with jazz or classical music. I <span class="hl-ext">tend to</span> listen to music while commuting, <span class="hl-ext">especially when</span> I am on the bus or walking to class.</div>
     </div>
   </div>
 </div>
 
+<!-- SLIDE 30 -->
 <div class="slide" id="slide-30">
-  <div class="s-header"><h1>Final Review: Complete Answer</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-header"><h1>Extra Practice: Build Full Answers</h1><span class="s-badge green">Speaking Practice</span></div>
   <div class="s-content">
-    <div class="intro-note">Review the complete formula with all components. Click each highlighted part to learn more.</div>
-    <div class="model-q"><i class="fas fa-question-circle"></i> Question: How often do you go out with friends?</div>
-    <div class="model-answer-box" style="font-size:.88rem;">
-      I <span class="hl-freq" style="cursor:pointer" onclick="showToast('Step 1 - Frequency: often — about 60%, placed before the verb','success')">often</span>
-      go out with my friends, mainly
-      <span class="hl-reason" style="cursor:pointer" onclick="showToast('Step 2 - Reason linker: because — connects the frequency to the reason','success')">because</span>
-      it is a good way to
-      <span class="hl-reason" style="cursor:pointer" onclick="showToast('Step 2 - Reason: unwind and catch up — explains WHY you go out that often','success')">unwind and catch up.</span>
-      We
-      <span class="hl-freq" style="cursor:pointer" onclick="showToast('Step 1 - Second frequency: usually — adds more detail about the routine','success')">usually</span>
-      go to a cafe at the weekend, and it is
-      <span class="hl-ext" style="cursor:pointer" onclick="showToast('Extension: a chance for us to — explains the social benefit','success')">a chance for us to</span>
-      talk about what has been going on in our lives.
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px;">
-      <div style="background:rgba(0,77,64,.08);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 1</div><div style="font-size:.82rem;color:var(--navy);font-weight:600;">Frequency</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">often + usually</div></div>
-      <div style="background:rgba(255,143,0,.1);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#7a3800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Step 2</div><div style="font-size:.82rem;color:#7a3800;font-weight:600;">Reason</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">because it is a good way to unwind</div></div>
-      <div style="background:rgba(0,172,193,.1);border-radius:10px;padding:12px;text-align:center;"><div style="font-family:var(--hf);font-size:.72rem;font-weight:700;color:#006064;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Extension</div><div style="font-size:.82rem;color:#006064;font-weight:600;">Extra Detail</div><div style="font-size:.75rem;color:var(--ink2);margin-top:3px;">a chance for us to talk about our lives</div></div>
+    <div class="intro-note">Write a full answer for each question using the formula: Frequency + Reason + Extension.</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);">
+        <div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">How often do you use your phone?</div>
+        <div style="background:rgba(0,77,64,.06);border-radius:8px;padding:10px 12px;font-size:.84rem;color:var(--ink2);line-height:1.6;"><strong>Sample:</strong> I <span class="hl-freq">constantly</span> use my phone <span class="hl-reason">because</span> it is essential for staying connected with friends and family. I <span class="hl-ext">tend to</span> check it first thing in the morning and last thing at night, <span class="hl-ext">especially when</span> I am waiting for important messages.</div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);">
+        <div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">How often do you visit your relatives?</div>
+        <div style="background:rgba(0,77,64,.06);border-radius:8px;padding:10px 12px;font-size:.84rem;color:var(--ink2);line-height:1.6;"><strong>Sample:</strong> I visit my relatives <span class="hl-coll">from time to time</span>, <span class="hl-reason">mainly because</span> we live quite far apart. We <span class="hl-freq">usually</span> get together during holidays or special occasions, and it is <span class="hl-ext">a chance for us to</span> catch up and share news.</div>
+      </div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);">
+        <div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">How often do you study English at home?</div>
+        <div style="background:rgba(0,77,64,.06);border-radius:8px;padding:10px 12px;font-size:.84rem;color:var(--ink2);line-height:1.6;"><strong>Sample:</strong> I <span class="hl-freq">usually</span> study English at home every evening <span class="hl-reason">because</span> I want to improve my speaking and writing skills. I <span class="hl-ext">tend to</span> spend about an hour reviewing vocabulary and practising grammar, <span class="hl-ext">especially when</span> I have an important test coming up.</div>
+      </div>
     </div>
   </div>
 </div>
 
+<!-- SLIDE 31 -->
 <div class="slide" id="slide-31">
+  <div class="s-header"><h1>Practice Questions</h1><span class="s-badge green">Speaking Practice</span></div>
+  <div class="s-content">
+    
+    <div style="background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;border-radius:12px;padding:12px 16px;box-shadow:0 3px 12px rgba(0,0,0,.12);">
+      <div style="font-family:var(--hf);font-size:.76rem;font-weight:800;color:var(--amber);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;"><i class="fas fa-users"></i> Pair Activity: Compare Your Weekly Routines</div>
+      <div style="font-size:.84rem;line-height:1.5;">Ask your partner how often they exercise, read, eat out, or go to the cinema. Find <strong>two habits you have in common</strong> and <strong>one healthy habit you both want to do more often this week</strong>.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+        <div style="background:rgba(255,255,255,.12);padding:7px 10px;border-radius:8px;font-size:.78rem;"><strong>🗣️ Speaker:</strong> Give your answer with a clear reason and a personal example.</div>
+        <div style="background:rgba(255,255,255,.12);padding:7px 10px;border-radius:8px;font-size:.78rem;"><strong>👂 Partner:</strong> Listen, react naturally, and ask one follow-up question.</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>1.</strong> How often do you use your phone?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>2.</strong> How often do you read the news?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>3.</strong> How often do you help your parents?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>4.</strong> How often do you go shopping?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>5.</strong> How often do you watch movies?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>6.</strong> How often do you play sports?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>7.</strong> How often do you eat out?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>8.</strong> How often do you listen to music?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>9.</strong> How often do you visit your relatives?</div>
+      <div style="background:#fff;border-radius:10px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,77,64,.07);border-left:3px solid var(--navy);font-size:.84rem;"><strong>10.</strong> How often do you study English at home?</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 32 -->
+<div class="slide" id="slide-32">
   <div class="s-header"><h1>IELTS Speaking Tips for Part 1</h1><span class="s-badge purple">IELTS Tips</span></div>
   <div class="s-content">
     <div class="intro-note">Follow these tips to maximise your score in IELTS Speaking Part 1 habit questions.</div>
@@ -713,67 +1041,26 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
   </div>
 </div>
 
-<div class="slide" id="slide-32">
-  <div class="s-header"><h1>Mixed Quiz: All Topics</h1><span class="s-badge amber">Final Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Test yourself on all the key points from Lesson 3. Score: <strong id="q9-score">0</strong>/4</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Which adverb can ONLY go before the verb?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q9-1"><button class="mc-opt" onclick="checkQ9(this,1,'always')">always</button><button class="mc-opt" onclick="checkQ9(this,1,'always')">sometimes</button><button class="mc-opt" onclick="checkQ9(this,1,'always')">occasionally</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. "once in a blue moon" means...</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q9-2"><button class="mc-opt" onclick="checkQ9(this,2,'rarely')">rarely</button><button class="mc-opt" onclick="checkQ9(this,2,'rarely')">sometimes</button><button class="mc-opt" onclick="checkQ9(this,2,'rarely')">always</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Which sentence is correct?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q9-3"><button class="mc-opt" onclick="checkQ9(this,3,'I always exercise in the morning.')">I always exercise in the morning.</button><button class="mc-opt" onclick="checkQ9(this,3,'I always exercise in the morning.')">Always I exercise in the morning.</button><button class="mc-opt" onclick="checkQ9(this,3,'I always exercise in the morning.')">I exercise always in the morning.</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. Which adverb can ONLY go at the END of a sentence?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="q9-4"><button class="mc-opt" onclick="checkQ9(this,4,'all the time')">all the time</button><button class="mc-opt" onclick="checkQ9(this,4,'all the time')">usually</button><button class="mc-opt" onclick="checkQ9(this,4,'all the time')">often</button></div></div>
-    </div>
-    <div class="btn-row"><button class="reset-btn" onclick="resetQ9()"><i class="fas fa-redo"></i> Reset</button></div>
-  </div>
-</div>
-
+<!-- SLIDE 33 -->
 <div class="slide" id="slide-33">
-  <div class="s-header"><h1>Extra Practice: Sentence Correction</h1><span class="s-badge red">Error Correction</span></div>
+  <div class="s-header"><h1>Self-Assessment Checklist</h1><span class="s-badge">Evaluation</span></div>
   <div class="s-content">
-    <div class="intro-note">Find and correct the mistake in each sentence. Click Check to verify your answer.</div>
-    <div style="display:flex;flex-direction:column;gap:9px;">
-      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);">
-        <div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;"><span style="color:#c62828;font-weight:600;">Wrong:</span> "Always I go to the gym in the morning."<br>Correct: I <input class="gap-input" id="ec-1" placeholder="___" style="width:80px" onkeydown="if(event.key==='Enter')checkEC(1,['always'])"> go to the gym in the morning.</div>
-        <button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkEC(1,['always'])"><i class="fas fa-check"></i> Check</button>
-      </div>
-      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);">
-        <div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;"><span style="color:#c62828;font-weight:600;">Wrong:</span> "I listen to my MP3 all the time always."<br>Correct: I listen to my MP3 <input class="gap-input" id="ec-2" placeholder="___" style="width:120px" onkeydown="if(event.key==='Enter')checkEC(2,['all the time'])">.</div>
-        <button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkEC(2,['all the time'])"><i class="fas fa-check"></i> Check</button>
-      </div>
-      <div style="background:#fff;border-radius:10px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,77,64,.07);">
-        <div style="font-size:.86rem;color:var(--ink);margin-bottom:6px;"><span style="color:#c62828;font-weight:600;">Wrong:</span> "I go rarely to fast food restaurants."<br>Correct: I <input class="gap-input" id="ec-3" placeholder="___" style="width:80px" onkeydown="if(event.key==='Enter')checkEC(3,['rarely'])"> go to fast food restaurants.</div>
-        <button class="check-btn" style="padding:5px 12px;font-size:.76rem;" onclick="checkEC(3,['rarely'])"><i class="fas fa-check"></i> Check</button>
-      </div>
-    </div>
-    <div class="btn-row">
-      <button class="check-btn amber" onclick="showECAnswers()"><i class="fas fa-eye"></i> Show Answers</button>
-      <button class="reset-btn" onclick="resetEC()"><i class="fas fa-redo"></i> Reset</button>
+    <div class="intro-note">Use this checklist to evaluate your own answer after practising. Click each item to mark it.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>1. Frequency given:</strong> Uses an adverb (always, usually, often, etc.)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>2. Correct position:</strong> Adverb placed correctly (before verb / end / beginning)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>3. Clear answer:</strong> Directly answers "How often..."</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>4. Reason given:</strong> Explains why (because / since / as)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>5. Idea development:</strong> Gives a clear idea (relax, health, social, study)</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>6. Example included:</strong> Uses for example / for instance</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>7. Variety:</strong> Uses different adverbs or colloquial expressions</div></div>
+      <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"><i class="fas fa-check"></i></div><div class="check-text"><strong>8. Clarity and fluency:</strong> Easy to understand, logical flow</div></div>
     </div>
   </div>
 </div>
 
+<!-- SLIDE 34 -->
 <div class="slide" id="slide-34">
-  <div class="s-header"><h1>Extra Practice: Build Full Answers</h1><span class="s-badge green">Speaking Practice</span></div>
-  <div class="s-content">
-    <div class="intro-note">Write a full answer for each question using the formula: Frequency + Reason + Extension.</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);">
-        <div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">How often do you use your phone?</div>
-        <div style="background:rgba(0,77,64,.06);border-radius:8px;padding:10px 12px;font-size:.84rem;color:var(--ink2);line-height:1.6;"><strong>Sample:</strong> I <span class="hl-freq">constantly</span> use my phone <span class="hl-reason">because</span> it is essential for staying connected with friends and family. I <span class="hl-ext">tend to</span> check it first thing in the morning and last thing at night, <span class="hl-ext">especially when</span> I am waiting for important messages.</div>
-      </div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);">
-        <div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">How often do you visit your relatives?</div>
-        <div style="background:rgba(0,77,64,.06);border-radius:8px;padding:10px 12px;font-size:.84rem;color:var(--ink2);line-height:1.6;"><strong>Sample:</strong> I visit my relatives <span class="hl-coll">from time to time</span>, <span class="hl-reason">mainly because</span> we live quite far apart. We <span class="hl-freq">usually</span> get together during holidays or special occasions, and it is <span class="hl-ext">a chance for us to</span> catch up and share news.</div>
-      </div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);">
-        <div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">How often do you study English at home?</div>
-        <div style="background:rgba(0,77,64,.06);border-radius:8px;padding:10px 12px;font-size:.84rem;color:var(--ink2);line-height:1.6;"><strong>Sample:</strong> I <span class="hl-freq">usually</span> study English at home every evening <span class="hl-reason">because</span> I want to improve my speaking and writing skills. I <span class="hl-ext">tend to</span> spend about an hour reviewing vocabulary and practising grammar, <span class="hl-ext">especially when</span> I have an important test coming up.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="slide" id="slide-35">
   <div class="s-header"><h1>Lesson 3: Complete Review Quiz</h1><span class="s-badge green">Final Review</span></div>
   <div class="s-content">
     <div class="intro-note">Test yourself on all the key points from Lesson 3. Score: <strong id="qfinal-score">0</strong>/5</div>
@@ -781,14 +1068,31 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
       <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">1. Which adverb can go at the BEGINNING of a sentence?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-1"><button class="mc-opt" onclick="checkQF(this,1,'Usually')">Usually</button><button class="mc-opt" onclick="checkQF(this,1,'Usually')">Always</button><button class="mc-opt" onclick="checkQF(this,1,'Usually')">Never</button></div></div>
       <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">2. "from time to time" means the same as...</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-2"><button class="mc-opt" onclick="checkQF(this,2,'occasionally')">occasionally</button><button class="mc-opt" onclick="checkQF(this,2,'occasionally')">rarely</button><button class="mc-opt" onclick="checkQF(this,2,'occasionally')">always</button></div></div>
       <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">3. Which sentence is correct?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-3"><button class="mc-opt" onclick="checkQF(this,3,'I hardly ever play video games.')">I hardly ever play video games.</button><button class="mc-opt" onclick="checkQF(this,3,'I hardly ever play video games.')">Hardly ever I play video games.</button></div></div>
-      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. What should you ALWAYS include after the frequency adverb?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-4"><button class="mc-opt" onclick="checkQF(this,4,'A reason (because/since/as)')">A reason (because/since/as)</button><button class="mc-opt" onclick="checkQF(this,4,'A reason (because/since/as)')">Another adverb</button><button class="mc-opt" onclick="checkQF(this,4,'A reason (because/since/as)')">A question</button></div></div>
+      <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">4. What should you ALWAYS include after the frequency adverb?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-4"><button class="mc-opt" onclick="checkQF(this,4,'A reason [because/since/as]')">A reason [because/since/as]</button><button class="mc-opt" onclick="checkQF(this,4,'A reason [because/since/as]')">Another adverb</button><button class="mc-opt" onclick="checkQF(this,4,'A reason [because/since/as]')">A question</button></div></div>
       <div style="background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(0,77,64,.07);"><div style="font-size:.88rem;color:var(--ink);margin-bottom:8px;font-weight:600;">5. "I tend to read before bed" — what type of phrase is this?</div><div style="display:flex;gap:7px;flex-wrap:wrap;" id="qf-5"><button class="mc-opt" onclick="checkQF(this,5,'Extension phrase')">Extension phrase</button><button class="mc-opt" onclick="checkQF(this,5,'Extension phrase')">Frequency adverb</button><button class="mc-opt" onclick="checkQF(this,5,'Extension phrase')">Reason linker</button></div></div>
     </div>
     <div class="btn-row"><button class="reset-btn" onclick="resetQF()"><i class="fas fa-redo"></i> Reset</button></div>
   </div>
 </div>
 
-  <div id="navbar">
+<!-- SLIDE 35 -->
+<div class="slide" id="slide-35">
+  <div class="s-header"><h1>Lesson Summary</h1><span class="s-badge">Key Takeaways</span></div>
+  <div class="s-content">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(0,77,64,.08);border-top:4px solid var(--navy);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-clock"></i> Adverbs of Frequency</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(0,77,64,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">always</span><span style="background:rgba(0,77,64,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">usually</span><span style="background:rgba(0,77,64,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">often</span><span style="background:rgba(0,77,64,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">sometimes</span><span style="background:rgba(0,77,64,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">occasionally</span><span style="background:rgba(0,77,64,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">rarely</span><span style="background:rgba(0,77,64,.08);color:var(--navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">never</span></div></div>
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(0,77,64,.08);border-top:4px solid var(--amber);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:#7a3800;margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-comment"></i> Colloquial Expressions</h3><div style="display:flex;flex-wrap:wrap;gap:5px;"><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">every once in a while</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">from time to time</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">once in a blue moon</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">hardly ever</span><span style="background:rgba(255,143,0,.08);color:#7a3800;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:20px;">all the time</span></div></div>
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(0,77,64,.08);border-top:4px solid var(--teal);"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:var(--teal);margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-map-pin"></i> Position Rules</h3><div style="font-size:.84rem;color:var(--ink2);line-height:1.5;">always/never/rarely: before verb ONLY<br>often/frequently: before verb or end<br>usually/sometimes/occasionally: flexible (3 positions)<br>all the time: end ONLY</div></div>
+      <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(0,77,64,.08);border-top:4px solid #2e7d32;"><h3 style="font-family:var(--hf);font-size:.95rem;font-weight:800;color:#2e7d32;margin-bottom:8px;display:flex;align-items:center;gap:7px;"><i class="fas fa-plus-circle"></i> Extension Phrases</h3><div style="font-size:.84rem;color:var(--ink2);line-height:1.5;">I tend to... / especially when... / I hope I will... / It is a chance for me to... / I have to be in the right mood</div></div>
+    </div>
+    <div style="background:linear-gradient(135deg,var(--navy),var(--green));color:#fff;border-radius:14px;padding:18px 24px;text-align:center;margin-top:8px;">
+      <div style="font-family:var(--hf);font-size:1.1rem;font-weight:800;margin-bottom:6px;">&#127881; Lesson 3 Complete!</div>
+      <div style="font-size:.88rem;opacity:.85;">You have mastered the formula for expressing habits and routines. Keep practising with the 10 practice questions!</div>
+    </div>
+  </div>
+</div>
+
+<div id="navbar">
     <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i> Prev</button>
     <div id="nav-dots"></div>
     <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next <i class="fas fa-chevron-right"></i></button>
@@ -825,6 +1129,13 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
       document.getElementById("next-btn").disabled = currentSlide === totalSlides;
       var pb = document.getElementById("progress-bar");
       if (pb) pb.style.width = ((currentSlide / totalSlides) * 100) + "%";
+      buildDrawer();
+      try {
+        localStorage.setItem("spkf_" + "lesson3_slide", currentSlide);
+        if (window.parent && window.parent !== window && typeof window.parent.onSlideChanged === "function") {
+          window.parent.onSlideChanged("lesson3", currentSlide, totalSlides);
+        }
+      } catch(e) {}
     }
 
     function changeSlide(dir) {
@@ -840,7 +1151,7 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
     function showToast(msg, type) {
       var t = document.getElementById("toast");
       t.textContent = msg;
-      t.className = "toast show " + (type || "");
+      t.className = "toast show " + (type || ""); if (type === "success") playSuccessChime();
       clearTimeout(t._timer);
       t._timer = setTimeout(function(){ t.className = "toast"; }, 3200);
     }
@@ -932,7 +1243,7 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
           score = 0; done = {};
           var el = document.getElementById(scoreId);
           if (el) el.textContent = "0";
-          document.querySelectorAll("#" + slideId + " .mc-opt").forEach(function(b) { b.classList.remove("correct","wrong"); b.disabled = false; });
+          (document.getElementById(scoreId) && document.getElementById(scoreId).closest(".slide") ? document.getElementById(scoreId).closest(".slide") : document).querySelectorAll(".mc-opt").forEach(function(b) { b.classList.remove("correct","wrong"); b.disabled = false; });
         }
       };
     }
@@ -972,6 +1283,148 @@ html,body{height:100%;font-family:var(--bf);background:var(--bg);color:var(--ink
     // ===== INIT =====
     buildDots();
     goToSlide(1);
+  
+    // ===== CLASSROOM CONTROLS =====
+    var slideTitles = [{"num": 1, "title": "Cover: Express Habits & Routines"}, {"num": 2, "title": "Warm-Up &amp; Lesson Goal"}, {"num": 3, "title": "Model Answer 1: How often do you socialise?"}, {"num": 4, "title": "Model Answer 2: How often do you read books?"}, {"num": 5, "title": "Model Answer 3: How often do you go out with friends?"}, {"num": 6, "title": "Model Answer 4: How often do you exercise?"}, {"num": 7, "title": "Model Answer 5: How often do you watch TV?"}, {"num": 8, "title": "Full Formula: Annotated Example"}, {"num": 9, "title": "Final Review: Complete Answer"}, {"num": 10, "title": "Step 1: Adverbs of Frequency (Position Rules)"}, {"num": 11, "title": "Grammar Focus: Adverb Position Rules"}, {"num": 12, "title": "Adverbs of Frequency: Scale"}, {"num": 13, "title": "Step 2: Colloquial Expressions of Infrequency"}, {"num": 14, "title": "Extension Phrases: Deep Dive"}, {"num": 15, "title": "Common Mistakes to Avoid"}, {"num": 16, "title": "Vocabulary Reference: All Key Expressions"}, {"num": 17, "title": "Formula Summary"}, {"num": 18, "title": "Quiz: Adverb Positions"}, {"num": 19, "title": "Quiz: Adverb Position (Advanced)"}, {"num": 20, "title": "Quiz: Frequency Scale"}, {"num": 21, "title": "Quiz: Colloquial Expressions"}, {"num": 22, "title": "Quiz: Choose the Right Expression"}, {"num": 23, "title": "Quiz: Formal vs Colloquial"}, {"num": 24, "title": "Quiz: Extension Phrases"}, {"num": 25, "title": "Quiz: Complete the Answer"}, {"num": 26, "title": "Mixed Quiz: All Topics"}, {"num": 27, "title": "Gap Fill: Complete the Answers"}, {"num": 28, "title": "Extra Practice: Sentence Correction"}, {"num": 29, "title": "Build Your Own Answer"}, {"num": 30, "title": "Extra Practice: Build Full Answers"}, {"num": 31, "title": "Practice Questions"}, {"num": 32, "title": "IELTS Speaking Tips for Part 1"}, {"num": 33, "title": "Self-Assessment Checklist"}, {"num": 34, "title": "Lesson 3: Complete Review Quiz"}, {"num": 35, "title": "Lesson Summary"}];
+    var soundEnabled = true;
+    var ttsSpeaking = false;
+
+    function switchScaffoldLevel(btn, level) {
+      var slideEl = btn.closest(".slide") || document;
+      slideEl.querySelectorAll(".scaffold-tab").forEach(function(t) { t.classList.remove("active"); });
+      btn.classList.add("active");
+      slideEl.querySelectorAll(".scaffold-level-box").forEach(function(box) {
+        box.style.display = (parseInt(box.getAttribute("data-level"), 10) === level) ? "block" : "none";
+      });
+    }
+
+    function buildDrawer() {
+      var container = document.getElementById("drawer-items");
+      if (!container) return;
+      container.innerHTML = "";
+      slideTitles.forEach(function(item) {
+        var div = document.createElement("div");
+        div.className = "drawer-item" + (item.num === currentSlide ? " active" : "");
+        div.onclick = function() { goToSlide(item.num); toggleSlideDrawer(); };
+        div.innerHTML = '<span class="drawer-item-num">' + item.num + '</span><span class="drawer-item-title">' + item.title + '</span>';
+        container.appendChild(div);
+      });
+    }
+
+    function toggleSlideDrawer() {
+      var drawer = document.getElementById("slide-drawer");
+      if (drawer) drawer.classList.toggle("open");
+    }
+
+    function toggleCardHighlight(el) {
+      el.classList.toggle("card-highlight");
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(function(){});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    function toggleSoundFX() {
+      soundEnabled = !soundEnabled;
+      var btn = document.getElementById("sound-btn");
+      if (btn) {
+        btn.innerHTML = soundEnabled ? '<i class="fas fa-bell"></i>' : '<i class="fas fa-bell-slash"></i>';
+        btn.classList.toggle("active", soundEnabled);
+      }
+      showToast(soundEnabled ? "Sound on" : "Sound muted", "success");
+    }
+
+    function playSuccessChime() {
+      if (!soundEnabled) return;
+      try {
+        var ctx = new (window.AudioContext || window.webkitAudioContext)();
+        var osc1 = ctx.createOscillator();
+        var osc2 = ctx.createOscillator();
+        var gain = ctx.createGain();
+        osc1.type = "sine"; osc1.frequency.setValueAtTime(523.25, ctx.currentTime);
+        osc2.type = "sine"; osc2.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.12, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+        osc1.connect(gain); osc2.connect(gain); gain.connect(ctx.destination);
+        osc1.start(ctx.currentTime); osc1.stop(ctx.currentTime + 0.15);
+        osc2.start(ctx.currentTime + 0.1); osc2.stop(ctx.currentTime + 0.35);
+      } catch(e) {}
+    }
+
+    function toggleReadSlide() {
+      if (!('speechSynthesis' in window)) {
+        showToast("Speech synthesis is not supported in this browser", "error");
+        return;
+      }
+      if (ttsSpeaking) {
+        window.speechSynthesis.cancel();
+        ttsSpeaking = false;
+        var btn = document.getElementById("tts-btn");
+        if (btn) btn.innerHTML = '<i class="fas fa-volume-up"></i> <span>Read Aloud</span>';
+        return;
+      }
+      var currentEl = document.getElementById("slide-" + currentSlide);
+      if (!currentEl) return;
+      var textToRead = "";
+      var q = currentEl.querySelector(".model-q");
+      var ans = currentEl.querySelector(".model-answer-box");
+      if (q || ans) {
+        textToRead = (q ? q.innerText + ". " : "") + (ans ? ans.innerText : "");
+      } else {
+        var textNodes = currentEl.querySelectorAll(".s-content, .intro-note, .cover-p");
+        textNodes.forEach(function(n) { textToRead += n.innerText + " "; });
+      }
+      textToRead = textToRead.replace(/\s+/g, " ").trim();
+      if (!textToRead) {
+        showToast("No text to read on this slide", "error");
+        return;
+      }
+      var utterance = new SpeechSynthesisUtterance(textToRead.slice(0, 500));
+      utterance.lang = "en-US";
+      utterance.rate = 0.95;
+      utterance.onend = function() {
+        ttsSpeaking = false;
+        var btn = document.getElementById("tts-btn");
+        if (btn) btn.innerHTML = '<i class="fas fa-volume-up"></i> <span>Read Aloud</span>';
+      };
+      utterance.onerror = function() {
+        ttsSpeaking = false;
+        var btn = document.getElementById("tts-btn");
+        if (btn) btn.innerHTML = '<i class="fas fa-volume-up"></i> <span>Read Aloud</span>';
+      };
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(utterance);
+      ttsSpeaking = true;
+      var btn = document.getElementById("tts-btn");
+      if (btn) btn.innerHTML = '<i class="fas fa-stop"></i> <span>Stop Audio</span>';
+      showToast("Reading slide aloud...", "success");
+    }
+
+    function exitToPortal() {
+      try {
+        if (window.parent && window.parent !== window && typeof window.parent.closePlayer === "function") {
+          window.parent.closePlayer();
+          return;
+        }
+      } catch(e) {}
+      window.location.href = "index.html";
+    }
+
+    function switchLesson(url) {
+      try {
+        if (window.parent && window.parent !== window && typeof window.parent.openLessonByFilename === "function") {
+          window.parent.openLessonByFilename(url);
+          return;
+        }
+      } catch(e) {}
+      window.location.href = url;
+    }
+
+    buildDrawer();
   </script>
 </body>
 </html>
